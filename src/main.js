@@ -8,6 +8,7 @@ import {
   haversineKm,
   scoreForDistance,
   dateKey,
+  addDays,
   playableDates,
   isPlayableDate,
   pruneDays,
@@ -97,9 +98,12 @@ const roundLabel = document.getElementById("round-label");
 const scoreLabel = document.getElementById("score-label");
 const streakLabel = document.getElementById("streak-label");
 const topbar = document.querySelector(".topbar");
-const daysEl = document.getElementById("days");
+const menuBtn = document.getElementById("menu-btn");
+const menuEl = document.getElementById("menu");
+const historyEl = document.getElementById("history");
+const historyList = document.getElementById("history-list");
 
-// The top bar now holds the day picker too, so its height is measured instead of assumed.
+// The top bar can change height (fonts, wrapping on narrow screens), so it is measured instead of assumed.
 // The map credit and the camera framing both sit below it.
 function measureTopbar() {
   document.documentElement.style.setProperty("--topbar-h", `${Math.round(topbar.getBoundingClientRect().height)}px`);
@@ -164,6 +168,8 @@ map.on("style.load", () => {
 
 // A click places (or moves) the pin; the player confirms with the "Lock in guess" button.
 map.on("click", (e) => {
+  // A click that closes the menu is only that: it must not also drop a pin.
+  if (menuOpen()) return closeMenu();
   if (revealed || isFinished()) return;
   const { lng, lat } = e.lngLat.wrap();
   placeGuess({ lat, lng });
@@ -343,53 +349,85 @@ function updateHeader() {
   // The streak is about today's habit, so it shows the same on every day.
   const s = currentStreak(store.streak, today);
   streakLabel.textContent = `🔥 ${s}`;
-  renderDays();
 }
 
-// ---------- day picker ----------
-// One chip per playable day, oldest first, ending with today. There is nothing to the right of today,
-// so you can't go forward in time.
-const DAY_KEYS = playableDates(today);
+// ---------- menu and previous results ----------
+// The menu lives in the top bar. "Previous results" opens a list of today and the days before it,
+// newest first. There is nothing after today, so you can't go forward in time.
+const DAY_KEYS = playableDates(today).reverse();
 
 function dayStatus(key) {
   const list = store.days[key] ? store.days[key].results : [];
-  if (list.length >= ROUNDS_PER_DAY) return { kind: "done", text: `${sumPoints(list)}`, spoken: `${sumPoints(list)} points` };
-  if (list.length > 0) return { kind: "partial", text: `${list.length}/${ROUNDS_PER_DAY}`, spoken: `${list.length} of ${ROUNDS_PER_DAY} rounds played` };
+  if (list.length >= ROUNDS_PER_DAY) return { kind: "done", text: `${sumPoints(list)} / ${ROUNDS_PER_DAY * POINTS_PER_ROUND}`, spoken: `${sumPoints(list)} points` };
+  if (list.length > 0) return { kind: "partial", text: `${list.length}/${ROUNDS_PER_DAY} played`, spoken: `${list.length} of ${ROUNDS_PER_DAY} rounds played` };
   return { kind: "new", text: "Play", spoken: "not played yet" };
 }
 
-function buildDays() {
-  daysEl.innerHTML = DAY_KEYS.map(
-    (key) => `<button type="button" class="day" data-key="${key}" title="${esc(fmtDay(key, { weekday: "long", day: "numeric", month: "long" }))}">
-      <span class="dw">${key === today ? "Today" : esc(fmtDay(key, { weekday: "short" }))}</span>
-      <span class="dn">${Number(key.slice(8))}</span>
-      <span class="ds"></span>
-    </button>`
-  ).join("");
-  daysEl.addEventListener("click", (e) => {
-    const chip = e.target.closest(".day");
-    if (chip) openDay(chip.dataset.key);
-  });
+const menuOpen = () => !menuEl.hidden;
+
+function openMenu() {
+  // While a guess is being revealed the story panel is not on screen yet; the menu waits for it.
+  if (panel.classList.contains("pending")) return;
+  menuEl.hidden = false;
+  menuBtn.setAttribute("aria-expanded", "true");
 }
 
-function renderDays() {
-  daysEl.querySelectorAll(".day").forEach((chip) => {
-    const key = chip.dataset.key;
-    const status = dayStatus(key);
-    chip.className = `day ${status.kind}${key === viewKey ? " active" : ""}`;
-    chip.querySelector(".ds").textContent = status.text;
-    const long = fmtDay(key, { weekday: "long", day: "numeric", month: "long" });
-    chip.setAttribute("aria-label", `${long}${key === today ? ", today" : ""}, ${status.spoken}`);
-    if (key === viewKey) chip.setAttribute("aria-current", "date");
-    else chip.removeAttribute("aria-current");
-  });
+function closeMenu() {
+  menuEl.hidden = true;
+  menuBtn.setAttribute("aria-expanded", "false");
 }
+
+const historyOpen = () => !historyEl.hidden;
+
+function openHistory() {
+  closeMenu();
+  historyList.innerHTML = DAY_KEYS.map((key) => {
+    const status = dayStatus(key);
+    const long = fmtDay(key, { weekday: "long", day: "numeric", month: "long" });
+    const when = key === today ? "Today" : key === addDays(today, -1) ? "Yesterday" : fmtDay(key, { weekday: "long" });
+    return `<li><button type="button" class="${status.kind}${key === viewKey ? " current" : ""}" data-key="${key}"
+        aria-label="${esc(long)}${key === today ? ", today" : ""}, ${status.spoken}">
+      <span class="h-day">${esc(when)}<small>${esc(fmtDay(key, { day: "numeric", month: "long" }))}</small></span>
+      <span class="h-state">${esc(status.text)}</span>
+    </button></li>`;
+  }).join("");
+  historyEl.hidden = false;
+  document.getElementById("history-close").focus();
+}
+
+function closeHistory() {
+  historyEl.hidden = true;
+  menuBtn.focus();
+}
+
+menuBtn.addEventListener("click", () => (menuOpen() ? closeMenu() : openMenu()));
+document.getElementById("menu-history").addEventListener("click", openHistory);
+document.getElementById("history-close").addEventListener("click", closeHistory);
+// Tapping the dimmed area around the list closes it too.
+historyEl.addEventListener("click", (e) => {
+  if (e.target === historyEl) closeHistory();
+});
+historyList.addEventListener("click", (e) => {
+  const row = e.target.closest("button[data-key]");
+  if (!row) return;
+  historyEl.hidden = true;
+  openDay(row.dataset.key);
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  if (historyOpen()) closeHistory();
+  else if (menuOpen()) closeMenu();
+});
+// Tapping elsewhere in the top bar or the panel also dismisses the menu. A tap on the globe is handled
+// by the map's click handler, which closes the menu without placing a pin.
+document.addEventListener("click", (e) => {
+  if (!menuOpen() || menuEl.contains(e.target) || menuBtn.contains(e.target)) return;
+  if (!e.target.closest("#globe")) closeMenu();
+});
 
 // Switches the screen to another day: its results if it is finished, otherwise where you left off.
 function openDay(key) {
   if (!isPlayableDate(key, today) || key === viewKey) return;
-  // While a guess is being revealed the story panel is not on screen yet; let the reveal finish first.
-  if (panel.classList.contains("pending")) return;
   viewKey = key;
   store.days[viewKey] = store.days[viewKey] || { results: [] };
   questions = questionsForView();
@@ -600,6 +638,7 @@ function renderFinal() {
 // ---------- test reset ----------
 // Clears the rounds of the day on screen and draws 5 new questions. The streak is left as it is.
 document.getElementById("reset").addEventListener("click", () => {
+  closeMenu();
   store.days[viewKey] = { results: [], reroll: (dayState().reroll || 0) + 1 };
   saveStore(store);
   questions = questionsForView();
@@ -612,9 +651,7 @@ document.addEventListener("visibilitychange", () => {
   if (!document.hidden && dateKey() !== today) location.reload();
 });
 
-buildDays();
-// The chips just made the top bar taller (and web fonts can change it again), so measure again.
-measureTopbar();
+// Web fonts can change the top bar's height after the first measurement, so measure again.
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureTopbar);
 // completeDay is idempotent, so a reload after round 5 still counts the streak.
 showDay();
