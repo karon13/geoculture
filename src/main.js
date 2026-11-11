@@ -285,8 +285,23 @@ function framing() {
   return { padding: { top, bottom, left: 12, right: 12 }, width, height };
 }
 
-function moveCamera({ center, zoom, ms = 1200 }) {
+// `fly` makes a gentle trip instead of a straight slide: the globe zooms out, turns, then zooms back in.
+// The farther it has to go, the longer it takes, so short hops stay calm and long ones don't whip around.
+function moveCamera({ center, zoom, ms = 1200, fly = false }) {
   const f = framing();
+  if (fly) {
+    const from = map.getCenter();
+    const km = haversineKm(from.lat, from.lng, center[1], center[0]);
+    map.flyTo({
+      center,
+      zoom,
+      padding: f.padding,
+      duration: REDUCED_MOTION ? 0 : Math.round(2200 + (Math.min(km, 12000) / 12000) * 1800),
+      curve: 1.2, // lower = less zooming out on the way
+      essential: false,
+    });
+    return;
+  }
   map.easeTo({
     center,
     zoom,
@@ -296,9 +311,9 @@ function moveCamera({ center, zoom, ms = 1200 }) {
   });
 }
 
-function overview() {
+function overview({ fly = false } = {}) {
   const f = framing();
-  moveCamera({ center: [10, 25], zoom: globeZoom(Math.min(f.width, f.height) * 0.92), ms: 900 });
+  moveCamera({ center: [10, 25], zoom: globeZoom(Math.min(f.width, f.height) * 0.92), ms: 900, fly });
 }
 
 function frameLink(a, b, km) {
@@ -442,7 +457,7 @@ function renderQuestion() {
   clearPins();
   updateHeader();
   panel.innerHTML = `
-    ${isToday() ? "" : `<p class="past-note">📅 ${esc(fmtDay(viewKey))} · past day, doesn't count toward your streak</p>`}
+    ${isToday() ? "" : `<p class="past-note">📅 ${esc(fmtDay(viewKey))}</p>`}
     <span class="chip ${q.category}">${esc(q.category)}</span>
     <p class="prompt">${esc(q.prompt)}</p>
     <p class="hint">Click the globe to place your pin (click again to move it). Scroll or pinch to zoom in.</p>
@@ -533,7 +548,7 @@ function renderFinal() {
   const last = dayResults.length - 1;
   const streakNote = isToday()
     ? `Streak: 🔥 ${streak} day${streak === 1 ? "" : "s"}. Come back tomorrow for 5 new places.`
-    : `Past days don't count toward your streak (🔥 ${streak} day${streak === 1 ? "" : "s"}).`;
+    : "";
   panel.innerHTML = `
     <div class="final">
       <div class="final-body">
@@ -570,7 +585,7 @@ function renderFinal() {
       </div>
       <div class="final-footer">
         <button id="share">Share result</button>
-        <p class="note">${streakNote}</p>
+        ${streakNote ? `<p class="note">${streakNote}</p>` : ""}
       </div>
     </div>
   `;
@@ -596,14 +611,14 @@ function renderFinal() {
     if (i === null) {
       // Back to the overview with every pin and no line.
       setLink(null);
-      overview();
+      overview({ fly: true });
       return;
     }
     const q = questions[i];
     const r = dayResults[i];
     setLink({ a: r.guess, b: q, km: r.km });
     // The panel has changed size, so the camera is placed after that (it reads the panel's height).
-    moveCamera({ center: [q.lng, q.lat], zoom: r.km < 300 ? zoomForKm(r.km, q.lat, 500) : 6, ms: 1400 });
+    moveCamera({ center: [q.lng, q.lat], zoom: r.km < 300 ? zoomForKm(r.km, q.lat, 500) : 6, fly: true });
   }
 
   panel.querySelectorAll(".row").forEach((btn) => {
