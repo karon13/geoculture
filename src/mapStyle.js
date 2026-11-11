@@ -121,7 +121,19 @@ function satelliteStyle() {
 }
 
 // Land is the background colour, water is drawn over it, and land cover (forest, grass, ice ...) gives the
-// land some texture. Rivers appear once zoomed in. Nothing else: no roads, buildings or names.
+// land some texture. On top of that come the things you could also make out on a satellite photo: built-up
+// areas, roads (more of them the closer you zoom), runways and, zoomed in, building outlines. Still no text
+// anywhere: no names of places, streets or countries.
+// Road tiers, drawn bottom to top, so bigger roads sit over smaller ones. `width` is zoom, pixels pairs.
+const ROAD_TIERS = [
+  { id: "service", classes: ["service", "track"], minzoom: 13, color: "#b3b0a4", width: [13, 0.5, 16, 2.5] },
+  { id: "minor", classes: ["minor"], minzoom: 11, color: "#c4c1b4", width: [11, 0.4, 14, 1.4, 17, 4] },
+  { id: "tertiary", classes: ["tertiary"], minzoom: 9, color: "#d3d0c3", width: [9, 0.5, 14, 2, 17, 6] },
+  { id: "secondary", classes: ["secondary"], minzoom: 8, color: "#e3ddc6", width: [8, 0.6, 14, 2.6, 17, 7] },
+  { id: "primary", classes: ["primary"], minzoom: 6, color: "#efdca8", width: [6, 0.6, 14, 3.2, 17, 8] },
+  { id: "major", classes: ["motorway", "trunk"], minzoom: 4, color: "#f2c46a", width: [4, 0.7, 10, 1.8, 14, 4, 17, 9] },
+];
+
 function vectorStyle() {
   const LAND = "#566648";
   return {
@@ -178,6 +190,64 @@ function vectorStyle() {
           "line-width": ["interpolate", ["linear"], ["zoom"], 6, 0.5, 10, 1.6, 14, 3.5],
         },
       },
+
+      // Built-up areas: a soft grey patch where a town or city is, like the glow of a city on a photo.
+      {
+        id: "urban",
+        type: "fill",
+        source: "openmaptiles",
+        "source-layer": "landuse",
+        filter: ["in", ["get", "class"], ["literal", ["residential", "suburb", "neighbourhood", "commercial", "retail", "industrial"]]],
+        paint: {
+          "fill-color": "#8c8a80",
+          "fill-opacity": ["interpolate", ["linear"], ["zoom"], 4, 0.55, 12, 0.75],
+          "fill-antialias": false,
+        },
+      },
+
+      // Building outlines, only once you are close enough to see them.
+      {
+        id: "buildings",
+        type: "fill",
+        source: "openmaptiles",
+        "source-layer": "building",
+        minzoom: 13,
+        paint: {
+          "fill-color": "#a9a597",
+          "fill-opacity": ["interpolate", ["linear"], ["zoom"], 13, 0, 15, 0.9],
+        },
+      },
+
+      // Airports: runways show up as long straight strips.
+      {
+        id: "runways",
+        type: "line",
+        source: "openmaptiles",
+        "source-layer": "aeroway",
+        minzoom: 9,
+        filter: ["==", ["get", "class"], "runway"],
+        paint: {
+          "line-color": "#cfcabb",
+          "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1, 14, 8],
+        },
+      },
+
+      // Roads, from motorways (visible from far away) down to side streets (only up close).
+      // Tunnels are left out. Each tier is its own layer so it can start at its own zoom.
+      ...ROAD_TIERS.map((tier) => ({
+        id: `road-${tier.id}`,
+        type: "line",
+        source: "openmaptiles",
+        "source-layer": "transportation",
+        minzoom: tier.minzoom,
+        filter: ["all", ["in", ["get", "class"], ["literal", tier.classes]], ["!=", ["get", "brunnel"], "tunnel"]],
+        layout: { "line-cap": "round", "line-join": "round" },
+        paint: {
+          "line-color": tier.color,
+          "line-width": ["interpolate", ["linear"], ["zoom"], ...tier.width],
+        },
+      })),
+
       ...borderLayers(),
     ],
   };
