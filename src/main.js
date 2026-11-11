@@ -307,7 +307,7 @@ function renderQuestion() {
     <p class="hint">Click the globe to place your pin (click again to move it). Scroll or pinch to zoom in.</p>
     <button id="lock" disabled>Lock in guess</button>
   `;
-  panel.classList.remove("pending");
+  panel.classList.remove("pending", "detail-mode");
   document.getElementById("lock").addEventListener("click", () => {
     if (guess) lockIn(guess);
   });
@@ -381,15 +381,21 @@ function renderFinal() {
   });
   showPins(pins);
   panel.classList.remove("pending");
+  panel.classList.remove("detail-mode");
 
   const total = totalPoints();
   const squares = shareText(today, results).split("\n")[1].split(" ")[0];
   const streak = currentStreak(store.streak, today);
+  const last = results.length - 1;
   panel.innerHTML = `
     <div class="final">
-      <h2>Today's score</h2>
-      <p class="total">${total} / ${ROUNDS_PER_DAY * POINTS_PER_ROUND}</p>
-      <p class="squares">${squares}</p>
+      <div class="summary">
+        <div class="summary-main">
+          <h2>Today's score</h2>
+          <p class="total">${total} / ${ROUNDS_PER_DAY * POINTS_PER_ROUND}</p>
+        </div>
+        <p class="squares">${squares}</p>
+      </div>
       <p class="hint">Tap a round to read its story and fly to the place.</p>
       <ul>
         ${results
@@ -398,6 +404,13 @@ function renderFinal() {
             return `<li>
               <button class="row" data-i="${i}" aria-expanded="false"><span>${i + 1}. ${esc(q.title)}</span><span>${r.points} pts · ${fmtKm(r.km)}</span></button>
               <div class="detail" hidden>
+                <div class="detail-nav">
+                  <button type="button" class="nav-btn" data-go="close">‹ All rounds</button>
+                  <span class="pager">
+                    <button type="button" class="nav-btn" data-go="${i - 1}" aria-label="Previous round" ${i === 0 ? "disabled" : ""}>←</button>
+                    <button type="button" class="nav-btn" data-go="${i + 1}" aria-label="Next round" ${i === last ? "disabled" : ""}>→</button>
+                  </span>
+                </div>
                 <p class="reveal-place">📍 ${esc(q.place)}</p>
                 <p class="story">${esc(q.story)}</p>
                 ${q.source ? `<p class="source"><a href="${esc(q.source)}" target="_blank" rel="noopener noreferrer">Source</a></p>` : ""}
@@ -412,26 +425,46 @@ function renderFinal() {
   `;
   overview();
 
-  // Tapping a round opens its story, turns the globe to the real location and draws that round's line.
-  // Tapping the open round again closes the story.
+  // Opens one round (or none): shows its story, turns the globe to the real place and draws its line.
+  // On phones an open round hides the score summary and the other rounds (see .detail-mode in the CSS)
+  // so the card stays small and the map stays visible.
+  const finalEl = panel.querySelector(".final");
+  let openIndex = null;
+  function setOpen(i) {
+    openIndex = i;
+    panel.querySelectorAll(".row").forEach((b) => {
+      const open = Number(b.dataset.i) === i;
+      b.setAttribute("aria-expanded", String(open));
+      b.classList.toggle("active", open);
+      b.nextElementSibling.hidden = !open;
+      b.closest("li").classList.toggle("open", open);
+    });
+    finalEl.classList.toggle("has-open", i !== null);
+    panel.classList.toggle("detail-mode", i !== null);
+    panel.scrollTop = 0;
+    if (i === null) {
+      // Back to the overview with every pin and no line.
+      setLink(null);
+      overview();
+      return;
+    }
+    const q = questions[i];
+    const r = results[i];
+    setLink({ a: r.guess, b: q, km: r.km });
+    // The panel has changed size, so the camera is placed after that (it reads the panel's height).
+    moveCamera({ center: [q.lng, q.lat], zoom: r.km < 300 ? zoomForKm(r.km, q.lat, 500) : 6, ms: 1400 });
+  }
+
   panel.querySelectorAll(".row").forEach((btn) => {
     btn.addEventListener("click", () => {
       const i = Number(btn.dataset.i);
-      const q = questions[i];
-      const r = results[i];
-      const wasOpen = btn.getAttribute("aria-expanded") === "true";
-      panel.querySelectorAll(".row").forEach((b) => {
-        const open = b === btn && !wasOpen;
-        b.setAttribute("aria-expanded", String(open));
-        b.classList.toggle("active", open);
-        b.nextElementSibling.hidden = !open;
-      });
-      if (wasOpen) return;
-      btn.closest("li").scrollIntoView({ block: "nearest", behavior: REDUCED_MOTION ? "auto" : "smooth" });
-      setLink({ a: r.guess, b: q, km: r.km });
-      // Centre on the real place at city scale, so the surroundings are visible. The panel has grown to
-      // make room for the story, so the camera is positioned after that.
-      moveCamera({ center: [q.lng, q.lat], zoom: r.km < 300 ? zoomForKm(r.km, q.lat, 500) : 6, ms: 1400 });
+      setOpen(openIndex === i ? null : i);
+    });
+  });
+  panel.querySelectorAll("[data-go]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const go = btn.dataset.go;
+      setOpen(go === "close" ? null : Number(go));
     });
   });
 

@@ -384,3 +384,160 @@ button.secondary {
 #globe .maplibregl-canvas {
   outline: none;
 }
+
+/* ---------- results screen: phone layout ---------- */
+.panel {
+  max-height: 62vh;
+  max-height: 62dvh;
+}
+
+/* The header text sits over bright satellite imagery, so it gets a darker backing and a shadow. */
+.topbar {
+  background: linear-gradient(to bottom, rgba(7, 11, 22, 0.92), rgba(7, 11, 22, 0.55) 60%, rgba(7, 11, 22, 0));
+}
+
+.brand,
+.status {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+}
+
+.status {
+  color: #c3cce6;
+}
+
+.final .detail-nav {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  /* The credit button goes below the two-line header instead of over the score. */
+  .maplibregl-ctrl-top-left {
+    margin-top: 76px;
+  }
+
+  /* List view: score and result squares share one row, which saves about a third of the card. */
+  .final .summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .final .summary h2 {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--muted);
+  }
+
+  .final .summary .total {
+    margin: 0;
+    font-size: 1.7rem;
+  }
+
+  .final .summary .squares {
+    margin: 0;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+  }
+
+  .final .hint {
+    margin: 0 0 4px;
+    font-size: 0.8rem;
+  }
+
+  .final ul {
+    margin: 0 0 8px;
+  }
+
+  .final .row {
+    padding: 6px 4px;
+    font-size: 0.88rem;
+    line-height: 1.3;
+  }
+
+  .final #share {
+    padding: 10px 16px;
+  }
+
+  .final .note {
+    margin: 8px 0 0;
+    font-size: 0.75rem;
+  }
+
+  /* Detail view: one round fills a small card, so most of the map stays visible. */
+  .panel.detail-mode {
+    max-height: 46vh;
+    max-height: 46dvh;
+    padding: 10px 14px 12px;
+  }
+
+  .final.has-open > .summary,
+  .final.has-open > .hint,
+  .final.has-open > #share,
+  .final.has-open > .note,
+  .final.has-open li:not(.open) {
+    display: none;
+  }
+
+  .final.has-open ul {
+    margin: 0;
+  }
+
+  /* Back and previous/next sit above the round's title. */
+  .final li.open {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .final li.open .detail {
+    display: contents;
+  }
+
+  .final li.open .detail-nav {
+    order: -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 4px;
+  }
+
+  .final li.open .row {
+    order: 0;
+    padding: 6px 4px;
+  }
+
+  .final li.open .reveal-place,
+  .final li.open .story,
+  .final li.open .source {
+    order: 1;
+    margin-left: 4px;
+    margin-right: 4px;
+  }
+
+  .final li.open .story {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .final .pager {
+    display: flex;
+    gap: 8px;
+  }
+
+  .final .nav-btn {
+    width: auto;
+    padding: 6px 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  .final .nav-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+}
