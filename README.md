@@ -22,6 +22,11 @@ which regenerates `src/questions.js`.
 
 ## Map
 
+Two base maps can be compared while testing: **satellite** (Esri imagery, the default) and **vector** (a plain
+land and water map from OpenFreeMap's free vector tiles, with no names, roads or buildings). Switch with the
+hamburger menu ("Switch to vector map"), or open the page with `?map=vector` / `?map=satellite`. The choice is
+remembered in the browser. Both draw the same country and US state borders on top.
+
 MapLibre GL JS on a 3D globe: satellite imagery with country borders and US state borders on top.
 There are no labels, roads or place names.
 
