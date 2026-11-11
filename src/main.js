@@ -50,14 +50,17 @@ const today = dateKey();
 const store = loadStore();
 store.streak = store.streak || { streak: 0, lastCompleted: null };
 
-// Progress is kept per date: store.days["2026-11-11"] = { results: [...], reroll? }.
-// Saves from before past days existed held a single `store.day`; fold it in.
-store.days = store.days || {};
-if (store.day && store.day.key && !store.days[store.day.key]) {
-  store.days[store.day.key] = { results: store.day.results || [], reroll: store.day.reroll };
+// Progress is kept per date: store.days["2026-11-11"] = { results: [...] }.
+// Version 2 changed how a date's questions are chosen (no repeats across days), so days saved before
+// that are dropped; the streak is kept.
+const STORE_VERSION = 2;
+if (store.v !== STORE_VERSION) {
+  store.days = {};
+  delete store.day;
+  store.v = STORE_VERSION;
 }
-delete store.day;
-// Only today and the last week can be opened, so anything older (or in the future) is dropped.
+store.days = store.days || {};
+// Only today and the last 28 days can be opened, so anything older (or in the future) is dropped.
 store.days = pruneDays(store.days, today);
 store.days[today] = store.days[today] || { results: [] };
 saveStore(store);
@@ -68,18 +71,11 @@ const isToday = () => viewKey === today;
 const dayState = () => store.days[viewKey];
 const results = () => dayState().results;
 
-// Normally a day's 5 questions are fixed by its date. The test reset bumps `reroll`,
-// which draws a fresh set so you can try more of the question bank.
-function pickKey() {
-  const reroll = dayState().reroll;
-  return reroll ? `${viewKey}#${reroll}` : viewKey;
-}
-
 const QUESTION_BY_ID = new Map(QUESTIONS.map((q) => [q.id, q]));
 
 function questionsForView() {
   // Rounds already played keep their question even if the question bank has changed since.
-  return pickDaily(QUESTIONS, pickKey()).map((q, i) => {
+  return pickDaily(QUESTIONS, viewKey).map((q, i) => {
     const played = results()[i];
     return (played && QUESTION_BY_ID.get(played.id)) || q;
   });
@@ -129,16 +125,16 @@ if (new URLSearchParams(location.search).has("debug")) window.__map = map;
 map.touchPitch.disable();
 // The imagery credit must stay visible (it is a licence condition).
 map.addControl(new maplibregl.AttributionControl({ compact: true }), "top-left");
-// On narrow screens the open credit would cover the score line, so it starts as the (i) button.
-if (window.matchMedia("(max-width: 600px)").matches) {
-  map.once("load", () => {
-    const attrib = document.querySelector("#globe .maplibregl-ctrl-attrib");
-    if (attrib) {
-      attrib.classList.remove("maplibregl-compact-show");
-      attrib.removeAttribute("open");
-    }
-  });
+// The credit starts closed, as a small (i) button; tapping it opens the full text.
+function closeAttribution() {
+  const attrib = document.querySelector("#globe .maplibregl-ctrl-attrib");
+  if (attrib) {
+    attrib.classList.remove("maplibregl-compact-show");
+    attrib.removeAttribute("open");
+  }
 }
+closeAttribution();
+map.once("load", closeAttribution);
 
 // The line between guess and answer. Kept as plain data so it can be (re)applied after the style loads.
 let linkLine = null;
@@ -636,13 +632,16 @@ function renderFinal() {
 }
 
 // ---------- test reset ----------
-// Clears the rounds of the day on screen and draws 5 new questions. The streak is left as it is.
+// Wipes everything this game saved in the browser (every day's results and the streak) and reloads,
+// so the page starts as it does on a first visit. Only this game's key is removed: on GitHub Pages other
+// projects of the same account share this origin's storage.
 document.getElementById("reset").addEventListener("click", () => {
-  closeMenu();
-  store.days[viewKey] = { results: [], reroll: (dayState().reroll || 0) + 1 };
-  saveStore(store);
-  questions = questionsForView();
-  renderQuestion();
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    /* storage unavailable: nothing was saved anyway */
+  }
+  location.reload();
 });
 
 // ---------- start ----------

@@ -41,7 +41,7 @@ export function addDays(key, n) {
 }
 
 // How many days back a missed day can still be played.
-export const MAX_DAYS_BACK = 7;
+export const MAX_DAYS_BACK = 28;
 
 // The days a player can open, oldest first and ending with today: [today-7, ..., today].
 export function playableDates(today, maxBack = MAX_DAYS_BACK) {
@@ -82,15 +82,26 @@ function mulberry32(seed) {
   };
 }
 
-// Same date => same 5 questions for every player. Categories are a natural random mix.
+// Whole days since 1970-01-01 for a YYYY-MM-DD key (UTC arithmetic, so clock changes don't matter).
+export function dayNumber(key) {
+  const [y, m, d] = key.split("-").map(Number);
+  return Math.round(Date.UTC(y, m - 1, d) / 86400000);
+}
+
+// One fixed shuffle of the whole question bank, walked through 5 at a time: day N gets the next 5 after
+// day N-1. So the same date gives every player the same 5 questions, and no question comes back until the
+// whole bank has been used (130 questions = 26 days). Categories stay a natural random mix.
+// Questions are ordered by id before shuffling, so the order doesn't depend on how the bank file is sorted.
 export function pickDaily(questions, key, n = ROUNDS_PER_DAY) {
-  const rand = mulberry32(hashString(`geoculture:${key}`));
-  const pool = [...questions];
-  for (let i = pool.length - 1; i > 0; i--) {
+  const rand = mulberry32(hashString("geoculture:order"));
+  const order = [...questions].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  for (let i = order.length - 1; i > 0; i--) {
     const j = Math.floor(rand() * (i + 1));
-    [pool[i], pool[j]] = [pool[j], pool[i]];
+    [order[i], order[j]] = [order[j], order[i]];
   }
-  return pool.slice(0, n);
+  const size = order.length;
+  const start = (((dayNumber(key) * n) % size) + size) % size;
+  return Array.from({ length: Math.min(n, size) }, (_, i) => order[(start + i) % size]);
 }
 
 // Streak rules: finishing a day's 5 rounds extends the streak if you also finished yesterday,

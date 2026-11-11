@@ -4,6 +4,8 @@ import {
   haversineKm,
   scoreForDistance,
   pickDaily,
+  dayNumber,
+  MAX_DAYS_BACK,
   nextStreak,
   currentStreak,
   previousDateKey,
@@ -45,6 +47,22 @@ test("daily pick: deterministic, 5 unique questions, differs by date", () => {
   assert.deepEqual(a.map((q) => q.id), b.map((q) => q.id));
   assert.equal(new Set(a.map((q) => q.id)).size, 5);
   assert.notDeepEqual(a.map((q) => q.id), c.map((q) => q.id));
+});
+
+test("daily pick: no question repeats across any 26 consecutive days (the whole bank is used first)", () => {
+  const days = Math.floor(QUESTIONS.length / 5);
+  for (const start of ["2026-11-11", "2026-02-20", "2026-12-20", "2028-02-15"]) {
+    const seen = new Set();
+    for (let d = 0; d < days; d++) {
+      for (const q of pickDaily(QUESTIONS, addDays(start, d))) {
+        assert.ok(!seen.has(q.id), `${q.id} repeated within ${days} days from ${start}`);
+        seen.add(q.id);
+      }
+    }
+  }
+  // Consecutive days are consecutive slices, also across month and year ends.
+  assert.equal(dayNumber("2026-11-12") - dayNumber("2026-11-11"), 1);
+  assert.equal(dayNumber("2027-01-01") - dayNumber("2026-12-31"), 1);
 });
 
 test("question data: valid coordinates, unique ids, all four categories", () => {
@@ -90,24 +108,25 @@ test("addDays crosses month, year and leap-day boundaries in both directions", (
   assert.equal(addDays("2026-11-11", 0), "2026-11-11");
 });
 
-test("playableDates: today and the 7 days before it, oldest first", () => {
+test("playableDates: today and the 28 days before it, oldest first", () => {
+  assert.equal(MAX_DAYS_BACK, 28);
   const days = playableDates("2026-11-11");
-  assert.equal(days.length, 8);
-  assert.equal(days[0], "2026-11-04");
-  assert.equal(days[7], "2026-11-11");
+  assert.equal(days.length, 29);
+  assert.equal(days[0], "2026-10-14");
+  assert.equal(days[28], "2026-11-11");
   assert.deepEqual(playableDates("2026-11-11", 3), ["2026-11-08", "2026-11-09", "2026-11-10", "2026-11-11"]);
   // Across a clock change (Europe: 2026-10-25) every key is still a distinct calendar day.
   const across = playableDates("2026-10-27");
-  assert.equal(new Set(across).size, 8);
-  assert.equal(across[0], "2026-10-20");
+  assert.equal(new Set(across).size, 29);
+  assert.equal(across[0], "2026-09-29");
 });
 
-test("isPlayableDate: no future days, nothing older than a week", () => {
+test("isPlayableDate: no future days, nothing older than 28 days back", () => {
   const today = "2026-11-11";
   assert.equal(isPlayableDate("2026-11-11", today), true);
   assert.equal(isPlayableDate("2026-11-10", today), true);
-  assert.equal(isPlayableDate("2026-11-04", today), true);
-  assert.equal(isPlayableDate("2026-11-03", today), false);
+  assert.equal(isPlayableDate("2026-10-14", today), true);
+  assert.equal(isPlayableDate("2026-10-13", today), false);
   assert.equal(isPlayableDate("2026-11-12", today), false);
   assert.equal(isPlayableDate("2027-01-01", today), false);
   assert.equal(isPlayableDate(undefined, today), false);
@@ -116,7 +135,7 @@ test("isPlayableDate: no future days, nothing older than a week", () => {
 
 test("pruneDays keeps the playable window and drops old or future days", () => {
   const days = {
-    "2026-10-30": { results: [1] },
+    "2026-09-30": { results: [1] },
     "2026-11-04": { results: [2] },
     "2026-11-10": { results: [3] },
     "2026-11-11": { results: [4] },
