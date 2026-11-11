@@ -12,6 +12,9 @@ import {
   wrapLng,
   zoomForKm,
   globeZoom,
+  easeInOutCubic,
+  partialLine,
+  revealDurationMs,
 } from "../src/game.js";
 import { QUESTIONS } from "../src/questions.js";
 
@@ -124,4 +127,26 @@ test("zoomForKm: closer guesses zoom in more, clamped to a sane range", () => {
 
 test("globeZoom fits the globe: bigger screens zoom in further", () => {
   assert.ok(globeZoom(900) > globeZoom(400));
+});
+
+test("partialLine: grows from the start and reaches the full line", () => {
+  const pts = Array.from({ length: 11 }, (_, i) => [i * 10, i * 5]);
+  assert.equal(partialLine(pts, 0), null);
+  const half = partialLine(pts, 0.5);
+  assert.deepEqual(half[0], [0, 0]);
+  assert.deepEqual(half[half.length - 1], [50, 25]);
+  const quarter = partialLine(pts, 0.25);
+  assert.deepEqual(quarter[quarter.length - 1], [25, 12.5]);
+  const full = partialLine(pts, 1);
+  assert.equal(full.length, 11);
+  assert.deepEqual(full[full.length - 1], [100, 50]);
+  assert.equal(partialLine([[0, 0]], 0.5), null);
+});
+
+test("easing and reveal duration stay in range", () => {
+  assert.equal(easeInOutCubic(0), 0);
+  assert.equal(easeInOutCubic(1), 1);
+  assert.ok(easeInOutCubic(0.25) < 0.25 && easeInOutCubic(0.75) > 0.75);
+  assert.equal(revealDurationMs(0), 1500);
+  assert.equal(revealDurationMs(50000), 3000);
 });

@@ -141,3 +141,29 @@ export function zoomForKm(km, latDeg, pixels, { min = 0.8, max = 14 } = {}) {
 export function globeZoom(pixels) {
   return Math.min(4, Math.max(0.5, Math.log2((pixels * Math.PI) / 512)));
 }
+
+// ---------- reveal animation helpers ----------
+export function easeInOutCubic(t) {
+  const x = Math.min(1, Math.max(0, t));
+  return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+}
+
+// The first `fraction` (0..1) of a line, ending exactly on that fraction of its length by point count.
+// Returns [lng, lat] pairs, or null while there is not yet a visible segment.
+export function partialLine(points, fraction) {
+  const n = points.length - 1;
+  if (n < 1) return null;
+  const f = Math.min(1, Math.max(0, fraction));
+  const x = f * n;
+  const i = Math.min(n - 1, Math.floor(x));
+  const frac = x - i;
+  const out = points.slice(0, i + 1);
+  const [a, b] = [points[i], points[i + 1]];
+  out.push([a[0] + (b[0] - a[0]) * frac, a[1] + (b[1] - a[1]) * frac]);
+  return out.length >= 2 && (x > 0) ? out : null;
+}
+
+// How long the line takes to grow: always a moment of suspense, a little longer for far misses.
+export function revealDurationMs(km) {
+  return Math.round(1500 + (Math.min(Math.max(km, 0), 10000) / 10000) * 1500);
+}
