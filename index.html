@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>GeoCulture - a daily culture geoguesser</title>
+    <meta name="description" content="Guess where famous art, music, books and movies come from. Five rounds a day." />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="globe"></div>
+
+    <header class="topbar">
+      <div class="brand">GeoCulture</div>
+      <div class="status">
+        <span id="round-label"></span>
+        <span class="dot">·</span>
+        <span id="score-label"></span>
+        <span class="dot">·</span>
+        <span id="streak-label" title="Daily streak"></span>
+        <button id="reset" class="reset" type="button" title="Testing: clears today's progress and draws 5 new questions">↻ Reset</button>
+      </div>
+    </header>
+
+    <section id="panel" class="panel" aria-live="polite"></section>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+{
+  "name": "geoculture",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "vite": "^8.3.7"
+  },
+  "dependencies": {
+    "maplibre-gl": "^5.24.0"
+  }
+}
