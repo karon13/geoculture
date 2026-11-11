@@ -31,8 +31,36 @@ export function dateKey(date = new Date()) {
 }
 
 export function previousDateKey(key) {
+  return addDays(key, -1);
+}
+
+// Calendar arithmetic on YYYY-MM-DD keys (local dates, so month ends and clock changes are handled).
+export function addDays(key, n) {
   const [y, m, d] = key.split("-").map(Number);
-  return dateKey(new Date(y, m - 1, d - 1));
+  return dateKey(new Date(y, m - 1, d + n));
+}
+
+// How many days back a missed day can still be played.
+export const MAX_DAYS_BACK = 7;
+
+// The days a player can open, oldest first and ending with today: [today-7, ..., today].
+export function playableDates(today, maxBack = MAX_DAYS_BACK) {
+  return Array.from({ length: maxBack + 1 }, (_, i) => addDays(today, i - maxBack));
+}
+
+// Today and up to `maxBack` days before it. Nothing after today, nothing older than the window.
+// (Keys are zero-padded YYYY-MM-DD, so plain string comparison is date order.)
+export function isPlayableDate(key, today, maxBack = MAX_DAYS_BACK) {
+  return typeof key === "string" && key <= today && key >= addDays(today, -maxBack);
+}
+
+// Drops saved days that fell out of the window (or are in the future, e.g. after a clock change).
+export function pruneDays(days = {}, today, maxBack = MAX_DAYS_BACK) {
+  const kept = {};
+  for (const [key, value] of Object.entries(days)) {
+    if (isPlayableDate(key, today, maxBack)) kept[key] = value;
+  }
+  return kept;
 }
 
 function hashString(str) {

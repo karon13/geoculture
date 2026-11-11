@@ -39,7 +39,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 6px 12px;
-  padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
+  padding: calc(12px + env(safe-area-inset-top)) 16px 8px;
   background: linear-gradient(to bottom, rgba(7, 11, 22, 0.85), rgba(7, 11, 22, 0));
   pointer-events: none;
   z-index: 2;
@@ -371,9 +371,9 @@ button.secondary {
   }
 }
 
-/* MapLibre: the credit sits under the title bar so the answer panel never covers it. */
+/* MapLibre: the credit sits under the top bar (title, score and day picker); main.js sets --topbar-h. */
 .maplibregl-ctrl-top-left {
-  margin-top: 44px;
+  margin-top: calc(var(--topbar-h, 96px) + 4px);
   z-index: 1;
 }
 
@@ -410,11 +410,6 @@ button.secondary {
 }
 
 @media (max-width: 600px) {
-  /* The credit button goes below the two-line header instead of over the score. */
-  .maplibregl-ctrl-top-left {
-    margin-top: 76px;
-  }
-
   /* List view: score and result squares share one row, which saves about a third of the card. */
   .final .summary {
     display: flex;
@@ -575,4 +570,87 @@ button.secondary {
 
 .final-footer .note {
   margin: 8px 0 0;
+}
+
+/* ---------- day picker ---------- */
+/* Lives in the top bar on its own row: today on the right, the last 7 days to its left, nothing after today. */
+.days {
+  flex: 0 0 100%;
+  display: flex;
+  gap: 4px;
+  pointer-events: auto;
+}
+
+.days .day {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 4px 0 5px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  background: rgba(7, 11, 22, 0.78);
+  color: var(--text);
+  font-weight: 600;
+  line-height: 1.15;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.days .day .dw {
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.days .day .dn {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.days .day .ds {
+  font-size: 0.62rem;
+  color: var(--muted);
+}
+
+/* Not played yet: dashed outline. Finished: the score in green. In progress: rounds so far in amber. */
+.days .day.new {
+  border-style: dashed;
+}
+
+.days .day.done .ds {
+  color: var(--good);
+}
+
+.days .day.partial .ds {
+  color: var(--accent);
+}
+
+.days .day:last-child {
+  border-color: rgba(255, 180, 84, 0.65);
+}
+
+.days .day.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #1a1204;
+}
+
+.days .day.active .dw,
+.days .day.active .ds {
+  color: rgba(26, 18, 4, 0.78);
+}
+
+.days .day:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.past-note {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
 }

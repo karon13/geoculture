@@ -7,6 +7,10 @@ import {
   nextStreak,
   currentStreak,
   previousDateKey,
+  addDays,
+  playableDates,
+  isPlayableDate,
+  pruneDays,
   shareText,
   greatCircle,
   wrapLng,
@@ -75,6 +79,51 @@ test("currentStreak shows 0 once a day has been missed", () => {
   assert.equal(currentStreak(s, "2026-11-10"), 4);
   assert.equal(currentStreak(s, "2026-11-11"), 4);
   assert.equal(currentStreak(s, "2026-11-12"), 0);
+});
+
+test("addDays crosses month, year and leap-day boundaries in both directions", () => {
+  assert.equal(addDays("2026-11-11", -7), "2026-11-04");
+  assert.equal(addDays("2026-11-03", -7), "2026-10-27");
+  assert.equal(addDays("2027-01-03", -7), "2026-12-27");
+  assert.equal(addDays("2028-03-01", -1), "2028-02-29");
+  assert.equal(addDays("2026-12-31", 1), "2027-01-01");
+  assert.equal(addDays("2026-11-11", 0), "2026-11-11");
+});
+
+test("playableDates: today and the 7 days before it, oldest first", () => {
+  const days = playableDates("2026-11-11");
+  assert.equal(days.length, 8);
+  assert.equal(days[0], "2026-11-04");
+  assert.equal(days[7], "2026-11-11");
+  assert.deepEqual(playableDates("2026-11-11", 3), ["2026-11-08", "2026-11-09", "2026-11-10", "2026-11-11"]);
+  // Across a clock change (Europe: 2026-10-25) every key is still a distinct calendar day.
+  const across = playableDates("2026-10-27");
+  assert.equal(new Set(across).size, 8);
+  assert.equal(across[0], "2026-10-20");
+});
+
+test("isPlayableDate: no future days, nothing older than a week", () => {
+  const today = "2026-11-11";
+  assert.equal(isPlayableDate("2026-11-11", today), true);
+  assert.equal(isPlayableDate("2026-11-10", today), true);
+  assert.equal(isPlayableDate("2026-11-04", today), true);
+  assert.equal(isPlayableDate("2026-11-03", today), false);
+  assert.equal(isPlayableDate("2026-11-12", today), false);
+  assert.equal(isPlayableDate("2027-01-01", today), false);
+  assert.equal(isPlayableDate(undefined, today), false);
+  assert.equal(isPlayableDate("2026-11-04", today, 3), false);
+});
+
+test("pruneDays keeps the playable window and drops old or future days", () => {
+  const days = {
+    "2026-10-30": { results: [1] },
+    "2026-11-04": { results: [2] },
+    "2026-11-10": { results: [3] },
+    "2026-11-11": { results: [4] },
+    "2026-11-13": { results: [5] },
+  };
+  assert.deepEqual(Object.keys(pruneDays(days, "2026-11-11")), ["2026-11-04", "2026-11-10", "2026-11-11"]);
+  assert.deepEqual(pruneDays(undefined, "2026-11-11"), {});
 });
 
 test("share text includes date, squares and total", () => {

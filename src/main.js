@@ -8,6 +8,9 @@ import {
   haversineKm,
   scoreForDistance,
   dateKey,
+  playableDates,
+  isPlayableDate,
+  pruneDays,
   pickDaily,
   nextStreak,
   currentStreak,
@@ -45,17 +48,43 @@ function saveStore(store) {
 const today = dateKey();
 const store = loadStore();
 store.streak = store.streak || { streak: 0, lastCompleted: null };
-// Keep only today's progress; older days are not needed.
-store.day = store.day && store.day.key === today ? store.day : { key: today, results: [] };
+
+// Progress is kept per date: store.days["2026-11-11"] = { results: [...], reroll? }.
+// Saves from before past days existed held a single `store.day`; fold it in.
+store.days = store.days || {};
+if (store.day && store.day.key && !store.days[store.day.key]) {
+  store.days[store.day.key] = { results: store.day.results || [], reroll: store.day.reroll };
+}
+delete store.day;
+// Only today and the last week can be opened, so anything older (or in the future) is dropped.
+store.days = pruneDays(store.days, today);
+store.days[today] = store.days[today] || { results: [] };
 saveStore(store);
 
-// Normally the day's 5 questions are fixed by the date. The test reset bumps `reroll`,
+// The day on screen. Only today counts toward the streak; past days are for catching up.
+let viewKey = today;
+const isToday = () => viewKey === today;
+const dayState = () => store.days[viewKey];
+const results = () => dayState().results;
+
+// Normally a day's 5 questions are fixed by its date. The test reset bumps `reroll`,
 // which draws a fresh set so you can try more of the question bank.
 function pickKey() {
-  return store.day.reroll ? `${today}#${store.day.reroll}` : today;
+  const reroll = dayState().reroll;
+  return reroll ? `${viewKey}#${reroll}` : viewKey;
 }
 
-let questions = pickDaily(QUESTIONS, pickKey());
+const QUESTION_BY_ID = new Map(QUESTIONS.map((q) => [q.id, q]));
+
+function questionsForView() {
+  // Rounds already played keep their question even if the question bank has changed since.
+  return pickDaily(QUESTIONS, pickKey()).map((q, i) => {
+    const played = results()[i];
+    return (played && QUESTION_BY_ID.get(played.id)) || q;
+  });
+}
+
+let questions = questionsForView();
 
 // ---------- UI state ----------
 let revealed = false; // whether the current round has been locked in (answer on screen or on its way)
@@ -67,6 +96,15 @@ const panel = document.getElementById("panel");
 const roundLabel = document.getElementById("round-label");
 const scoreLabel = document.getElementById("score-label");
 const streakLabel = document.getElementById("streak-label");
+const topbar = document.querySelector(".topbar");
+const daysEl = document.getElementById("days");
+
+// The top bar now holds the day picker too, so its height is measured instead of assumed.
+// The map credit and the camera framing both sit below it.
+function measureTopbar() {
+  document.documentElement.style.setProperty("--topbar-h", `${Math.round(topbar.getBoundingClientRect().height)}px`);
+}
+measureTopbar();
 
 // ---------- map ----------
 const map = new maplibregl.Map({
@@ -238,7 +276,7 @@ function animateLink(link, done) {
 // ---------- camera ----------
 // The answer panel covers the bottom of the screen, so the map is centred in the space above it.
 function framing() {
-  const top = 56;
+  const top = Math.round(topbar.getBoundingClientRect().height);
   const bottom = panel.getBoundingClientRect().height + 28;
   const width = window.innerWidth;
   const height = Math.max(160, window.innerHeight - top - bottom);
@@ -269,39 +307,108 @@ function frameLink(a, b, km) {
   moveCamera({ center: [wrapLng(mid[0]), mid[1]], zoom });
 }
 
-window.addEventListener("resize", () => map.resize());
+window.addEventListener("resize", () => {
+  measureTopbar();
+  map.resize();
+});
 
 // ---------- helpers ----------
 const esc = (s) =>
   String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
 function isFinished() {
-  return store.day.results.length >= ROUNDS_PER_DAY;
+  return results().length >= ROUNDS_PER_DAY;
 }
 
+const sumPoints = (list) => list.reduce((s, r) => s + r.points, 0);
+
 function totalPoints() {
-  return store.day.results.reduce((s, r) => s + r.points, 0);
+  return sumPoints(results());
 }
 
 function fmtKm(km) {
   return km < 10 ? `${km.toFixed(1)} km` : `${Math.round(km).toLocaleString("en-US")} km`;
 }
 
+// "Mon 9 Nov" from a YYYY-MM-DD key, in the player's own calendar.
+function fmtDay(key, options = { weekday: "short", day: "numeric", month: "short" }) {
+  const [y, m, d] = key.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString("en-US", options);
+}
+
 function updateHeader() {
-  const done = store.day.results.length;
-  roundLabel.textContent = isFinished() ? "Done for today" : `Round ${done + 1}/${ROUNDS_PER_DAY}`;
+  const done = results().length;
+  roundLabel.textContent = isFinished() ? (isToday() ? "Done for today" : "Day complete") : `Round ${done + 1}/${ROUNDS_PER_DAY}`;
   scoreLabel.textContent = `${totalPoints()} pts`;
+  // The streak is about today's habit, so it shows the same on every day.
   const s = currentStreak(store.streak, today);
   streakLabel.textContent = `🔥 ${s}`;
+  renderDays();
+}
+
+// ---------- day picker ----------
+// One chip per playable day, oldest first, ending with today. There is nothing to the right of today,
+// so you can't go forward in time.
+const DAY_KEYS = playableDates(today);
+
+function dayStatus(key) {
+  const list = store.days[key] ? store.days[key].results : [];
+  if (list.length >= ROUNDS_PER_DAY) return { kind: "done", text: `${sumPoints(list)}`, spoken: `${sumPoints(list)} points` };
+  if (list.length > 0) return { kind: "partial", text: `${list.length}/${ROUNDS_PER_DAY}`, spoken: `${list.length} of ${ROUNDS_PER_DAY} rounds played` };
+  return { kind: "new", text: "Play", spoken: "not played yet" };
+}
+
+function buildDays() {
+  daysEl.innerHTML = DAY_KEYS.map(
+    (key) => `<button type="button" class="day" data-key="${key}" title="${esc(fmtDay(key, { weekday: "long", day: "numeric", month: "long" }))}">
+      <span class="dw">${key === today ? "Today" : esc(fmtDay(key, { weekday: "short" }))}</span>
+      <span class="dn">${Number(key.slice(8))}</span>
+      <span class="ds"></span>
+    </button>`
+  ).join("");
+  daysEl.addEventListener("click", (e) => {
+    const chip = e.target.closest(".day");
+    if (chip) openDay(chip.dataset.key);
+  });
+}
+
+function renderDays() {
+  daysEl.querySelectorAll(".day").forEach((chip) => {
+    const key = chip.dataset.key;
+    const status = dayStatus(key);
+    chip.className = `day ${status.kind}${key === viewKey ? " active" : ""}`;
+    chip.querySelector(".ds").textContent = status.text;
+    const long = fmtDay(key, { weekday: "long", day: "numeric", month: "long" });
+    chip.setAttribute("aria-label", `${long}${key === today ? ", today" : ""}, ${status.spoken}`);
+    if (key === viewKey) chip.setAttribute("aria-current", "date");
+    else chip.removeAttribute("aria-current");
+  });
+}
+
+// Switches the screen to another day: its results if it is finished, otherwise where you left off.
+function openDay(key) {
+  if (!isPlayableDate(key, today) || key === viewKey) return;
+  // While a guess is being revealed the story panel is not on screen yet; let the reveal finish first.
+  if (panel.classList.contains("pending")) return;
+  viewKey = key;
+  store.days[viewKey] = store.days[viewKey] || { results: [] };
+  questions = questionsForView();
+  showDay();
+}
+
+function showDay() {
+  if (isFinished()) completeDay();
+  else renderQuestion();
 }
 
 // ---------- views ----------
 function renderQuestion() {
-  const q = questions[store.day.results.length];
+  const q = questions[results().length];
   revealed = false;
   clearPins();
   updateHeader();
   panel.innerHTML = `
+    ${isToday() ? "" : `<p class="past-note">📅 ${esc(fmtDay(viewKey))} · past day, doesn't count toward your streak</p>`}
     <span class="chip ${q.category}">${esc(q.category)}</span>
     <p class="prompt">${esc(q.prompt)}</p>
     <p class="hint">Click the globe to place your pin (click again to move it). Scroll or pinch to zoom in.</p>
@@ -316,11 +423,11 @@ function renderQuestion() {
 
 function lockIn(pick) {
   if (revealed) return;
-  const index = store.day.results.length;
+  const index = results().length;
   const q = questions[index];
   const km = haversineKm(pick.lat, pick.lng, q.lat, q.lng);
   const points = scoreForDistance(km);
-  store.day.results.push({
+  results().push({
     id: q.id,
     guess: { lat: pick.lat, lng: pick.lng },
     km,
@@ -363,18 +470,21 @@ function lockIn(pick) {
 }
 
 function completeDay() {
-  // Streak is extended once, when the fifth round is finished.
-  store.streak = nextStreak(store.streak, today);
-  saveStore(store);
+  // Streak is extended once, when the fifth round of *today* is finished.
+  // Catching up on a past day never touches it.
+  if (isToday()) {
+    store.streak = nextStreak(store.streak, today);
+    saveStore(store);
+  }
   renderFinal();
 }
 
 function renderFinal() {
   revealed = true;
   updateHeader();
-  const results = store.day.results;
+  const dayResults = results();
   const pins = [];
-  results.forEach((r, i) => {
+  dayResults.forEach((r, i) => {
     const q = questions[i];
     pins.push({ lat: q.lat, lng: q.lng, color: "#4ade80", label: q.place });
     pins.push({ lat: r.guess.lat, lng: r.guess.lng, color: "#60a5fa", label: "Your guess" });
@@ -384,22 +494,25 @@ function renderFinal() {
   panel.classList.add("final-mode");
 
   const total = totalPoints();
-  const squares = shareText(today, results).split("\n")[1].split(" ")[0];
+  const squares = shareText(viewKey, dayResults).split("\n")[1].split(" ")[0];
   const streak = currentStreak(store.streak, today);
-  const last = results.length - 1;
+  const last = dayResults.length - 1;
+  const streakNote = isToday()
+    ? `Streak: 🔥 ${streak} day${streak === 1 ? "" : "s"}. Come back tomorrow for 5 new places.`
+    : `Past days don't count toward your streak (🔥 ${streak} day${streak === 1 ? "" : "s"}).`;
   panel.innerHTML = `
     <div class="final">
       <div class="final-body">
       <div class="summary">
         <div class="summary-main">
-          <h2>Today's score</h2>
+          <h2>${isToday() ? "Today's score" : `${esc(fmtDay(viewKey))} · score`}</h2>
           <p class="total">${total} / ${ROUNDS_PER_DAY * POINTS_PER_ROUND}</p>
         </div>
         <p class="squares">${squares}</p>
       </div>
       <p class="hint">Tap a round to read its story and fly to the place.</p>
       <ul>
-        ${results
+        ${dayResults
           .map((r, i) => {
             const q = questions[i];
             return `<li>
@@ -423,7 +536,7 @@ function renderFinal() {
       </div>
       <div class="final-footer">
         <button id="share">Share result</button>
-        <p class="note">Streak: 🔥 ${streak} day${streak === 1 ? "" : "s"}. Come back tomorrow for 5 new places.</p>
+        <p class="note">${streakNote}</p>
       </div>
     </div>
   `;
@@ -453,7 +566,7 @@ function renderFinal() {
       return;
     }
     const q = questions[i];
-    const r = results[i];
+    const r = dayResults[i];
     setLink({ a: r.guess, b: q, km: r.km });
     // The panel has changed size, so the camera is placed after that (it reads the panel's height).
     moveCamera({ center: [q.lng, q.lat], zoom: r.km < 300 ? zoomForKm(r.km, q.lat, 500) : 6, ms: 1400 });
@@ -473,7 +586,7 @@ function renderFinal() {
   });
 
   document.getElementById("share").addEventListener("click", async (e) => {
-    const text = shareText(today, results);
+    const text = shareText(viewKey, dayResults);
     try {
       if (navigator.share) await navigator.share({ text });
       else await navigator.clipboard.writeText(text);
@@ -485,15 +598,23 @@ function renderFinal() {
 }
 
 // ---------- test reset ----------
-// Clears today's rounds and draws 5 new questions. The streak is left as it is.
+// Clears the rounds of the day on screen and draws 5 new questions. The streak is left as it is.
 document.getElementById("reset").addEventListener("click", () => {
-  store.day = { key: today, results: [], reroll: (store.day.reroll || 0) + 1 };
+  store.days[viewKey] = { results: [], reroll: (dayState().reroll || 0) + 1 };
   saveStore(store);
-  questions = pickDaily(QUESTIONS, pickKey());
+  questions = questionsForView();
   renderQuestion();
 });
 
 // ---------- start ----------
+// Left open past midnight, the page would still think it is yesterday: start over on the new date.
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && dateKey() !== today) location.reload();
+});
+
+buildDays();
+// The chips just made the top bar taller (and web fonts can change it again), so measure again.
+measureTopbar();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureTopbar);
 // completeDay is idempotent, so a reload after round 5 still counts the streak.
-if (isFinished()) completeDay();
-else renderQuestion();
+showDay();
