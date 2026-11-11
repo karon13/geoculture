@@ -10,7 +10,7 @@ A daily game: five prompts from art, music, books and movies, and you pin each o
     npm test             # scoring, daily pick, streak and map maths
     npm run build        # static site in dist/
 
-Needs Node.js 18 or newer and an internet connection (map tiles load from OpenFreeMap).
+Needs Node.js 18 or newer and an internet connection (satellite tiles load from Esri).
 
 ## Questions
 
@@ -22,13 +22,16 @@ which regenerates `src/questions.js`.
 
 ## Map
 
-MapLibre GL JS (globe projection) with vector tiles from OpenFreeMap, no API key.
-Change the look with a different style, for example at build time:
+MapLibre GL JS on a 3D globe: satellite imagery with country borders and US state borders on top.
+There are no labels, roads or place names.
 
-    VITE_MAP_STYLE=https://tiles.openfreemap.org/styles/positron npm run build
-
-OpenFreeMap styles: liberty (default), bright, positron. The OpenStreetMap / OpenFreeMap credit in the
-corner of the map is a licence condition, so keep it visible.
+- Imagery: Esri World Imagery tiles (no key). Check Esri's terms before a commercial launch. To use another
+  satellite source (MapTiler, Mapbox, Sentinel-2) set `VITE_IMAGERY_URL` (an XYZ URL with `{z}/{x}/{y}`) and
+  `VITE_IMAGERY_ATTRIBUTION` when building. Keep the credit visible, it is a licence condition.
+- Borders: Natural Earth (countries) and US Census (states), built into `public/borders-*.json` by
+  `node scripts/build-borders.mjs`. They carry no names. Only shared borders are drawn, not coastlines.
+- Styling lives in `src/mapStyle.js`.
+- Open the page with `?debug` to expose the map as `window.__map` for tests.
 
 ## Deploy
 

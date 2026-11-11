@@ -1,5 +1,6 @@
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { buildStyle } from "./mapStyle.js";
 import { QUESTIONS } from "./questions.js";
 import {
   ROUNDS_PER_DAY,
@@ -17,9 +18,7 @@ import {
   globeZoom,
 } from "./game.js";
 
-// Vector tiles from OpenFreeMap (free, no key). Other styles: bright, positron.
-// A different tile source can be set at build time with VITE_MAP_STYLE.
-const STYLE_URL = import.meta.env.VITE_MAP_STYLE || "https://tiles.openfreemap.org/styles/liberty";
+// Satellite globe with borders only (see mapStyle.js).
 const STORAGE_KEY = "geoculture:v1";
 const REDUCED_MOTION = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -66,7 +65,7 @@ const streakLabel = document.getElementById("streak-label");
 // ---------- map ----------
 const map = new maplibregl.Map({
   container: "globe",
-  style: STYLE_URL,
+  style: buildStyle(),
   center: [10, 25],
   zoom: 1.6,
   minZoom: 0.5,
@@ -77,8 +76,10 @@ const map = new maplibregl.Map({
   renderWorldCopies: false,
 });
 map.touchZoomRotate.disableRotation();
+// Lets automated tests move the camera: open the page with ?debug.
+if (new URLSearchParams(location.search).has("debug")) window.__map = map;
 map.touchPitch.disable();
-// The OpenStreetMap / OpenFreeMap credit must stay visible (it is a licence condition).
+// The imagery credit must stay visible (it is a licence condition).
 map.addControl(new maplibregl.AttributionControl({ compact: true }), "top-left");
 
 // The line between guess and answer. Kept as plain data so it can be (re)applied after the style loads.
