@@ -307,7 +307,7 @@ function renderQuestion() {
     <p class="hint">Click the globe to place your pin (click again to move it). Scroll or pinch to zoom in.</p>
     <button id="lock" disabled>Lock in guess</button>
   `;
-  panel.classList.remove("pending", "detail-mode");
+  panel.classList.remove("pending", "detail-mode", "final-mode");
   document.getElementById("lock").addEventListener("click", () => {
     if (guess) lockIn(guess);
   });
@@ -380,8 +380,8 @@ function renderFinal() {
     pins.push({ lat: r.guess.lat, lng: r.guess.lng, color: "#60a5fa", label: "Your guess" });
   });
   showPins(pins);
-  panel.classList.remove("pending");
-  panel.classList.remove("detail-mode");
+  panel.classList.remove("pending", "detail-mode");
+  panel.classList.add("final-mode");
 
   const total = totalPoints();
   const squares = shareText(today, results).split("\n")[1].split(" ")[0];
@@ -389,6 +389,7 @@ function renderFinal() {
   const last = results.length - 1;
   panel.innerHTML = `
     <div class="final">
+      <div class="final-body">
       <div class="summary">
         <div class="summary-main">
           <h2>Today's score</h2>
@@ -419,8 +420,11 @@ function renderFinal() {
           })
           .join("")}
       </ul>
-      <button id="share">Share result</button>
-      <p class="note">Streak: 🔥 ${streak} day${streak === 1 ? "" : "s"}. Come back tomorrow for 5 new places.</p>
+      </div>
+      <div class="final-footer">
+        <button id="share">Share result</button>
+        <p class="note">Streak: 🔥 ${streak} day${streak === 1 ? "" : "s"}. Come back tomorrow for 5 new places.</p>
+      </div>
     </div>
   `;
   overview();
@@ -441,7 +445,7 @@ function renderFinal() {
     });
     finalEl.classList.toggle("has-open", i !== null);
     panel.classList.toggle("detail-mode", i !== null);
-    panel.scrollTop = 0;
+    finalEl.querySelector(".final-body").scrollTop = 0;
     if (i === null) {
       // Back to the overview with every pin and no line.
       setLink(null);

@@ -473,10 +473,9 @@ button.secondary {
     padding: 10px 14px 12px;
   }
 
-  .final.has-open > .summary,
-  .final.has-open > .hint,
-  .final.has-open > #share,
-  .final.has-open > .note,
+  .final.has-open .summary,
+  .final.has-open .hint,
+  .final.has-open .note,
   .final.has-open li:not(.open) {
     display: none;
   }
@@ -501,6 +500,12 @@ button.secondary {
     justify-content: space-between;
     align-items: center;
     margin: 0 0 4px;
+    padding-bottom: 4px;
+    /* Stays at the top of the card while a long story scrolls. */
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #0e1426;
   }
 
   .final li.open .row {
@@ -540,4 +545,34 @@ button.secondary {
     opacity: 0.3;
     cursor: default;
   }
+}
+
+/* Results card: the rounds scroll, the share button stays pinned at the bottom in every view. */
+.panel.final-mode {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panel.final-mode .final {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.final-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.final-footer {
+  flex: none;
+  padding-top: 10px;
+}
+
+.final-footer .note {
+  margin: 8px 0 0;
 }
