@@ -1,4 +1,4 @@
-import { LIBERTY_STYLE_URL, stripText } from "./libertyStyle.js";
+import { LIBERTY_STYLE_URL, stripText, deepSea } from "./libertyStyle.js";
 
 // The globe's look. Two base maps can be switched between for testing (hamburger menu, or ?map=liberty):
 //   satellite: Esri World Imagery photos
@@ -127,7 +127,7 @@ function placeholderStyle() {
 async function libertyStyle() {
   const response = await fetch(LIBERTY_STYLE_URL);
   if (!response.ok) throw new Error(`Liberty style: HTTP ${response.status}`);
-  const style = stripText(await response.json());
+  const style = deepSea(stripText(await response.json()));
   return {
     ...style,
     name: "GeoCulture Liberty",

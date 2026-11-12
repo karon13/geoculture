@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { stripText } from "../src/libertyStyle.js";
+import { stripText, deepSea, SEA } from "../src/libertyStyle.js";
 
 // A tiny stand-in shaped like OpenFreeMap's Liberty style.
 const liberty = {
@@ -40,4 +40,22 @@ test("stripText: does not change the style it is given", () => {
   const before = JSON.stringify(liberty);
   stripText(liberty);
   assert.equal(JSON.stringify(liberty), before);
+});
+
+test("deepSea: sea, rivers and the low-zoom image change; land and roads stay as they were", () => {
+  const style = {
+    ...liberty,
+    layers: [
+      ...liberty.layers,
+      { id: "waterway", type: "line", source: "openmaptiles", "source-layer": "waterway", paint: { "line-color": "#aaccee" } },
+    ].map((l) => (l.id === "water" ? { ...l, paint: { "fill-color": "#aaccee", "fill-outline-color": "#fff" } } : l)),
+  };
+  const out = deepSea(style);
+  const by = (id) => out.layers.find((l) => l.id === id);
+  assert.equal(by("water").paint["fill-color"], SEA);
+  assert.equal(by("water").paint["fill-outline-color"], undefined);
+  assert.equal(by("waterway").paint["line-color"], SEA);
+  assert.ok(by("natural_earth").paint["raster-brightness-max"] < 1);
+  assert.deepEqual(by("road_motorway"), style.layers.find((l) => l.id === "road_motorway"));
+  assert.equal(out.layers.length, style.layers.length);
 });

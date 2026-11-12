@@ -13,3 +13,30 @@ export function stripText(style) {
     layers: style.layers.filter((layer) => layer.type !== "symbol"),
   };
 }
+
+// Liberty's sea is a light, bright blue that looks washed out against the game's dark page. This paints the
+// sea (and rivers) a deeper blue and darkens the low-zoom image layer a little so zoomed out it matches.
+// Everything else stays as Liberty has it. Change SEA to taste.
+export const SEA = "#2c6aa3";
+
+export function deepSea(style) {
+  return {
+    ...style,
+    layers: style.layers.map((layer) => {
+      const sourceLayer = layer["source-layer"];
+      if (layer.type === "fill" && sourceLayer === "water") {
+        const paint = { ...layer.paint, "fill-color": SEA };
+        delete paint["fill-outline-color"];
+        delete paint["fill-pattern"];
+        return { ...layer, paint };
+      }
+      if (layer.type === "line" && sourceLayer === "waterway") {
+        return { ...layer, paint: { ...layer.paint, "line-color": SEA } };
+      }
+      if (layer.type === "raster") {
+        return { ...layer, paint: { ...layer.paint, "raster-brightness-max": 0.88, "raster-saturation": 0.1 } };
+      }
+      return layer;
+    }),
+  };
+}
