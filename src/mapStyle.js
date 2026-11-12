@@ -20,6 +20,16 @@ const OPENFREEMAP_URL = "https://tiles.openfreemap.org/planet";
 const OPENFREEMAP_ATTRIBUTION =
   '<a href="https://openfreemap.org" target="_blank" rel="noopener noreferrer">OpenFreeMap</a> © <a href="https://openmaptiles.org/" target="_blank" rel="noopener noreferrer">OpenMapTiles</a> Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>';
 
+// NASA Blue Marble (shaded relief + sea-floor depth), served as free map tiles by NASA GIBS: no key, NASA
+// data is CC0 and GIBS asks for an acknowledgement, which the attribution below gives. It is only 500 m per
+// pixel, so it is used for the far-out views, where it shows at a glance where it is green, desert, ice or
+// sea; the sharp vector map fades in over it as you zoom in. If NASA's tiles ever fail to load, the map
+// still works, it just falls back to the flat land colour.
+const TERRAIN_URL =
+  "https://gibs.earthdata.nasa.gov/wmts/epsg3857/best/BlueMarble_ShadedRelief_Bathymetry/default/GoogleMapsCompatible_Level8/{z}/{y}/{x}.jpeg";
+const TERRAIN_ATTRIBUTION =
+  'Terrain: NASA <a href="https://earthdata.nasa.gov/gibs" target="_blank" rel="noopener noreferrer">GIBS</a> / Blue Marble';
+
 export const MAP_KINDS = ["satellite", "vector"];
 export const DEFAULT_MAP_KIND = "satellite";
 
@@ -140,6 +150,13 @@ function vectorStyle() {
     version: 8,
     name: "GeoCulture vector",
     sources: {
+      terrain: {
+        type: "raster",
+        tiles: [TERRAIN_URL],
+        tileSize: 256,
+        maxzoom: 8,
+        attribution: TERRAIN_ATTRIBUTION,
+      },
       openmaptiles: {
         type: "vector",
         url: OPENFREEMAP_URL,
@@ -149,12 +166,21 @@ function vectorStyle() {
     },
     layers: [
       { id: "land", type: "background", paint: { "background-color": LAND } },
+      // Far out: real terrain colours. It stays fully visible until the vector layers below have taken over.
+      {
+        id: "terrain",
+        type: "raster",
+        source: "terrain",
+        paint: { "raster-resampling": "linear", "raster-fade-duration": 150, "raster-saturation": 0.1 },
+      },
       {
         id: "landcover",
         type: "fill",
         source: "openmaptiles",
         "source-layer": "landcover",
         paint: {
+          // Fades in between zoom 6 and 9, so it sharpens the terrain instead of flattening it.
+          "fill-opacity": ["interpolate", ["linear"], ["zoom"], 6, 0, 9, 1],
           "fill-color": [
             "match",
             ["get", "class"],
@@ -175,7 +201,13 @@ function vectorStyle() {
         type: "fill",
         source: "openmaptiles",
         "source-layer": "water",
-        paint: { "fill-color": "#17496f", "fill-antialias": true },
+        paint: {
+          "fill-color": "#17496f",
+          "fill-antialias": true,
+          // Far out the sea comes from the terrain image (with its depth shading); the crisp coastline
+          // takes over as you zoom in.
+          "fill-opacity": ["interpolate", ["linear"], ["zoom"], 6, 0, 8, 1],
+        },
       },
       {
         id: "rivers",

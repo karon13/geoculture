@@ -23,7 +23,7 @@ which regenerates `src/questions.js`.
 ## Map
 
 Two base maps can be compared while testing: **satellite** (Esri imagery, the default) and **vector** (a plain
-land and water map from OpenFreeMap's free vector tiles with built-up areas, roads, runways and buildings, but no text). Switch with the
+land and water map from OpenFreeMap's free vector tiles with built-up areas, roads, runways and buildings, but no text), over NASA's free Blue Marble terrain colours so deserts, forests and ice show when zoomed out. Switch with the
 hamburger menu ("Switch to vector map"), or open the page with `?map=vector` / `?map=satellite`. The choice is
 remembered in the browser. Both draw the same country and US state borders on top.
 
