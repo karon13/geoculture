@@ -1,9 +1,8 @@
 import { LIBERTY_STYLE_URL, THEMES, stripText, recolor } from "./libertyStyle.js";
 
-// The globe's look. Three base maps can be switched between for testing (hamburger menu, or ?map=night):
+// The globe's look. Two base maps can be switched between for testing (hamburger menu, or ?map=liberty):
 //   satellite: Esri World Imagery photos
-//   night:     OpenFreeMap's Liberty style, text removed, in dark colours (theme A, see libertyStyle.js)
-//   natural:   the same Liberty style in calmer natural colours with a deep teal sea (theme D)
+//   liberty:   OpenFreeMap's Liberty style with text removed and a deeper blue sea (see libertyStyle.js)
 // Whichever is used, the game's own country and US state borders are drawn on top, and nothing is
 // labelled: no names of places, streets or countries, so the player has to know where things are.
 

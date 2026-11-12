@@ -85,29 +85,17 @@ export function mapColors(value, change) {
 
 // ---------- themes ----------
 
-// Each theme sets the sea and the land base, how every other colour is re-toned (`tone`), how the low-zoom
-// image layer, if Liberty has one, is darkened, and the coastal glow colour. Very light colours (white roads,
+// A theme sets the sea colour and may also set the land base, re-tone every other colour (`tone`), adjust the
+// low-zoom image layer, if Liberty has one, and set the coastal glow colour. Very light colours (white roads,
 // snow) are kept light on purpose so they still stand out.
 export const THEMES = {
-  // A: dark and modern, close to the game's own dark interface.
-  night: {
-    label: "A · night",
-    ocean: "#0a1727",
-    river: "#12304d",
-    glow: "#17385a",
-    land: "#2b3732",
-    tone: ({ h, s, l, a }) => ({ h, s: s * 0.5, l: l > 0.93 ? 0.62 : 0.1 + l * 0.26, a }),
-    raster: { "raster-brightness-max": 0.35, "raster-saturation": -0.35, "raster-contrast": 0.1 },
-  },
-  // D: close to the satellite look, but calmer: deep teal sea, earthy olive land.
-  natural: {
-    label: "D · natural sea",
-    ocean: "#0b3556",
-    river: "#13506f",
-    glow: "#1c6d8f",
-    land: "#5f6c4b",
-    tone: ({ h, s, l, a }) => ({ h, s: s * 0.8, l: l > 0.93 ? l : l * 0.62, a }),
-    raster: { "raster-brightness-max": 0.7, "raster-saturation": -0.1 },
+  // Liberty as OpenFreeMap designed it, with only the sea made a deeper blue (land colours stay untouched).
+  liberty: {
+    label: "Liberty",
+    ocean: "#2c6aa3",
+    river: "#2c6aa3",
+    glow: "#3f82bd",
+    raster: { "raster-brightness-max": 0.9, "raster-saturation": 0.1 },
   },
 };
 
@@ -120,16 +108,16 @@ export function recolor(style, themeName) {
   const layers = style.layers.map((layer) => {
     const paint = { ...(layer.paint || {}) };
     if (layer.type === "background") {
-      paint["background-color"] = theme.land;
+      if (theme.land) paint["background-color"] = theme.land;
     } else if (layer.type === "raster") {
-      Object.assign(paint, theme.raster);
+      Object.assign(paint, theme.raster || {});
     } else if (layer.type === "fill" && layer["source-layer"] === "water") {
       paint["fill-color"] = theme.ocean;
       delete paint["fill-outline-color"];
       delete paint["fill-pattern"];
     } else if (layer.type === "line" && layer["source-layer"] === "waterway") {
       paint["line-color"] = theme.river;
-    } else {
+    } else if (theme.tone) {
       for (const key of Object.keys(paint)) {
         if (COLOR_KEY.test(key)) paint[key] = mapColors(paint[key], theme.tone);
       }

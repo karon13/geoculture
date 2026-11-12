@@ -94,7 +94,7 @@ test("recolor: unknown theme is an error, input is left unchanged", () => {
   const style = base();
   const before = JSON.stringify(style);
   assert.throws(() => recolor(style, "pink"), /Unknown map theme/);
-  recolor(style, "night");
+  recolor(style, "liberty");
   assert.equal(JSON.stringify(style), before);
 });
 
@@ -103,7 +103,7 @@ for (const name of Object.keys(THEMES)) {
     const t = THEMES[name];
     const out = recolor(base(), name);
     const byId = Object.fromEntries(out.layers.map((l) => [l.id, l]));
-    assert.equal(byId.background.paint["background-color"], t.land);
+    assert.equal(byId.background.paint["background-color"], "#f8f4f0", "land base is left as Liberty has it");
     assert.equal(byId.water.paint["fill-color"], t.ocean);
     assert.equal(byId.water.paint["fill-outline-color"], undefined);
     assert.equal(byId.river.paint["line-color"], t.river);
@@ -111,16 +111,12 @@ for (const name of Object.keys(THEMES)) {
     assert.equal(byId.natural_earth.paint["raster-opacity"], 1);
   });
 
-  test(`recolor ${name}: other colours are re-toned and opacity is untouched`, () => {
+  test(`recolor ${name}: land colours and opacity are left exactly as Liberty has them`, () => {
+    const before = base();
     const out = recolor(base(), name);
-    const wood = out.layers.find((l) => l.id === "landcover_wood").paint;
-    assert.equal(wood["fill-opacity"], 0.8);
-    const woodColor = parseColor(wood["fill-color"][3]);
-    const original = parseColor("hsl(100, 40%, 70%)");
-    assert.ok(woodColor.l < original.l, "land colours get darker");
-    assert.equal(wood["fill-color"][2], "wood", "class names in a match stay as they are");
-    const road = out.layers.find((l) => l.id === "road").paint["line-color"];
-    assert.ok(parseColor(road.stops[0][1]).l > 0.5, "white roads stay light so they stand out");
+    for (const id of ["landcover_wood", "road"]) {
+      assert.deepEqual(out.layers.find((l) => l.id === id).paint, before.layers.find((l) => l.id === id).paint);
+    }
   });
 
   test(`recolor ${name}: a coastal glow is added right after the water fill, inside the water`, () => {
@@ -138,7 +134,7 @@ for (const name of Object.keys(THEMES)) {
 test("recolor: a style without a water layer still works (no glow)", () => {
   const style = base();
   style.layers = style.layers.filter((l) => l.id !== "water");
-  const out = recolor(style, "night");
+  const out = recolor(style, "liberty");
   assert.equal(out.layers.some((l) => l.id.startsWith("shelf-glow")), false);
 });
 

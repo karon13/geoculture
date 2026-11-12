@@ -48,7 +48,7 @@ function saveStore(store) {
 
 const today = dateKey();
 const store = loadStore();
-// Base map for testing: ?map=satellite, ?map=night or ?map=natural wins, then the last choice from the menu.
+// Base map for testing: ?map=satellite or ?map=liberty wins, then the last choice from the menu.
 const urlMap = new URLSearchParams(location.search).get("map");
 let mapKind = MAP_KINDS.includes(urlMap) ? urlMap : MAP_KINDS.includes(store.mapKind) ? store.mapKind : DEFAULT_MAP_KIND;
 store.streak = store.streak || { streak: 0, lastCompleted: null };
@@ -417,7 +417,7 @@ function closeHistory() {
 menuBtn.addEventListener("click", () => (menuOpen() ? closeMenu() : openMenu()));
 document.getElementById("menu-history").addEventListener("click", openHistory);
 
-// Testing: cycle through the base maps (satellite, A night, D natural) without reloading. The borders, the line
+// Testing: cycle through the base maps (satellite, Liberty) without reloading. The borders, the line
 // and the pins stay as they are; only the map underneath is swapped.
 const mapToggle = document.getElementById("menu-map");
 const nextMapKind = () => MAP_KINDS[(MAP_KINDS.indexOf(mapKind) + 1) % MAP_KINDS.length];
