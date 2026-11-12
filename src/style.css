@@ -318,14 +318,21 @@ button.secondary {
   outline-offset: 1px;
 }
 
+.final .row .row-title {
+  flex: 1;
+  min-width: 0;
+}
+
 .final .row .chip {
-  margin: 0 2px 0 0;
+  flex: none;
+  align-self: center;
+  margin: 0 -2px 0 0;
   padding: 1px 7px;
   font-size: 0.62rem;
-  vertical-align: 1px;
 }
 
 .final .row > span:last-child {
+  flex: none;
   color: var(--text);
   white-space: nowrap;
 }

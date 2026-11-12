@@ -612,7 +612,7 @@ function renderFinal() {
           .map((r, i) => {
             const q = questions[i];
             return `<li>
-              <button class="row" data-i="${i}" aria-expanded="false"><span class="row-title">${i + 1}. <span class="chip ${q.category}">${esc(q.category)}</span> ${esc(q.title)}</span><span>${r.points} pts · ${fmtKm(r.km)}</span></button>
+              <button class="row" data-i="${i}" aria-expanded="false"><span class="row-title">${i + 1}. ${esc(q.title)}</span><span class="chip ${q.category}">${esc(q.category)}</span><span>${r.points} pts · ${fmtKm(r.km)}</span></button>
               <div class="detail" hidden>
                 <div class="detail-nav">
                   <button type="button" class="nav-btn" data-go="close">‹ All rounds</button>
