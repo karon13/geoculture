@@ -318,7 +318,14 @@ button.secondary {
   outline-offset: 1px;
 }
 
-.final .row span:last-child {
+.final .row .chip {
+  margin: 0 2px 0 0;
+  padding: 1px 7px;
+  font-size: 0.62rem;
+  vertical-align: 1px;
+}
+
+.final .row > span:last-child {
   color: var(--text);
   white-space: nowrap;
 }
