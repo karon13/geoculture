@@ -1,6 +1,6 @@
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { buildStyle, MAP_KINDS, DEFAULT_MAP_KIND } from "./mapStyle.js";
+import { buildStyle, loadStyle, MAP_KINDS, DEFAULT_MAP_KIND } from "./mapStyle.js";
 import { QUESTIONS } from "./questions.js";
 import {
   ROUNDS_PER_DAY,
@@ -420,13 +420,32 @@ document.getElementById("menu-history").addEventListener("click", openHistory);
 // Testing: switch between the satellite and the vector base map without reloading. The borders, the line
 // and the pins stay as they are; only the map underneath is swapped.
 const mapToggle = document.getElementById("menu-map");
-const MAP_NAMES = { satellite: "satellite", vector: "vector" };
+const MAP_NAMES = { satellite: "satellite", liberty: "Liberty (no text)", vector: "custom vector" };
+const nextMapKind = () => MAP_KINDS[(MAP_KINDS.indexOf(mapKind) + 1) % MAP_KINDS.length];
 function updateMapToggle() {
-  const other = MAP_KINDS.find((k) => k !== mapKind);
-  mapToggle.textContent = `🗺 Switch to ${MAP_NAMES[other]} map (testing)`;
+  mapToggle.textContent = `🗺 Map: ${MAP_NAMES[mapKind]} → ${MAP_NAMES[nextMapKind()]} (testing)`;
 }
+
+// Puts a base map on the globe. Liberty has to be downloaded first; if that fails (offline, OpenFreeMap
+// down) the custom vector map is shown instead so the game never ends up with a blank globe.
+// diff:false rebuilds the style from scratch, which re-runs the "style.load" setup (globe, line layers).
+let applySeq = 0;
+async function applyMapKind() {
+  const mine = ++applySeq;
+  let style;
+  try {
+    style = await loadStyle(mapKind);
+  } catch (err) {
+    console.warn("Could not load the", mapKind, "map, using the custom vector map instead.", err);
+    mapKind = "vector";
+    updateMapToggle();
+    style = buildStyle("vector");
+  }
+  if (mine === applySeq) map.setStyle(style, { diff: false });
+}
+
 mapToggle.addEventListener("click", () => {
-  mapKind = MAP_KINDS.find((k) => k !== mapKind);
+  mapKind = nextMapKind();
   store.mapKind = mapKind;
   saveStore(store);
   // The address would otherwise keep forcing the old choice on the next reload.
@@ -436,11 +455,12 @@ mapToggle.addEventListener("click", () => {
     history.replaceState(null, "", url);
   }
   closeMenu();
-  // diff:false rebuilds the style from scratch, which re-runs the "style.load" setup (globe, line layers).
-  map.setStyle(buildStyle(mapKind), { diff: false });
+  applyMapKind();
   updateMapToggle();
 });
 updateMapToggle();
+// Liberty starts on the plain placeholder globe and is swapped in once downloaded.
+if (mapKind === "liberty") applyMapKind();
 document.getElementById("history-close").addEventListener("click", closeHistory);
 // Tapping the dimmed area around the list closes it too.
 historyEl.addEventListener("click", (e) => {

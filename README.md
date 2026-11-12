@@ -22,10 +22,16 @@ which regenerates `src/questions.js`.
 
 ## Map
 
-Two base maps can be compared while testing: **satellite** (Esri imagery, the default) and **vector** (a plain
-land and water map from OpenFreeMap's free vector tiles with built-up areas, roads, runways and buildings, but no text), over NASA's free Blue Marble terrain colours so deserts, forests and ice show when zoomed out. Switch with the
-hamburger menu ("Switch to vector map"), or open the page with `?map=vector` / `?map=satellite`. The choice is
-remembered in the browser. Both draw the same country and US state borders on top.
+Three base maps can be compared while testing. Cycle through them with the hamburger menu, or open the page with
+`?map=satellite`, `?map=liberty` or `?map=vector`; the choice is remembered in the browser.
+
+- **satellite** (default): Esri World Imagery photos.
+- **liberty**: OpenFreeMap's own "Liberty" style, downloaded when the page opens, with every text and icon layer
+  removed (`src/libertyStyle.js`). If it can't be downloaded the custom vector map is shown instead.
+- **vector**: our own plain map from OpenFreeMap's vector tiles (water, land cover, built-up areas, roads,
+  buildings, no text) over NASA Blue Marble terrain colours.
+
+All three draw the same country and US state borders on top.
 
 MapLibre GL JS on a 3D globe: satellite imagery with country borders and US state borders on top.
 There are no labels, roads or place names.

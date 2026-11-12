@@ -1,8 +1,11 @@
-// The globe's look. Two base maps can be switched between for testing (hamburger menu, or ?map=vector):
+import { LIBERTY_STYLE_URL, stripText } from "./libertyStyle.js";
+
+// The globe's look. Three base maps can be switched between for testing (hamburger menu, or ?map=liberty):
 //   satellite: Esri World Imagery photos
-//   vector:    a plain land/water map drawn from OpenFreeMap's vector tiles
-// Either way the same country and US state borders are drawn on top, and there are no labels, roads or
-// places, so the player has to know where things are.
+//   liberty:   OpenFreeMap's Liberty style with all text removed (see libertyStyle.js)
+//   vector:    our own plain land/water map drawn from OpenFreeMap's vector tiles
+// Whichever is used, the game's own country and US state borders are drawn on top, and nothing is
+// labelled: no names of places, streets or countries, so the player has to know where things are.
 
 // Satellite tiles. Esri World Imagery is keyless and sharp down to street level in most places.
 // Check Esri's terms before a commercial launch; any XYZ raster source can be swapped in here or at
@@ -30,7 +33,7 @@ const TERRAIN_URL =
 const TERRAIN_ATTRIBUTION =
   'Terrain: NASA <a href="https://earthdata.nasa.gov/gibs" target="_blank" rel="noopener noreferrer">GIBS</a> / Blue Marble';
 
-export const MAP_KINDS = ["satellite", "vector"];
+export const MAP_KINDS = ["satellite", "liberty", "vector"];
 export const DEFAULT_MAP_KIND = "satellite";
 
 // Border files live in public/ and are resolved against the page so the site works from any sub-path.
@@ -285,6 +288,32 @@ function vectorStyle() {
   };
 }
 
+// Shown while the Liberty style is still being downloaded.
+function placeholderStyle() {
+  return { version: 8, name: "GeoCulture loading", sources: {}, layers: [{ id: "space", type: "background", paint: { "background-color": "#050914" } }] };
+}
+
+// Liberty has to be downloaded first, so this one is async and can fail (offline, OpenFreeMap down).
+async function libertyStyle() {
+  const response = await fetch(LIBERTY_STYLE_URL);
+  if (!response.ok) throw new Error(`Liberty style: HTTP ${response.status}`);
+  const style = stripText(await response.json());
+  return {
+    ...style,
+    name: "GeoCulture liberty",
+    sources: { ...style.sources, ...borderSources() },
+    layers: [...style.layers, ...borderLayers()],
+  };
+}
+
+// The style to show before anything has loaded: instant for the built-in maps, a plain dark globe for Liberty.
 export function buildStyle(kind = DEFAULT_MAP_KIND) {
-  return kind === "vector" ? vectorStyle() : satelliteStyle();
+  if (kind === "vector") return vectorStyle();
+  if (kind === "liberty") return placeholderStyle();
+  return satelliteStyle();
+}
+
+// The finished style for a map kind.
+export async function loadStyle(kind = DEFAULT_MAP_KIND) {
+  return kind === "liberty" ? libertyStyle() : buildStyle(kind);
 }
