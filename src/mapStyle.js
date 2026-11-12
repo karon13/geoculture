@@ -3,8 +3,9 @@ import { LIBERTY_STYLE_URL, stripText } from "./libertyStyle.js";
 // The globe's look. Two base maps can be switched between for testing (hamburger menu, or ?map=liberty):
 //   satellite: Esri World Imagery photos
 //   liberty:   OpenFreeMap's Liberty style with the text removed (see libertyStyle.js)
-// Whichever is used, the game's own country and US state borders are drawn on top, and nothing is
-// labelled: no names of places, streets or countries, so the player has to know where things are.
+// Satellite gets the game's own country and US state borders drawn on top; Liberty keeps its own border
+// lines. Nothing is labelled: no names of places, streets or countries, so the player has to know where
+// things are.
 
 // Satellite tiles. Esri World Imagery is keyless and sharp down to street level in most places.
 // Check Esri's terms before a commercial launch; any XYZ raster source can be swapped in here or at
@@ -130,8 +131,6 @@ async function libertyStyle() {
   return {
     ...style,
     name: "GeoCulture Liberty",
-    sources: { ...style.sources, ...borderSources() },
-    layers: [...style.layers, ...borderLayers()],
   };
 }
 

@@ -24,15 +24,15 @@ const liberty = {
   ],
 };
 
-test("stripText: removes every text/icon layer and OpenFreeMap's own boundaries", () => {
+test("stripText: removes every text/icon layer but keeps Liberty's own boundaries", () => {
   const out = stripText(liberty);
   assert.equal(out.layers.filter((l) => l.type === "symbol").length, 0);
-  assert.equal(out.layers.filter((l) => l["source-layer"] === "boundary").length, 0);
+  assert.equal(out.layers.filter((l) => l["source-layer"] === "boundary").length, 2);
 });
 
 test("stripText: keeps the terrain, water and road layers in their original order", () => {
   const out = stripText(liberty);
-  assert.deepEqual(out.layers.map((l) => l.id), ["background", "natural_earth", "landcover_wood", "water", "road_motorway"]);
+  assert.deepEqual(out.layers.map((l) => l.id), ["background", "natural_earth", "landcover_wood", "water", "road_motorway", "boundary_country", "boundary_state"]);
   assert.deepEqual(out.sources, liberty.sources);
 });
 

@@ -27,9 +27,9 @@ Two base maps can be compared while testing. Switch with the hamburger menu, or 
 
 - **satellite** (default): Esri World Imagery photos.
 - **liberty**: OpenFreeMap's "Liberty" style, downloaded when the page opens, with every text and icon layer
-  removed, otherwise unchanged (`src/libertyStyle.js`). Falls back to satellite if it can't be downloaded.
+  removed, otherwise unchanged, including its own border lines (`src/libertyStyle.js`). Falls back to satellite if it can't be downloaded.
 
-Both draw the same country and US state borders on top.
+Satellite draws our own country and US state borders on top (Natural Earth, US Census); Liberty uses its own.
 
 MapLibre GL JS on a 3D globe: satellite imagery with country borders and US state borders on top.
 There are no labels, roads or place names.
