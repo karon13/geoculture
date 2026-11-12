@@ -1,8 +1,8 @@
-import { LIBERTY_STYLE_URL, THEMES, stripText, recolor } from "./libertyStyle.js";
+import { LIBERTY_STYLE_URL, stripText } from "./libertyStyle.js";
 
 // The globe's look. Two base maps can be switched between for testing (hamburger menu, or ?map=liberty):
 //   satellite: Esri World Imagery photos
-//   liberty:   OpenFreeMap's Liberty style with text removed and a deeper blue sea (see libertyStyle.js)
+//   liberty:   OpenFreeMap's Liberty style with the text removed (see libertyStyle.js)
 // Whichever is used, the game's own country and US state borders are drawn on top, and nothing is
 // labelled: no names of places, streets or countries, so the player has to know where things are.
 
@@ -16,8 +16,8 @@ const IMAGERY_ATTRIBUTION =
   import.meta.env.VITE_IMAGERY_ATTRIBUTION ||
   "Imagery © Esri, Maxar, Earthstar Geographics and the GIS User Community";
 
-export const MAP_KINDS = ["satellite", ...Object.keys(THEMES)];
-export const MAP_LABELS = { satellite: "satellite (Esri)", ...Object.fromEntries(Object.entries(THEMES).map(([k, t]) => [k, t.label])) };
+export const MAP_KINDS = ["satellite", "liberty"];
+export const MAP_LABELS = { satellite: "satellite (Esri)", liberty: "Liberty" };
 export const DEFAULT_MAP_KIND = "satellite";
 
 // Border files live in public/ and are resolved against the page so the site works from any sub-path.
@@ -123,13 +123,13 @@ function placeholderStyle() {
 }
 
 // A Liberty-based map has to be downloaded first, so it is async and can fail (offline, OpenFreeMap down).
-async function libertyStyle(theme) {
+async function libertyStyle() {
   const response = await fetch(LIBERTY_STYLE_URL);
   if (!response.ok) throw new Error(`Liberty style: HTTP ${response.status}`);
-  const style = recolor(stripText(await response.json()), theme);
+  const style = stripText(await response.json());
   return {
     ...style,
-    name: `GeoCulture ${theme}`,
+    name: "GeoCulture Liberty",
     sources: { ...style.sources, ...borderSources() },
     layers: [...style.layers, ...borderLayers()],
   };
@@ -142,5 +142,5 @@ export function buildStyle(kind = DEFAULT_MAP_KIND) {
 
 // The finished style for a map kind.
 export async function loadStyle(kind = DEFAULT_MAP_KIND) {
-  return kind === "satellite" ? satelliteStyle() : libertyStyle(kind);
+  return kind === "satellite" ? satelliteStyle() : libertyStyle();
 }

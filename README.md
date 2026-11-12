@@ -27,7 +27,7 @@ Two base maps can be compared while testing. Switch with the hamburger menu, or 
 
 - **satellite** (default): Esri World Imagery photos.
 - **liberty**: OpenFreeMap's "Liberty" style, downloaded when the page opens, with every text and icon layer
-  removed and the sea made a deeper blue (`src/libertyStyle.js`). Falls back to satellite if it can't be downloaded.
+  removed, otherwise unchanged (`src/libertyStyle.js`). Falls back to satellite if it can't be downloaded.
 
 Both draw the same country and US state borders on top.
 
