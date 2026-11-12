@@ -240,6 +240,7 @@ function setLabel(points, km) {
   if (!points || km < 1) return;
   const el = document.createElement("div");
   el.className = "dist-label";
+  el.dataset.km = km;
   el.textContent = fmtKm(km);
   labelMarker = new maplibregl.Marker({ element: el, anchor: "center" })
     .setLngLat(points[Math.floor(points.length / 2)])
@@ -346,8 +347,30 @@ function totalPoints() {
   return sumPoints(results());
 }
 
+// Distances are scored in km; only the display unit changes. The unit follows the browser's language
+// (miles for en-US, en-GB and en-LR) until the player picks one in the menu.
+const MILE_REGIONS = ["US", "GB", "LR"];
+function detectUnit() {
+  try {
+    const langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language];
+    const region = new Intl.Locale(langs[0]).maximize().region;
+    return MILE_REGIONS.includes(region) ? "mi" : "km";
+  } catch {
+    return "km";
+  }
+}
+let unit = store.unit === "mi" || store.unit === "km" ? store.unit : detectUnit();
+
 function fmtKm(km) {
-  return km < 10 ? `${km.toFixed(1)} km` : `${Math.round(km).toLocaleString("en-US")} km`;
+  const v = unit === "mi" ? km * 0.621371 : km;
+  return v < 10 ? `${v.toFixed(1)} ${unit}` : `${Math.round(v).toLocaleString("en-US")} ${unit}`;
+}
+
+// Distances already on screen carry their km value so a unit switch can redraw them in place.
+function updateDistances() {
+  document.querySelectorAll("[data-km]").forEach((el) => {
+    el.textContent = fmtKm(Number(el.dataset.km)) + (el.dataset.suffix || "");
+  });
 }
 
 // "Mon 9 Nov" from a YYYY-MM-DD key, in the player's own calendar.
@@ -416,6 +439,20 @@ function closeHistory() {
 
 menuBtn.addEventListener("click", () => (menuOpen() ? closeMenu() : openMenu()));
 document.getElementById("menu-history").addEventListener("click", openHistory);
+
+const unitToggle = document.getElementById("menu-unit");
+function updateUnitToggle() {
+  unitToggle.textContent = `📏 Distances in ${unit === "km" ? "kilometres" : "miles"} → switch to ${unit === "km" ? "miles" : "kilometres"}`;
+}
+updateUnitToggle();
+unitToggle.addEventListener("click", () => {
+  unit = unit === "km" ? "mi" : "km";
+  store.unit = unit;
+  saveStore(store);
+  updateUnitToggle();
+  updateDistances();
+  closeMenu();
+});
 
 // Testing: cycle through the base maps (satellite, Liberty) without reloading. The borders, the line
 // and the pins stay as they are; only the map underneath is swapped.
@@ -540,7 +577,7 @@ function lockIn(pick) {
   panel.innerHTML = `
     <div class="result-head">
       <span class="pts">+${points}</span>
-      <span class="dist">${fmtKm(km)} away</span>
+      <span class="dist" data-km="${km}" data-suffix=" away">${fmtKm(km)} away</span>
     </div>
     <p class="reveal-title">${esc(q.title)}</p>
     <p class="reveal-place">📍 ${esc(q.place)}</p>
@@ -612,7 +649,7 @@ function renderFinal() {
           .map((r, i) => {
             const q = questions[i];
             return `<li>
-              <button class="row" data-i="${i}" aria-expanded="false"><span class="row-title">${i + 1}. ${esc(q.title)}</span><span class="chip ${q.category}">${esc(q.category)}</span><span>${r.points} pts · ${fmtKm(r.km)}</span></button>
+              <button class="row" data-i="${i}" aria-expanded="false"><span class="row-title">${i + 1}. ${esc(q.title)}</span><span class="chip ${q.category}">${esc(q.category)}</span><span>${r.points} pts · <span data-km="${r.km}">${fmtKm(r.km)}</span></span></button>
               <div class="detail" hidden>
                 <div class="detail-nav">
                   <button type="button" class="nav-btn" data-go="close">‹ All rounds</button>
