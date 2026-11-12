@@ -23,15 +23,15 @@ which regenerates `src/questions.js`.
 ## Map
 
 Three base maps can be compared while testing. Cycle through them with the hamburger menu, or open the page with
-`?map=satellite`, `?map=liberty` or `?map=vector`; the choice is remembered in the browser.
+`?map=satellite`, `?map=night` or `?map=natural`; the choice is remembered in the browser.
 
 - **satellite** (default): Esri World Imagery photos.
-- **liberty**: OpenFreeMap's own "Liberty" style, downloaded when the page opens, with every text and icon layer
-  removed (`src/libertyStyle.js`). If it can't be downloaded the custom vector map is shown instead.
-- **vector**: our own plain map from OpenFreeMap's vector tiles (water, land cover, built-up areas, roads,
-  buildings, no text) over NASA Blue Marble terrain colours.
+- **night** (A): OpenFreeMap's "Liberty" style, downloaded when the page opens, with every text and icon layer
+  removed and recoloured in dark tones with a deep navy sea (`src/libertyStyle.js`).
+- **natural** (D): the same Liberty style in calmer natural colours with a deep teal sea.
 
-All three draw the same country and US state borders on top.
+Both recoloured maps add a soft glow on the water along coastlines and fall back to satellite if Liberty
+can't be downloaded. All three draw the same country and US state borders on top.
 
 MapLibre GL JS on a 3D globe: satellite imagery with country borders and US state borders on top.
 There are no labels, roads or place names.

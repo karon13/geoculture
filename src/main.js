@@ -1,6 +1,6 @@
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { buildStyle, loadStyle, MAP_KINDS, DEFAULT_MAP_KIND } from "./mapStyle.js";
+import { buildStyle, loadStyle, MAP_KINDS, MAP_LABELS, DEFAULT_MAP_KIND } from "./mapStyle.js";
 import { QUESTIONS } from "./questions.js";
 import {
   ROUNDS_PER_DAY,
@@ -48,7 +48,7 @@ function saveStore(store) {
 
 const today = dateKey();
 const store = loadStore();
-// Base map for testing: ?map=vector or ?map=satellite wins, then the last choice from the menu.
+// Base map for testing: ?map=satellite, ?map=night or ?map=natural wins, then the last choice from the menu.
 const urlMap = new URLSearchParams(location.search).get("map");
 let mapKind = MAP_KINDS.includes(urlMap) ? urlMap : MAP_KINDS.includes(store.mapKind) ? store.mapKind : DEFAULT_MAP_KIND;
 store.streak = store.streak || { streak: 0, lastCompleted: null };
@@ -417,17 +417,16 @@ function closeHistory() {
 menuBtn.addEventListener("click", () => (menuOpen() ? closeMenu() : openMenu()));
 document.getElementById("menu-history").addEventListener("click", openHistory);
 
-// Testing: switch between the satellite and the vector base map without reloading. The borders, the line
+// Testing: cycle through the base maps (satellite, A night, D natural) without reloading. The borders, the line
 // and the pins stay as they are; only the map underneath is swapped.
 const mapToggle = document.getElementById("menu-map");
-const MAP_NAMES = { satellite: "satellite", liberty: "Liberty (no text)", vector: "custom vector" };
 const nextMapKind = () => MAP_KINDS[(MAP_KINDS.indexOf(mapKind) + 1) % MAP_KINDS.length];
 function updateMapToggle() {
-  mapToggle.textContent = `🗺 Map: ${MAP_NAMES[mapKind]} → ${MAP_NAMES[nextMapKind()]} (testing)`;
+  mapToggle.textContent = `🗺 Map: ${MAP_LABELS[mapKind]} → ${MAP_LABELS[nextMapKind()]} (testing)`;
 }
 
-// Puts a base map on the globe. Liberty has to be downloaded first; if that fails (offline, OpenFreeMap
-// down) the custom vector map is shown instead so the game never ends up with a blank globe.
+// Puts a base map on the globe. The Liberty-based maps have to be downloaded first; if that fails (offline,
+// OpenFreeMap down) the satellite map is shown instead so the game never ends up with a blank globe.
 // diff:false rebuilds the style from scratch, which re-runs the "style.load" setup (globe, line layers).
 let applySeq = 0;
 async function applyMapKind() {
@@ -436,10 +435,10 @@ async function applyMapKind() {
   try {
     style = await loadStyle(mapKind);
   } catch (err) {
-    console.warn("Could not load the", mapKind, "map, using the custom vector map instead.", err);
-    mapKind = "vector";
+    console.warn("Could not load the", mapKind, "map, using the satellite map instead.", err);
+    mapKind = "satellite";
     updateMapToggle();
-    style = buildStyle("vector");
+    style = buildStyle("satellite");
   }
   if (mine === applySeq) map.setStyle(style, { diff: false });
 }
@@ -459,8 +458,8 @@ mapToggle.addEventListener("click", () => {
   updateMapToggle();
 });
 updateMapToggle();
-// Liberty starts on the plain placeholder globe and is swapped in once downloaded.
-if (mapKind === "liberty") applyMapKind();
+// The Liberty-based maps start on a plain placeholder globe and are swapped in once downloaded.
+if (mapKind !== "satellite") applyMapKind();
 document.getElementById("history-close").addEventListener("click", closeHistory);
 // Tapping the dimmed area around the list closes it too.
 historyEl.addEventListener("click", (e) => {
