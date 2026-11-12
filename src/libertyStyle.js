@@ -14,10 +14,95 @@ export function stripText(style) {
   };
 }
 
-// Liberty's sea is a light, bright blue that looks washed out against the game's dark page. This paints the
-// sea (and rivers) a deeper blue and darkens the low-zoom image layer a little so zoomed out it matches.
-// Everything else stays as Liberty has it. Change SEA to taste.
+// ---------- colours ----------
+
+// Reads a CSS colour string (#rgb, #rrggbb, #rrggbbaa, rgb(), rgba(), hsl(), hsla()) into { h, s, l, a }
+// with h in degrees and s, l, a between 0 and 1. Returns null for anything that is not a colour.
+export function parseColor(text) {
+  const t = text.trim().toLowerCase();
+  let r, g, b, a = 1;
+  let m = t.match(/^#([0-9a-f]{3,8})$/);
+  if (m) {
+    let hex = m[1];
+    if (hex.length === 3 || hex.length === 4) hex = [...hex].map((c) => c + c).join("");
+    if (hex.length !== 6 && hex.length !== 8) return null;
+    r = parseInt(hex.slice(0, 2), 16) / 255;
+    g = parseInt(hex.slice(2, 4), 16) / 255;
+    b = parseInt(hex.slice(4, 6), 16) / 255;
+    if (hex.length === 8) a = parseInt(hex.slice(6, 8), 16) / 255;
+  } else if ((m = t.match(/^rgba?\(\s*([\d.]+%?)[\s,]+([\d.]+%?)[\s,]+([\d.]+%?)(?:[\s,/]+([\d.]+%?))?\s*\)$/))) {
+    const ch = (v) => (v.endsWith("%") ? parseFloat(v) / 100 : parseFloat(v) / 255);
+    [r, g, b] = [ch(m[1]), ch(m[2]), ch(m[3])];
+    if (m[4] !== undefined) a = m[4].endsWith("%") ? parseFloat(m[4]) / 100 : parseFloat(m[4]);
+  } else if ((m = t.match(/^hsla?\(\s*([\d.]+)(?:deg)?[\s,]+([\d.]+)%[\s,]+([\d.]+)%(?:[\s,/]+([\d.]+%?))?\s*\)$/))) {
+    const out = { h: ((parseFloat(m[1]) % 360) + 360) % 360, s: parseFloat(m[2]) / 100, l: parseFloat(m[3]) / 100, a: 1 };
+    if (m[4] !== undefined) out.a = m[4].endsWith("%") ? parseFloat(m[4]) / 100 : parseFloat(m[4]);
+    return out;
+  } else {
+    return null;
+  }
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const l = (max + min) / 2;
+  const d = max - min;
+  let h = 0;
+  let s = 0;
+  if (d > 0) {
+    s = d / (1 - Math.abs(2 * l - 1));
+    if (max === r) h = ((g - b) / d) % 6;
+    else if (max === g) h = (b - r) / d + 2;
+    else h = (r - g) / d + 4;
+    h = (h * 60 + 360) % 360;
+  }
+  return { h, s, l, a };
+}
+
+const clamp01 = (n) => Math.min(1, Math.max(0, n));
+
+export function formatColor({ h, s, l, a }) {
+  return `hsla(${h.toFixed(1)}, ${(clamp01(s) * 100).toFixed(1)}%, ${(clamp01(l) * 100).toFixed(1)}%, ${clamp01(a).toFixed(3)})`;
+}
+
+// Applies `change` to every colour inside a paint value. A value can be a plain colour string, a zoom-stops
+// object, or an expression (nested arrays such as ["interpolate", ["linear"], ["zoom"], 5, "#fff", 9, "#000"]
+// or ["match", ["get", "class"], "wood", "#3f5c3a", "#566648"]). Only strings that really are colours are
+// touched, so class names like "wood" or "grass" in a match are left alone.
+export function mapColors(value, change) {
+  if (typeof value === "string") {
+    const color = parseColor(value);
+    return color ? formatColor(change(color)) : value;
+  }
+  if (Array.isArray(value)) return value.map((item) => mapColors(item, change));
+  if (value && typeof value === "object" && Array.isArray(value.stops)) {
+    return { ...value, stops: value.stops.map(([stop, v]) => [stop, mapColors(v, change)]) };
+  }
+  return value;
+}
+
+// ---------- the game's colours ----------
+
+// Liberty is a light, bright map. Against the game's dark page we want deeper, more earth-like colours:
+//   - the sea and rivers become a deeper blue (SEA);
+//   - land fills (forest, grass, farmland, sand, parks and the base colour) get darker with a bit more
+//     contrast between light and dark areas, and greens drift toward olive, so it reads like earth;
+//   - the low-zoom image layer, if Liberty has one, is darkened to match.
+// Roads, buildings and everything else stay as Liberty has them. Change the numbers below to taste.
 export const SEA = "#2c6aa3";
+const LAND_LAYERS = new Set(["landcover", "landuse", "park", "landuse_overlay"]);
+const LAND = { darken: 0.78, contrast: 1.5, pivot: 0.55, greenHue: 92, greenPull: 0.5, greenSat: 0.85 };
+
+// Re-tones one land colour. Near-white (snow, ice) is left as it is so poles and glaciers stay bright.
+export function earthTone({ h, s, l, a }) {
+  if (l > 0.93) return { h, s, l, a };
+  let hue = h;
+  let sat = s;
+  if (h >= 60 && h <= 170) {
+    hue = h + (LAND.greenHue - h) * LAND.greenPull;
+    sat = s * LAND.greenSat;
+  }
+  const light = LAND.pivot + (l * LAND.darken - LAND.pivot) * LAND.contrast;
+  return { h: hue, s: sat, l: Math.min(0.92, Math.max(0.08, light)), a };
+}
 
 export function deepSea(style) {
   return {
@@ -33,8 +118,16 @@ export function deepSea(style) {
       if (layer.type === "line" && sourceLayer === "waterway") {
         return { ...layer, paint: { ...layer.paint, "line-color": SEA } };
       }
+      if (layer.type === "background") {
+        return { ...layer, paint: { ...layer.paint, "background-color": mapColors(layer.paint?.["background-color"], earthTone) } };
+      }
+      if (layer.type === "fill" && LAND_LAYERS.has(sourceLayer)) {
+        const paint = { ...layer.paint };
+        for (const key of ["fill-color", "fill-outline-color"]) if (key in paint) paint[key] = mapColors(paint[key], earthTone);
+        return { ...layer, paint };
+      }
       if (layer.type === "raster") {
-        return { ...layer, paint: { ...layer.paint, "raster-brightness-max": 0.88, "raster-saturation": 0.1 } };
+        return { ...layer, paint: { ...layer.paint, "raster-brightness-max": 0.82, "raster-contrast": 0.1, "raster-saturation": 0.05 } };
       }
       return layer;
     }),

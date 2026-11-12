@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { stripText, deepSea, SEA } from "../src/libertyStyle.js";
+import { stripText, deepSea, SEA, earthTone, parseColor } from "../src/libertyStyle.js";
 
 // A tiny stand-in shaped like OpenFreeMap's Liberty style.
 const liberty = {
@@ -58,4 +58,35 @@ test("deepSea: sea, rivers and the low-zoom image change; land and roads stay as
   assert.ok(by("natural_earth").paint["raster-brightness-max"] < 1);
   assert.deepEqual(by("road_motorway"), style.layers.find((l) => l.id === "road_motorway"));
   assert.equal(out.layers.length, style.layers.length);
+});
+
+test("earthTone: land gets darker with more contrast, greens move toward olive, snow stays white", () => {
+  const light = earthTone(parseColor("hsl(98, 61%, 72%)"));
+  assert.ok(light.l < 0.72, "light green gets darker");
+  assert.ok(light.h < 98 && light.h > 90, "green drifts toward olive");
+  const lighter = earthTone(parseColor("hsl(47, 13%, 90%)"));
+  const darker = earthTone(parseColor("hsl(47, 13%, 60%)"));
+  assert.ok(lighter.l - darker.l > 0.9 - 0.6, "contrast between light and dark land grows");
+  assert.equal(earthTone(parseColor("#f8f8f8")).l, parseColor("#f8f8f8").l);
+});
+
+test("deepSea: land fills and the base colour are re-toned, roads are not", () => {
+  const style = {
+    ...liberty,
+    layers: liberty.layers.map((l) =>
+      l.id === "background" ? { ...l, paint: { "background-color": "hsl(47, 26%, 88%)" } }
+      : l.id === "landcover_wood" ? { ...l, paint: { "fill-color": ["match", ["get", "class"], "wood", "hsl(98, 61%, 72%)", "hsl(75, 45%, 85%)"], "fill-opacity": 0.8 } }
+      : l.id === "road_motorway" ? { ...l, paint: { "line-color": "hsl(28, 80%, 70%)" } }
+      : l,
+    ),
+  };
+  const out = deepSea(style);
+  const by = (id) => out.layers.find((l) => l.id === id);
+  assert.notEqual(by("background").paint["background-color"], "hsl(47, 26%, 88%)");
+  const wood = by("landcover_wood").paint;
+  assert.equal(wood["fill-opacity"], 0.8);
+  assert.equal(wood["fill-color"][0], "match");
+  assert.equal(wood["fill-color"][2], "wood", "class names are left alone");
+  assert.notEqual(wood["fill-color"][3], "hsl(98, 61%, 72%)");
+  assert.equal(by("road_motorway").paint["line-color"], "hsl(28, 80%, 70%)");
 });
