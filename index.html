@@ -32,7 +32,7 @@
     <noscript>
       <p style="position:relative;z-index:10;max-width:560px;margin:80px auto;padding:0 20px;line-height:1.6">
         GeoCulture is a free daily game: five clues from art, music, books and movies, and you pin where each one
-        comes from on a globe. It needs JavaScript to run. <a href="./about/" style="color:#ffb454">Read how it works</a>.
+        comes from on a globe. It needs JavaScript to run. <a href="./about/" style="color:#ffb454">Read how to play</a>.
       </p>
     </noscript>
 
@@ -50,8 +50,7 @@
       </button>
       <div id="menu" class="menu" role="menu" hidden>
         <button type="button" role="menuitem" id="menu-history">📅 Previous results</button>
-        <button type="button" role="menuitem" id="menu-about">❓ How to play</button>
-        <a role="menuitem" href="./about/">📖 About GeoCulture</a>
+        <a role="menuitem" href="./about/">❓ How to play &amp; about</a>
         <a role="menuitem" href="./privacy/">🔒 Privacy</a>
         <div class="menu-row" role="group" aria-labelledby="unit-label">
           <span id="unit-label">📏 Distances</span>
@@ -72,35 +71,6 @@
         </div>
         <p class="sheet-note">Catch up on the last 28 days. Only today counts toward your streak.</p>
         <ul id="history-list" class="history-list"></ul>
-      </div>
-    </div>
-
-    <div id="about" class="sheet" role="dialog" aria-modal="true" aria-labelledby="about-title" hidden>
-      <div class="sheet-card">
-        <div class="sheet-head">
-          <h2 id="about-title">How to play</h2>
-          <button type="button" id="about-close" class="sheet-close" aria-label="Close">✕</button>
-        </div>
-        <div class="about-body">
-          <p>Every day there are five prompts from art, music, books and movies. Each one comes from a real place somewhere in the world. Your job: find it on the globe.</p>
-          <h3>Playing a round</h3>
-          <ol>
-            <li>Read the prompt and the tag (art, music, books or movies).</li>
-            <li>Spin and zoom the globe, then tap where you think it comes from. Tap again to move your pin.</li>
-            <li>Press <b>Lock in guess</b>. You see the real place, how far off you were, and the story behind it.</li>
-          </ol>
-          <h3>Scoring</h3>
-          <p>Each round is worth up to 100 points, 500 a day. The badge next to the category says how exact the answer is: a 🎯 specific place, a 🏘️ district, a 🏙️ city / town or a 🗺️ region. The more exact the target, the closer you need to be for full points (2&nbsp;km for a specific place, up to 100&nbsp;km for a region), and the faster points fall off after that. There are no labels on the map, so it is down to what you know.</p>
-          <h3>Every day, new places</h3>
-          <p>A new set of five appears at midnight, in your own time zone. Everyone who plays on the same date gets the same five, so you can compare scores. When you finish, use <b>Share result</b> to send your squares to a friend.</p>
-          <h3>Streak and past days</h3>
-          <p>Play today to keep your daily streak going. You can also catch up on the last 28 days from <b>Previous results</b> in the menu. Those games are fun to play but only today counts toward your streak.</p>
-          <h3>Good to know</h3>
-          <p>Your progress is saved in this browser only, so clearing site data or switching browsers starts you from scratch. Distances show in kilometres or miles; change that in the menu.</p>
-          <p><a href="./about/">Read the full guide and FAQ</a></p>
-          <h3>Credits</h3>
-          <p class="about-credits">Map: <a href="https://openfreemap.org" target="_blank" rel="noopener noreferrer">OpenFreeMap</a> with data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors and <a href="https://openmaptiles.org" target="_blank" rel="noopener noreferrer">OpenMapTiles</a>, drawn with <a href="https://maplibre.org" target="_blank" rel="noopener noreferrer">MapLibre</a>.</p>
-        </div>
       </div>
     </div>
 

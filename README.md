@@ -42,10 +42,12 @@ which regenerates `src/questions.js`.
 
 ## Pages and SEO
 
-The build makes three pages: the game (`/`), `/about/` and `/privacy/`. The last two are plain static HTML
+The build makes three pages: the game (`/`), `/about/` (the one place for how to play, scoring, FAQ and credits;
+there is no separate in-game popup) and `/privacy/`. The last two are plain static HTML
 (`about/index.html`, `privacy/index.html`, styled by `src/page.css`) with no globe or map. Each has its own
 title, description, canonical link and share-card tags. `sitemap.xml` and `robots.txt` are generated at build time
-by `vite.config.js`.
+by `vite.config.js`. All three pages share the top bar and hamburger menu (`src/chrome.css`), so the menu button sits
+in the same place everywhere; the static pages' menu script is `src/pageMenu.js`.
 
 Canonical links, share cards and the sitemap need the public address. It defaults to
 `https://karon13.github.io/geoculture`; once there is a real domain, build with it:

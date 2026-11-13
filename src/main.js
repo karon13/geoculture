@@ -481,24 +481,6 @@ async function loadMap() {
 }
 loadMap();
 
-// How to play / about sheet.
-const aboutEl = document.getElementById("about");
-const aboutOpen = () => !aboutEl.hidden;
-function openAbout() {
-  closeMenu();
-  aboutEl.hidden = false;
-  aboutEl.querySelector(".about-body").scrollTop = 0;
-  document.getElementById("about-close").focus();
-}
-function closeAbout() {
-  aboutEl.hidden = true;
-  menuBtn.focus();
-}
-document.getElementById("menu-about").addEventListener("click", openAbout);
-document.getElementById("about-close").addEventListener("click", closeAbout);
-aboutEl.addEventListener("click", (e) => {
-  if (e.target === aboutEl) closeAbout();
-});
 document.getElementById("history-close").addEventListener("click", closeHistory);
 // Tapping the dimmed area around the list closes it too.
 historyEl.addEventListener("click", (e) => {
@@ -512,8 +494,7 @@ historyList.addEventListener("click", (e) => {
 });
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape") return;
-  if (aboutOpen()) closeAbout();
-  else if (historyOpen()) closeHistory();
+  if (historyOpen()) closeHistory();
   else if (menuOpen()) closeMenu();
 });
 // Tapping elsewhere in the top bar or the panel also dismisses the menu. A tap on the globe is handled

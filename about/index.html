@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>How to play GeoCulture - the daily culture geoguesser</title>
-    <meta name="description" content="GeoCulture is a free daily game: five clues from art, music, books and movies, and you pin where each one comes from on a globe. How it works, scoring and FAQ." />
+    <title>How to play GeoCulture - rules, scoring and FAQ</title>
+    <meta name="description" content="How to play GeoCulture, the free daily culture geoguesser: five clues from art, music, books and movies, how scoring works, streaks, past days and FAQ." />
     <link rel="canonical" href="%SITE_URL%/about/" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="GeoCulture" />
@@ -15,17 +15,20 @@
     <link rel="stylesheet" href="/src/page.css" />
   </head>
   <body>
-    <header class="site-head">
+    <header class="topbar">
       <a class="brand" href="../">GeoCulture</a>
-      <nav aria-label="Main">
-        <a href="./" aria-current="page">About</a>
-        <a href="../privacy/">Privacy</a>
-        <a class="play" href="../">Play today</a>
-      </nav>
+      <button id="menu-btn" class="menu-btn" type="button" aria-label="Menu" aria-haspopup="true" aria-expanded="false" aria-controls="menu">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg>
+      </button>
+      <div id="menu" class="menu" role="menu" hidden>
+        <a role="menuitem" href="../">▶️ Play today</a>
+        <a role="menuitem" href="../about/" aria-current="page">❓ How to play &amp; about</a>
+        <a role="menuitem" href="../privacy/">🔒 Privacy</a>
+      </div>
     </header>
 
     <main>
-      <h1>GeoCulture: the daily culture geoguesser</h1>
+      <h1>How to play GeoCulture</h1>
       <p class="lede">
         Every day you get five clues from art, music, books and movies. Each one comes from a real place somewhere
         in the world. Your job is to find that place on a globe, using nothing but what you know about culture.
@@ -117,6 +120,8 @@
       </p>
 
       <h2>Frequently asked questions</h2>
+      <h3>Can I use miles instead of kilometres?</h3>
+      <p>Yes. Open the menu in the game and switch Distances between km and mi.</p>
       <h3>Is GeoCulture free?</h3>
       <p>Yes. There is nothing to buy and no account to create.</p>
       <h3>Do I need to sign up?</h3>
@@ -152,7 +157,8 @@
     </main>
 
     <footer class="site-foot">
-      <a href="../">Play</a> &middot; <a href="./">About</a> &middot; <a href="../privacy/">Privacy</a>
+      <a href="../">Play</a> &middot; <a href="./">How to play &amp; about</a> &middot; <a href="../privacy/">Privacy</a>
     </footer>
+      <script type="module" src="/src/pageMenu.js"></script>
   </body>
 </html>

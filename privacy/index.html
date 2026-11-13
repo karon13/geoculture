@@ -15,13 +15,16 @@
     <link rel="stylesheet" href="/src/page.css" />
   </head>
   <body>
-    <header class="site-head">
+    <header class="topbar">
       <a class="brand" href="../">GeoCulture</a>
-      <nav aria-label="Main">
-        <a href="../about/">About</a>
-        <a href="./" aria-current="page">Privacy</a>
-        <a class="play" href="../">Play today</a>
-      </nav>
+      <button id="menu-btn" class="menu-btn" type="button" aria-label="Menu" aria-haspopup="true" aria-expanded="false" aria-controls="menu">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" fill="none"/></svg>
+      </button>
+      <div id="menu" class="menu" role="menu" hidden>
+        <a role="menuitem" href="../">▶️ Play today</a>
+        <a role="menuitem" href="../about/">❓ How to play &amp; about</a>
+        <a role="menuitem" href="../privacy/" aria-current="page">🔒 Privacy</a>
+      </div>
     </header>
 
     <main>
@@ -69,7 +72,8 @@
     </main>
 
     <footer class="site-foot">
-      <a href="../">Play</a> &middot; <a href="../about/">About</a> &middot; <a href="./">Privacy</a>
+      <a href="../">Play</a> &middot; <a href="../about/">How to play &amp; about</a> &middot; <a href="./">Privacy</a>
     </footer>
+      <script type="module" src="/src/pageMenu.js"></script>
   </body>
 </html>
