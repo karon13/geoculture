@@ -654,6 +654,9 @@ function completeDay() {
 }
 
 function renderFinal() {
+  // Start fetching all five pictures as soon as a finished day opens (a past day from the menu, or today's
+  // summary), so each one is already in the browser when its round is tapped open.
+  preloadImages(questions);
   revealed = true;
   finalShown = true;
   updateHeader();
