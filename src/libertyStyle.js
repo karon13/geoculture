@@ -89,6 +89,8 @@ export function mapColors(value, change) {
 // Roads, buildings and everything else stay as Liberty has them. Change the numbers below to taste.
 export const SEA = "#2c6aa3";
 const LAND_LAYERS = new Set(["landcover", "landuse", "park", "landuse_overlay"]);
+// The low-zoom image layer (Liberty draws a picture of the world there, not vector shapes).
+const RASTER = { "raster-brightness-max": 0.82, "raster-contrast": 0.1, "raster-saturation": 0.05 };
 const LAND = { darken: 0.78, contrast: 1.5, pivot: 0.55, greenHue: 92, greenPull: 0.5, greenSat: 0.85 };
 
 // Re-tones one land colour. Near-white (snow, ice) is left as it is so poles and glaciers stay bright.
@@ -127,7 +129,7 @@ export function deepSea(style) {
         return { ...layer, paint };
       }
       if (layer.type === "raster") {
-        return { ...layer, paint: { ...layer.paint, "raster-brightness-max": 0.82, "raster-contrast": 0.1, "raster-saturation": 0.05 } };
+        return { ...layer, paint: { ...layer.paint, ...RASTER } };
       }
       return layer;
     }),

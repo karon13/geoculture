@@ -24,8 +24,8 @@
       </button>
       <div id="menu" class="menu" role="menu" hidden>
         <button type="button" role="menuitem" id="menu-history">📅 Previous results</button>
+        <button type="button" role="menuitem" id="menu-about">❓ How to play</button>
         <button type="button" role="menuitem" id="menu-unit">📏 Distances</button>
-        <button type="button" role="menuitem" id="menu-map">🗺 Switch map (testing)</button>
         <button type="button" role="menuitem" id="reset" title="Testing: wipes all saved results and the streak, as if this were your first visit">↻ Reset everything (testing)</button>
       </div>
     </header>
@@ -40,6 +40,36 @@
         <ul id="history-list" class="history-list"></ul>
       </div>
     </div>
+
+    <div id="about" class="sheet" role="dialog" aria-modal="true" aria-labelledby="about-title" hidden>
+      <div class="sheet-card">
+        <div class="sheet-head">
+          <h2 id="about-title">How to play</h2>
+          <button type="button" id="about-close" class="sheet-close" aria-label="Close">✕</button>
+        </div>
+        <div class="about-body">
+          <p>Every day there are five prompts from art, music, books and movies. Each one comes from a real place somewhere in the world. Your job: find it on the globe.</p>
+          <h3>Playing a round</h3>
+          <ol>
+            <li>Read the prompt and the tag (art, music, books or movies).</li>
+            <li>Spin and zoom the globe, then tap where you think it comes from. Tap again to move your pin.</li>
+            <li>Press <b>Lock in guess</b>. You see the real place, how far off you were, and the story behind it.</li>
+          </ol>
+          <h3>Scoring</h3>
+          <p>Each round is worth up to 100 points, 500 a day. A guess within 25&nbsp;km (15&nbsp;miles) earns the full 100. After that the points fall off quickly: about 57 at 1,000&nbsp;km (620&nbsp;miles) and about 7 at 5,000&nbsp;km (3,100&nbsp;miles). There are no labels on the map, so it is down to what you know.</p>
+          <h3>Every day, new places</h3>
+          <p>A new set of five appears at midnight, in your own time zone. Everyone who plays on the same date gets the same five, so you can compare scores. When you finish, use <b>Share result</b> to send your squares to a friend.</p>
+          <h3>Streak and past days</h3>
+          <p>Play today to keep your daily streak going. You can also catch up on the last 28 days from <b>Previous results</b> in the menu. Those games are fun to play but only today counts toward your streak.</p>
+          <h3>Good to know</h3>
+          <p>Your progress is saved in this browser only, so clearing site data or switching browsers starts you from scratch. Distances show in kilometres or miles; change that in the menu.</p>
+          <h3>Credits</h3>
+          <p class="about-credits">Map: <a href="https://openfreemap.org" target="_blank" rel="noopener noreferrer">OpenFreeMap</a> with data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors and <a href="https://openmaptiles.org" target="_blank" rel="noopener noreferrer">OpenMapTiles</a>, drawn with <a href="https://maplibre.org" target="_blank" rel="noopener noreferrer">MapLibre</a>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="map-error" class="map-error" role="alert" hidden>The map could not be loaded. Check your connection and reload the page.</div>
 
     <section id="panel" class="panel" aria-live="polite"></section>
 

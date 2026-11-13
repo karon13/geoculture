@@ -1,6 +1,6 @@
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { buildStyle, loadStyle, MAP_KINDS, MAP_LABELS, DEFAULT_MAP_KIND } from "./mapStyle.js";
+import { buildStyle, loadStyle } from "./mapStyle.js";
 import { QUESTIONS } from "./questions.js";
 import {
   ROUNDS_PER_DAY,
@@ -48,9 +48,6 @@ function saveStore(store) {
 
 const today = dateKey();
 const store = loadStore();
-// Base map for testing: ?map=satellite or ?map=liberty wins, then the last choice from the menu.
-const urlMap = new URLSearchParams(location.search).get("map");
-let mapKind = MAP_KINDS.includes(urlMap) ? urlMap : MAP_KINDS.includes(store.mapKind) ? store.mapKind : DEFAULT_MAP_KIND;
 store.streak = store.streak || { streak: 0, lastCompleted: null };
 
 // Progress is kept per date: store.days["2026-11-11"] = { results: [...] }.
@@ -112,7 +109,7 @@ measureTopbar();
 // ---------- map ----------
 const map = new maplibregl.Map({
   container: "globe",
-  style: buildStyle(mapKind),
+  style: buildStyle(),
   center: [10, 25],
   zoom: 1.6,
   minZoom: 0.5,
@@ -126,7 +123,7 @@ map.touchZoomRotate.disableRotation();
 // Lets automated tests move the camera: open the page with ?debug.
 if (new URLSearchParams(location.search).has("debug")) window.__map = map;
 map.touchPitch.disable();
-// The imagery credit must stay visible (it is a licence condition).
+// The map credit (OpenStreetMap, OpenMapTiles) must stay visible, it is a licence condition.
 map.addControl(new maplibregl.AttributionControl({ compact: true }), "top-left");
 // The credit starts closed, as a small (i) button; tapping it opens the full text.
 function closeAttribution() {
@@ -454,49 +451,43 @@ unitToggle.addEventListener("click", () => {
   closeMenu();
 });
 
-// Testing: cycle through the base maps (satellite, Liberty) without reloading. The borders, the line
-// and the pins stay as they are; only the map underneath is swapped.
-const mapToggle = document.getElementById("menu-map");
-const nextMapKind = () => MAP_KINDS[(MAP_KINDS.indexOf(mapKind) + 1) % MAP_KINDS.length];
-function updateMapToggle() {
-  mapToggle.textContent = `🗺 Map: ${MAP_LABELS[mapKind]} → ${MAP_LABELS[nextMapKind()]} (testing)`;
-}
-
-// Puts a base map on the globe. The Liberty-based maps have to be downloaded first; if that fails (offline,
-// OpenFreeMap down) the satellite map is shown instead so the game never ends up with a blank globe.
-// diff:false rebuilds the style from scratch, which re-runs the "style.load" setup (globe, line layers).
-let applySeq = 0;
-async function applyMapKind() {
-  const mine = ++applySeq;
-  let style;
-  try {
-    style = await loadStyle(mapKind);
-  } catch (err) {
-    console.warn("Could not load the", mapKind, "map, using the satellite map instead.", err);
-    mapKind = "satellite";
-    updateMapToggle();
-    style = buildStyle("satellite");
+// The map is OpenFreeMap's Liberty style, which has to be downloaded first. The globe starts on a plain dark
+// placeholder and the style is swapped in when it arrives (one retry after a short wait). If it still fails
+// (offline, OpenFreeMap down) a message says so. diff:false rebuilds the style from scratch, which re-runs the
+// "style.load" setup (globe, line layers).
+async function loadMap() {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      map.setStyle(await loadStyle(), { diff: false });
+      document.getElementById("map-error").hidden = true;
+      return;
+    } catch (err) {
+      console.warn("Could not load the map style", err);
+      if (attempt === 0) await new Promise((resolve) => setTimeout(resolve, 2000));
+    }
   }
-  if (mine === applySeq) map.setStyle(style, { diff: false });
+  document.getElementById("map-error").hidden = false;
 }
+loadMap();
 
-mapToggle.addEventListener("click", () => {
-  mapKind = nextMapKind();
-  store.mapKind = mapKind;
-  saveStore(store);
-  // The address would otherwise keep forcing the old choice on the next reload.
-  const url = new URL(location.href);
-  if (url.searchParams.has("map")) {
-    url.searchParams.delete("map");
-    history.replaceState(null, "", url);
-  }
+// How to play / about sheet.
+const aboutEl = document.getElementById("about");
+const aboutOpen = () => !aboutEl.hidden;
+function openAbout() {
   closeMenu();
-  applyMapKind();
-  updateMapToggle();
+  aboutEl.hidden = false;
+  aboutEl.querySelector(".about-body").scrollTop = 0;
+  document.getElementById("about-close").focus();
+}
+function closeAbout() {
+  aboutEl.hidden = true;
+  menuBtn.focus();
+}
+document.getElementById("menu-about").addEventListener("click", openAbout);
+document.getElementById("about-close").addEventListener("click", closeAbout);
+aboutEl.addEventListener("click", (e) => {
+  if (e.target === aboutEl) closeAbout();
 });
-updateMapToggle();
-// The Liberty-based maps start on a plain placeholder globe and are swapped in once downloaded.
-if (mapKind !== "satellite") applyMapKind();
 document.getElementById("history-close").addEventListener("click", closeHistory);
 // Tapping the dimmed area around the list closes it too.
 historyEl.addEventListener("click", (e) => {
@@ -510,7 +501,8 @@ historyList.addEventListener("click", (e) => {
 });
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape") return;
-  if (historyOpen()) closeHistory();
+  if (aboutOpen()) closeAbout();
+  else if (historyOpen()) closeHistory();
   else if (menuOpen()) closeMenu();
 });
 // Tapping elsewhere in the top bar or the panel also dismisses the menu. A tap on the globe is handled
