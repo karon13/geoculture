@@ -85,6 +85,7 @@ let questions = questionsForView();
 
 // ---------- UI state ----------
 let revealed = false; // whether the current round has been locked in (answer on screen or on its way)
+let finalShown = false; // whether the end-of-day summary is showing
 let guess = null; // { lat, lng } the player has pinned but not yet locked in
 let guessMarker = null;
 let animId = 0; // bumped to cancel a line animation that is still running
@@ -378,7 +379,12 @@ function fmtDay(key, options = { weekday: "short", day: "numeric", month: "short
 
 function updateHeader() {
   const done = results().length;
-  roundLabel.textContent = isFinished() ? (isToday() ? "Done for today" : "Day complete") : `Round ${done + 1}/${ROUNDS_PER_DAY}`;
+  // While an answer is on screen we are still in that round; the counter moves on with "Next round".
+  const inRound = revealed && !finalShown;
+  const round = inRound ? done : done + 1;
+  roundLabel.textContent = finalShown || (isFinished() && !inRound)
+    ? (isToday() ? "Done for today" : "Day complete")
+    : `Round ${Math.min(Math.max(round, 1), ROUNDS_PER_DAY)}/${ROUNDS_PER_DAY}`;
   scoreLabel.textContent = `${totalPoints()} pts`;
   // The streak is about today's habit, so it shows the same on every day.
   const s = currentStreak(store.streak, today);
@@ -533,6 +539,7 @@ function showDay() {
 function renderQuestion() {
   const q = questions[results().length];
   revealed = false;
+  finalShown = false;
   clearPins();
   updateHeader();
   panel.innerHTML = `
@@ -609,6 +616,7 @@ function completeDay() {
 
 function renderFinal() {
   revealed = true;
+  finalShown = true;
   updateHeader();
   const dayResults = results();
   const pins = [];
