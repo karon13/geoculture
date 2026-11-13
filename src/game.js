@@ -90,7 +90,7 @@ export function dayNumber(key) {
 
 // One fixed shuffle of the whole question bank, walked through 5 at a time: day N gets the next 5 after
 // day N-1. So the same date gives every player the same 5 questions, and no question comes back until the
-// whole bank has been used (130 questions = 26 days). Categories stay a natural random mix.
+// whole bank has been used (256 questions = 51 days). Categories stay a natural random mix.
 // Questions are ordered by id before shuffling, so the order doesn't depend on how the bank file is sorted.
 export function pickDaily(questions, key, n = ROUNDS_PER_DAY) {
   const rand = mulberry32(hashString("geoculture:order"));

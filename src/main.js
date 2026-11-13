@@ -24,6 +24,7 @@ import {
   partialLine,
   revealDurationMs,
 } from "./game.js";
+import { figureHTML, mountImage, preloadImages } from "./revealImage.js";
 
 // Satellite globe with borders only (see mapStyle.js).
 const STORAGE_KEY = "geoculture:v1";
@@ -538,6 +539,8 @@ function showDay() {
 // ---------- views ----------
 function renderQuestion() {
   const q = questions[results().length];
+  // Fetch this round's picture (and the next one) while the player is still thinking, so the reveal is instant.
+  preloadImages([q, questions[results().length + 1]]);
   revealed = false;
   finalShown = false;
   clearPins();
@@ -583,10 +586,12 @@ function lockIn(pick) {
     </div>
     <p class="reveal-title">${esc(q.title)}</p>
     <p class="reveal-place">📍 ${esc(q.place)}</p>
+    ${figureHTML(q)}
     <p class="story">${esc(q.story)}</p>
     ${q.source ? `<p class="source"><a href="${esc(q.source)}" target="_blank" rel="noopener noreferrer">Source</a></p>` : ""}
     <button id="next">${last ? "See your daily score" : "Next round"}</button>
   `;
+  mountImage(panel, q); // no picture, a slow one or a dead link all end with the figure removed
   document.getElementById("next").addEventListener("click", () => {
     if (last) completeDay();
     else renderQuestion();
@@ -662,6 +667,7 @@ function renderFinal() {
                   </span>
                 </div>
                 <p class="reveal-place">📍 ${esc(q.place)}</p>
+                ${figureHTML(q)}
                 <p class="story">${esc(q.story)}</p>
                 ${q.source ? `<p class="source"><a href="${esc(q.source)}" target="_blank" rel="noopener noreferrer">Source</a></p>` : ""}
               </div>
@@ -703,6 +709,8 @@ function renderFinal() {
     }
     const q = questions[i];
     const r = dayResults[i];
+    // Pictures are loaded when a round is opened, not for all five up front.
+    mountImage(panel.querySelectorAll(".detail")[i], q);
     setLink({ a: r.guess, b: q, km: r.km });
     // The panel has changed size, so the camera is placed after that (it reads the panel's height).
     moveCamera({ center: [q.lng, q.lat], zoom: r.km < 300 ? zoomForKm(r.km, q.lat, 500) : 6, fly: true });

@@ -232,6 +232,63 @@ button.secondary {
   font-size: 0.92rem;
 }
 
+/* The picture that comes with the story. Hotlinked, so it may be absent: the figure is only in the page
+   while a picture is loading or showing, and its frame keeps a fixed height while loading so the story
+   does not jump down when the picture arrives. */
+.reveal-figure {
+  margin: 0 0 12px;
+}
+
+.rf-frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.reveal-figure.loading .rf-frame {
+  min-height: 140px;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0.05) 30%, rgba(255, 255, 255, 0.12) 50%, rgba(255, 255, 255, 0.05) 70%);
+  background-size: 200% 100%;
+  animation: rf-shimmer 1.4s linear infinite;
+}
+
+.rf-img {
+  display: block;
+  max-width: 100%;
+  max-height: 38vh;
+  max-height: 38dvh;
+  object-fit: contain;
+  animation: rf-in 0.5s ease both;
+}
+
+.reveal-figure figcaption {
+  margin-top: 4px;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
+.reveal-figure figcaption a {
+  color: inherit;
+}
+
+@keyframes rf-in {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes rf-shimmer {
+  to { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rf-img { animation: none; }
+  .reveal-figure.loading .rf-frame { animation: none; }
+}
+
 .story {
   margin: 0 0 14px;
   line-height: 1.55;
@@ -505,11 +562,26 @@ button.secondary {
   }
 
   .final li.open .reveal-place,
+  .final li.open .reveal-figure,
   .final li.open .story,
   .final li.open .source {
     order: 1;
     margin-left: 4px;
     margin-right: 4px;
+  }
+
+  .final li.open .reveal-figure {
+    margin-top: 0;
+    margin-bottom: 8px;
+  }
+
+  .rf-img {
+    max-height: 24vh;
+    max-height: 24dvh;
+  }
+
+  .reveal-figure.loading .rf-frame {
+    min-height: 110px;
   }
 
   .final li.open .story {

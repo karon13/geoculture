@@ -20,6 +20,26 @@ Needs Node.js 18 or newer and an internet connection (the map style and tiles lo
 
 which regenerates `src/questions.js`.
 
+## Reveal pictures
+
+After a guess the reveal shows the place, then a picture (artwork, film location...), then the story. Pictures
+are **hotlinked**, never stored in the repo: `image_url` in the CSV goes to the player's browser as it is
+(Wikimedia Commons addresses get `?width=1000` added by the build script so phones fetch a thumbnail).
+
+A picture is a bonus and the reveal never depends on it (`src/revealImage.js`):
+
+- no `image_url` in the CSV: the question ships `image: null`, no figure is drawn;
+- the picture is fetched while the player is still guessing, so it is usually instant at the reveal;
+- it is only shown once the browser has really loaded it; a removed file (404), a blocked host or no answer
+  within 8 seconds removes the figure and the reveal looks like one without a picture;
+- a loading frame of fixed height keeps the story from jumping down if the picture arrives late;
+- the caption shows "Photo: credit · licence · Wikimedia Commons" (link to the file page). The licence is only
+  printed when the CSV has a confirmed one (CC BY, CC BY-SA, CC0, public domain); "Licence to confirm..."
+  values are treated as a to-do and not shown.
+
+Before launch, check each file page for licence and attribution (CC BY and CC BY-SA require the credit that the
+caption provides). `npm test` covers the loading, failure, timeout and caption logic.
+
 ## Map
 
 MapLibre GL JS on a 3D globe, using OpenFreeMap's **Liberty** style. It is free, needs no key and allows
