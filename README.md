@@ -20,6 +20,21 @@ Needs Node.js 18 or newer and an internet connection (the map style and tiles lo
 
 which regenerates `src/questions.js`.
 
+## Pages and SEO
+
+The build makes three pages: the game (`/`), `/about/` and `/privacy/`. The last two are plain static HTML
+(`about/index.html`, `privacy/index.html`, styled by `src/page.css`) with no globe or map. Each has its own
+title, description, canonical link and share-card tags. `sitemap.xml` and `robots.txt` are generated at build time
+by `vite.config.js`.
+
+Canonical links, share cards and the sitemap need the public address. It defaults to
+`https://karon13.github.io/geoculture`; once there is a real domain, build with it:
+
+    VITE_SITE_URL=https://yourdomain.com npm run build
+
+(in GitHub Actions, add `env: VITE_SITE_URL: ...` to the build step). Also still to do before launch: a
+1200x630 share image (`og:image`), and update `/privacy/` when ads or analytics are added.
+
 ## Reveal pictures
 
 After a guess the reveal shows the place, then a picture (artwork, film location...), then the story. Pictures

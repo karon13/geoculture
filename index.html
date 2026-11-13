@@ -4,11 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>GeoCulture - a daily culture geoguesser</title>
-    <meta name="description" content="Guess where famous art, music, books and movies come from. Five rounds a day." />
+    <meta name="description" content="Guess where famous art, music, books and movies come from. A free daily geoguessing game: five rounds a day, pin each one on the globe." />
+    <link rel="canonical" href="%SITE_URL%/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GeoCulture" />
+    <meta property="og:title" content="GeoCulture - a daily culture geoguesser" />
+    <meta property="og:description" content="Five clues from art, music, books and movies. Pin where each one comes from. A new set every day." />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta name="twitter:card" content="summary" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "GeoCulture",
+        "url": "%SITE_URL%/",
+        "description": "A free daily geoguessing game based on art, music, books and movies.",
+        "applicationCategory": "GameApplication",
+        "genre": "Quiz",
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
     <link rel="stylesheet" href="/src/style.css" />
   </head>
   <body>
     <div id="globe"></div>
+    <noscript>
+      <p style="position:relative;z-index:10;max-width:560px;margin:80px auto;padding:0 20px;line-height:1.6">
+        GeoCulture is a free daily game: five clues from art, music, books and movies, and you pin where each one
+        comes from on a globe. It needs JavaScript to run. <a href="./about/" style="color:#ffb454">Read how it works</a>.
+      </p>
+    </noscript>
 
     <header class="topbar">
       <div class="brand">GeoCulture</div>
@@ -25,6 +51,8 @@
       <div id="menu" class="menu" role="menu" hidden>
         <button type="button" role="menuitem" id="menu-history">📅 Previous results</button>
         <button type="button" role="menuitem" id="menu-about">❓ How to play</button>
+        <a role="menuitem" href="./about/">📖 About GeoCulture</a>
+        <a role="menuitem" href="./privacy/">🔒 Privacy</a>
         <div class="menu-row" role="group" aria-labelledby="unit-label">
           <span id="unit-label">📏 Distances</span>
           <span class="seg" id="menu-unit">
@@ -69,6 +97,7 @@
           <p>Play today to keep your daily streak going. You can also catch up on the last 28 days from <b>Previous results</b> in the menu. Those games are fun to play but only today counts toward your streak.</p>
           <h3>Good to know</h3>
           <p>Your progress is saved in this browser only, so clearing site data or switching browsers starts you from scratch. Distances show in kilometres or miles; change that in the menu.</p>
+          <p><a href="./about/">Read the full guide and FAQ</a></p>
           <h3>Credits</h3>
           <p class="about-credits">Map: <a href="https://openfreemap.org" target="_blank" rel="noopener noreferrer">OpenFreeMap</a> with data © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors and <a href="https://openmaptiles.org" target="_blank" rel="noopener noreferrer">OpenMapTiles</a>, drawn with <a href="https://maplibre.org" target="_blank" rel="noopener noreferrer">MapLibre</a>.</p>
         </div>

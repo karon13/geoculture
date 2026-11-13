@@ -695,6 +695,23 @@ button.secondary {
   text-align: left;
 }
 
+.menu a {
+  display: block;
+  padding: 11px 12px;
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.menu a:hover,
+.menu a:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  outline: none;
+}
+
 .menu button:hover {
   background: rgba(255, 255, 255, 0.08);
 }
