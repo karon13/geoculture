@@ -33,7 +33,7 @@ body {
 }
 
 main {
-  max-width: 720px;
+  max-width: 760px; /* 720px of text next to the 20px side padding, the same column as the top bar */
   margin: 0 auto;
   padding: 32px 20px 56px;
 }

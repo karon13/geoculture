@@ -10,7 +10,9 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 6px 12px;
-  padding: calc(10px + env(safe-area-inset-top)) 12px 10px 16px;
+  /* On wide screens the content stays in a 720px column in the middle (the bar itself is full width), so the
+     brand and the menu button are not pushed to opposite corners. The About and Privacy text uses the same column. */
+  padding: calc(10px + env(safe-area-inset-top)) max(12px, calc(50% - 360px)) 10px max(16px, calc(50% - 360px));
   /* A real bar, not an overlay: it takes every click and drag itself, so nothing in it reaches the globe. */
   background: rgba(7, 11, 22, 0.96);
   border-bottom: 1px solid var(--panel-border);
@@ -40,7 +42,7 @@
 .menu {
   position: absolute;
   top: calc(100% + 6px);
-  right: 12px;
+  right: max(12px, calc(50% - 360px));
   min-width: 230px;
   padding: 6px;
   display: flex;
