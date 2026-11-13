@@ -914,3 +914,34 @@ button.secondary {
 .menu .seg button[aria-pressed="true"]:hover {
   background: var(--accent);
 }
+
+/* ---------- result card: scrolling text, button pinned below it ---------- */
+.panel.result-mode {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panel.result-mode .result-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.panel.result-mode #next {
+  flex: 0 0 auto;
+  margin-top: 10px;
+}
+
+/* The copy of the question card that fades out while the result is prepared (see fadeOutGhost in main.js). */
+.panel.ghost {
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.panel.ghost.ghost-out {
+  opacity: 0;
+  transform: translateX(-50%) translateY(14px);
+}

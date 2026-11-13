@@ -552,11 +552,34 @@ function renderQuestion() {
     <p class="hint">Click the globe to place your pin (click again to move it). Scroll or pinch to zoom in.</p>
     <button id="lock" disabled>Lock in guess</button>
   `;
-  panel.classList.remove("pending", "detail-mode", "final-mode");
+  panel.classList.remove("pending", "detail-mode", "final-mode", "result-mode");
   document.getElementById("lock").addEventListener("click", () => {
     if (guess) lockIn(guess);
   });
   overview();
+}
+
+// The question card must fade out showing the *question*, not the answer. The panel is rebuilt with the
+// result straight away (the camera needs its size), so a copy of the old card is left behind to do the fading,
+// while the real panel starts hidden, with no transition, and fades in later with the new content.
+function fadeOutGhost() {
+  const ghost = panel.cloneNode(true);
+  ghost.removeAttribute("id");
+  ghost.querySelectorAll("[id]").forEach((el) => el.removeAttribute("id"));
+  ghost.setAttribute("aria-hidden", "true");
+  ghost.inert = true;
+  ghost.classList.add("ghost");
+  panel.after(ghost);
+  void ghost.offsetWidth; // start from the visible state, then fade
+  ghost.classList.add("ghost-out");
+  setTimeout(() => ghost.remove(), 500);
+}
+
+function hidePanelInstantly() {
+  panel.style.transition = "none";
+  panel.classList.add("pending");
+  void panel.offsetWidth;
+  panel.style.transition = "";
 }
 
 function lockIn(pick) {
@@ -578,20 +601,27 @@ function lockIn(pick) {
   // The result panel is built now so the camera can frame the space above it, but it stays hidden
   // until the line has reached the real location.
   const last = isFinished();
-  panel.classList.add("pending");
+  fadeOutGhost();
+  hidePanelInstantly();
+  // The text scrolls; the button below it stays pinned to the bottom of the card (matters on phones, where
+  // a picture makes the card taller than the space available).
+  panel.classList.add("result-mode");
   panel.innerHTML = `
-    <div class="result-head">
-      <span class="pts">+${points}</span>
-      <span class="dist" data-km="${km}" data-suffix=" away">${fmtKm(km)} away</span>
+    <div class="result-scroll">
+      <div class="result-head">
+        <span class="pts">+${points}</span>
+        <span class="dist" data-km="${km}" data-suffix=" away">${fmtKm(km)} away</span>
+      </div>
+      <p class="reveal-title">${esc(q.title)}</p>
+      <p class="reveal-place">📍 ${esc(q.place)}</p>
+      ${figureHTML(q)}
+      <p class="story">${esc(q.story)}</p>
+      ${q.source ? `<p class="source"><a href="${esc(q.source)}" target="_blank" rel="noopener noreferrer">Source</a></p>` : ""}
     </div>
-    <p class="reveal-title">${esc(q.title)}</p>
-    <p class="reveal-place">📍 ${esc(q.place)}</p>
-    ${figureHTML(q)}
-    <p class="story">${esc(q.story)}</p>
-    ${q.source ? `<p class="source"><a href="${esc(q.source)}" target="_blank" rel="noopener noreferrer">Source</a></p>` : ""}
     <button id="next">${last ? "See your daily score" : "Next round"}</button>
   `;
-  mountImage(panel, q); // no picture, a slow one or a dead link all end with the figure removed
+  // No picture, a slow one or a dead link all end with the figure removed.
+  const imageSettled = mountImage(panel, q);
   document.getElementById("next").addEventListener("click", () => {
     if (last) completeDay();
     else renderQuestion();
@@ -605,7 +635,11 @@ function lockIn(pick) {
       .addTo(map);
     markers.push(answer);
     updateHeader();
-    panel.classList.remove("pending");
+    // Show the card once the picture is in it (normally it already is: it was fetched while the player
+    // guessed). A slow picture waits at most 1.5 s, then the card appears and the picture joins when it can.
+    Promise.race([imageSettled, new Promise((r) => setTimeout(r, 1500))]).then(() => {
+      if (revealed && panel.classList.contains("result-mode")) panel.classList.remove("pending");
+    });
   });
 }
 
@@ -631,7 +665,7 @@ function renderFinal() {
     pins.push({ lat: r.guess.lat, lng: r.guess.lng, color: "#60a5fa", label: "Your guess" });
   });
   showPins(pins);
-  panel.classList.remove("pending", "detail-mode");
+  panel.classList.remove("pending", "detail-mode", "result-mode");
   panel.classList.add("final-mode");
 
   const total = totalPoints();
