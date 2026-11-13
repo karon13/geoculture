@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import {
   haversineKm,
   scoreForDistance,
+  PRECISION,
   pickDaily,
   dayNumber,
   MAX_DAYS_BACK,
@@ -33,11 +34,33 @@ test("haversine: same point is 0", () => {
   assert.equal(haversineKm(10, 20, 10, 20), 0);
 });
 
-test("score: within 25 km is full 100, far away is near 0", () => {
+test("score: city level (the default) is full 100 within 25 km, far away is near 0", () => {
   assert.equal(scoreForDistance(0), 100);
   assert.equal(scoreForDistance(25), 100);
+  assert.equal(scoreForDistance(25, "city"), 100);
   assert.ok(scoreForDistance(1000) > 50 && scoreForDistance(1000) < 65);
   assert.ok(scoreForDistance(15000) < 1);
+});
+
+test("score: the more exact the target, the stricter the scoring", () => {
+  const order = ["specific", "district", "city", "region"];
+  // full points inside each level's own zone, and not beyond it
+  for (const level of order) {
+    const { fullKm } = PRECISION[level];
+    assert.equal(scoreForDistance(fullKm, level), 100, level);
+    assert.ok(scoreForDistance(fullKm * 3 + 20, level) < 100, level);
+  }
+  // at any distance, a stricter level never scores higher than a looser one
+  for (const km of [0, 1, 5, 20, 50, 100, 300, 1000, 3000, 8000]) {
+    for (let i = 0; i < order.length - 1; i++) {
+      assert.ok(scoreForDistance(km, order[i]) <= scoreForDistance(km, order[i + 1]), `${km} km ${order[i]}`);
+    }
+  }
+  // a 40 km miss: fine for a region, clearly costly for a specific place
+  assert.equal(scoreForDistance(40, "region"), 100);
+  assert.ok(scoreForDistance(40, "specific") < 97);
+  // unknown level falls back to city rules
+  assert.equal(scoreForDistance(1000, "nonsense"), scoreForDistance(1000, "city"));
 });
 
 test("daily pick: deterministic, 5 unique questions, differs by date", () => {

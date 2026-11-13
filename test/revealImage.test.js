@@ -96,3 +96,12 @@ test("question bank: Commons pictures are requested as thumbnails, not originals
     if (q.image && q.image.url.includes("Special:FilePath/")) assert.match(q.image.url, /[?&]width=\d+/, q.id);
   }
 });
+
+test("question bank: every question has a known precision level", () => {
+  const counts = {};
+  for (const q of QUESTIONS) {
+    assert.ok(["specific", "district", "city", "region"].includes(q.level), `${q.id}: ${q.level}`);
+    counts[q.level] = (counts[q.level] || 0) + 1;
+  }
+  assert.ok(counts.specific > 100 && counts.city > 50 && counts.district > 0 && counts.region > 0);
+});

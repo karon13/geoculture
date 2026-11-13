@@ -7,6 +7,7 @@ import {
   POINTS_PER_ROUND,
   haversineKm,
   scoreForDistance,
+  PRECISION,
   dateKey,
   addDays,
   playableDates,
@@ -536,6 +537,14 @@ function showDay() {
   else renderQuestion();
 }
 
+// The badge that says how exact the answer has to be: 🎯 Specific place, 🏙️ City / town, ...
+function precisionChip(q) {
+  const p = PRECISION[q.level];
+  if (!p) return "";
+  const hint = `Target: ${p.label.toLowerCase()}. ${p.fullKm} km or closer earns full points, and the more exact the target, the faster points drop.`;
+  return `<span class="chip precision ${q.level}" title="${esc(hint)}"><span aria-hidden="true">${p.icon}</span> ${esc(p.label)}</span>`;
+}
+
 // ---------- views ----------
 function renderQuestion() {
   const q = questions[results().length];
@@ -547,7 +556,9 @@ function renderQuestion() {
   updateHeader();
   panel.innerHTML = `
     ${isToday() ? "" : `<p class="past-note">📅 ${esc(fmtDay(viewKey))}</p>`}
-    <span class="chip ${q.category}">${esc(q.category)}</span>
+    <div class="chips">
+      <span class="chip ${q.category}">${esc(q.category)}</span>${precisionChip(q)}
+    </div>
     <p class="prompt">${esc(q.prompt)}</p>
     <p class="hint">Click the globe to place your pin (click again to move it). Scroll or pinch to zoom in.</p>
     <button id="lock" disabled>Lock in guess</button>
@@ -587,7 +598,7 @@ function lockIn(pick) {
   const index = results().length;
   const q = questions[index];
   const km = haversineKm(pick.lat, pick.lng, q.lat, q.lng);
-  const points = scoreForDistance(km);
+  const points = scoreForDistance(km, q.level);
   results().push({
     id: q.id,
     guess: { lat: pick.lat, lng: pick.lng },

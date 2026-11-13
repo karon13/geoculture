@@ -9,7 +9,7 @@ export const QUESTIONS = [
   "place": "Philadelphia Museum of Art steps, Philadelphia, USA",
   "lat": 39.9645,
   "lng": -75.1806,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "The real staircase appears in the film as part of Rocky’s home city. Sylvester Stallone’s triumphant run became one of cinema’s most recognisable moments. Visitors still recreate the pose at the top, and a bronze statue of the fictional boxer stands nearby.",
   "source": "https://www.visitphilly.com/things-to-do/attractions/the-rocky-statue-and-the-rocky-steps/",
   "image": {
@@ -27,7 +27,7 @@ export const QUESTIONS = [
   "place": "US Route 163 viewpoint near Mexican Hat, Utah, USA",
   "lat": 37.101445,
   "lng": -109.990812,
-  "precision": "Exact road viewpoint",
+  "level": "specific",
   "story": "The highway gives the film its memorable view towards the sandstone formations of Monument Valley. The scene turned this stretch of US Route 163 into a popular stop for fans. Utah’s tourism authority publishes the viewpoint’s GPS coordinates and warns visitors to stay clear of traffic.",
   "source": "https://www.visitutah.com/articles/selfie-at-forrest-gump-point",
   "image": {
@@ -45,7 +45,7 @@ export const QUESTIONS = [
   "place": "Trevi Fountain, Rome, Italy",
   "lat": 41.900765,
   "lng": 12.483238,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "Anita Ekberg’s nighttime scene with Marcello Mastroianni helped turn the fountain into an international symbol of cinematic romance. The Baroque monument was completed in the 18th century, long before Fellini made it famous on screen.",
   "source": "https://www.imdb.com/title/tt0053779/locations/",
   "image": {
@@ -63,7 +63,7 @@ export const QUESTIONS = [
   "place": "Mirabell Gardens, Salzburg, Austria",
   "lat": 47.8058,
   "lng": 13.0418,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "Maria and the children dance around the Pegasus Fountain and move through the formal grounds during the musical sequence. The gardens remain one of the best-known stops for visitors following the film’s original locations around Salzburg.",
   "source": "https://www.salzburg.info/en/salzburg/the-sound-of-music/shooting-locations",
   "image": {
@@ -81,7 +81,7 @@ export const QUESTIONS = [
   "place": "Skellig Michael, County Kerry, Ireland",
   "lat": 51.7717,
   "lng": -10.5405,
-  "precision": "Island / historic site",
+  "level": "specific",
   "story": "The island was chosen for its dramatic and isolated landscape. Its early-medieval monastery, perched high above the Atlantic, was built by monks and includes remarkable stone beehive huts. The island is a UNESCO World Heritage Site; not every close-up in the film was shot there.",
   "source": "https://whc.unesco.org/en/list/757/; https://www.imdb.com/title/tt2488496/locations/",
   "image": {
@@ -99,7 +99,7 @@ export const QUESTIONS = [
   "place": "Al-Khazneh (the Treasury), Petra, Jordan",
   "lat": 30.3221,
   "lng": 35.4515,
-  "precision": "Exact monument",
+  "level": "specific",
   "story": "Petra’s Treasury provided the exterior of the Grail temple. Despite its name, the ancient monument was probably a royal tomb rather than a treasury. The elaborate underground chamber shown in the film was created separately and does not exist behind the facade.",
   "source": "https://www.visitpetra.jo/",
   "image": {
@@ -117,7 +117,7 @@ export const QUESTIONS = [
   "place": "Maya Bay, Ko Phi Phi Leh, Thailand",
   "lat": 7.6782,
   "lng": 98.7668,
-  "precision": "Exact bay",
+  "level": "specific",
   "story": "The film brought international attention to the bay and contributed to a surge in visitors. Tourism placed severe pressure on its marine ecosystem, prompting a prolonged closure for restoration. It has since reopened under restrictions designed to protect the recovering reef and wildlife.",
   "source": "https://thailand.prd.go.th/en/content/category/detail/id/52/iid/311034",
   "image": {
@@ -135,7 +135,7 @@ export const QUESTIONS = [
   "place": "Vienna, Austria",
   "lat": 48.2082,
   "lng": 16.3738,
-  "precision": "City",
+  "level": "city",
   "story": "Richard Linklater’s film uses the city as more than a backdrop: its cafés, streets, tram rides and riverside paths shape the encounter between the two characters. Vienna’s official tourism guide maps eleven locations from the overnight walk, including the final meeting place.",
   "source": "https://www.wien.info/en/travel-info/ivie-app/visit-the-filming-locations-of-before-sunrise-with-ivie",
   "image": null
@@ -148,7 +148,7 @@ export const QUESTIONS = [
   "place": "Spanish Steps, Rome, Italy",
   "lat": 41.9059,
   "lng": 12.4823,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "The staircase became internationally associated with Audrey Hepburn’s character after the film’s release. The 18th-century steps connect Piazza di Spagna with the church above and remain among the city’s most recognisable public spaces.",
   "source": "https://www.imdb.com/title/tt0046250/locations/",
   "image": {
@@ -166,7 +166,7 @@ export const QUESTIONS = [
   "place": "Agios Ioannis Kastri chapel, Skopelos, Greece",
   "lat": 39.1704,
   "lng": 23.6604,
-  "precision": "Exact chapel",
+  "level": "specific",
   "story": "The small Byzantine chapel sits on a rocky outcrop connected to the island by a narrow path. The production used it for the wedding scenes, and its steep staircase has since become a popular stop for visitors. The story’s island, Kalokairi, is fictional.",
   "source": "https://visit.skopelos.gr/en/article/mamma-mia-when-skopelos-welcomed-hollywood",
   "image": {
@@ -184,7 +184,7 @@ export const QUESTIONS = [
   "place": "Joseph A. Sylvia State Beach, Martha’s Vineyard, Massachusetts, USA",
   "lat": 41.3989,
   "lng": -70.5206,
-  "precision": "Exact beach",
+  "level": "specific",
   "story": "Martha’s Vineyard stood in for the fictional resort community of Amity Island. The Massachusetts Film Office identifies this beach as the location of the attack on Alex Kintner, one of the film’s most shocking scenes.",
   "source": "https://mafilm.org/2024/07/02/what-beaches-did-jaws-film-at-some-of-them-are-in-massachusetts-how-to-visit/",
   "image": {
@@ -202,7 +202,7 @@ export const QUESTIONS = [
   "place": "280 Westbourne Park Road, Notting Hill, London, England",
   "lat": 51.5186,
   "lng": -0.2036,
-  "precision": "Exact building / street address",
+  "level": "specific",
   "story": "The blue door belongs to the real house used as the exterior of William Thacker’s home. The film turned the ordinary residential street into a destination for fans. The nearby travel bookshop was also based on a real shopfront, although the interior scenes were filmed separately.",
   "source": "https://kensingtonandchelsea.london/film-and-tv",
   "image": {
@@ -220,7 +220,7 @@ export const QUESTIONS = [
   "place": "27 St Luke’s Mews, Notting Hill, London, England",
   "lat": 51.5149,
   "lng": -0.2011,
-  "precision": "Exact street / house exterior",
+  "level": "specific",
   "story": "The pink house at number 27 became famous through the cue-card scene. The mews is a real residential street, and the house remains privately occupied. London’s official guide to film locations identifies the street as one of the places used for the romantic comedy.",
   "source": "https://www.london.gov.uk/programmes-strategies/arts-and-culture/make-date-london/london-film-locations-love",
   "image": {
@@ -238,7 +238,7 @@ export const QUESTIONS = [
   "place": "Café des Deux Moulins, Paris, France",
   "lat": 48.8849,
   "lng": 2.3334,
-  "precision": "Exact café",
+  "level": "specific",
   "story": "The café’s red booths and zinc counter became familiar to audiences around the world. It sits in the Montmartre district, where much of the film’s story unfolds. The Paris city guide still highlights it as one of the film’s most recognisable locations.",
   "source": "https://www.paris.fr/en/pages/what-if-we-rediscovered-paris-through-the-eyes-of-amelie-poulain-34990",
   "image": {
@@ -256,7 +256,7 @@ export const QUESTIONS = [
   "place": "Wiener Riesenrad, Prater, Vienna, Austria",
   "lat": 48.2166,
   "lng": 16.3958,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "The Ferris wheel opened in 1897 and became one of Vienna’s defining landmarks. The film uses its height to stage a tense conversation between Holly Martins and Harry Lime. The wheel has appeared in other films too, including Before Sunrise.",
   "source": "https://www.wien.info/en/see-do/discover-vienna/hidden-gems/third-man-361288",
   "image": {
@@ -274,7 +274,7 @@ export const QUESTIONS = [
   "place": "Glen Etive, Scottish Highlands, Scotland",
   "lat": 56.625,
   "lng": -4.951,
-  "precision": "Valley / road area",
+  "level": "region",
   "story": "The production used the valley’s steep mountainsides and winding road for the journey towards the fictional Skyfall estate. The house itself was built for filming elsewhere, so the valley is the real location for the driving sequence, not the actual location of the house.",
   "source": "https://www.visitscotland.com/places-to-go/film-tv/skyfall",
   "image": null
@@ -287,7 +287,7 @@ export const QUESTIONS = [
   "place": "Hobbiton Movie Set, near Matamata, New Zealand",
   "lat": -37.8721,
   "lng": 175.6833,
-  "precision": "Exact film set",
+  "level": "specific",
   "story": "The Shire scenes were filmed on farmland near Matamata. The original temporary set was dismantled after filming, but a permanent version was rebuilt for The Hobbit and now welcomes guided tours. It is the best-preserved physical remnant of Middle-earth’s screen locations.",
   "source": "https://nzvisit.com/lotr",
   "image": {
@@ -305,7 +305,7 @@ export const QUESTIONS = [
   "place": "Glenfinnan Viaduct, Scotland",
   "lat": 56.8763,
   "lng": -5.4319,
-  "precision": "Exact structure",
+  "level": "specific",
   "story": "The 21-arch viaduct carries the West Highland Line through the landscape near Loch Shiel. It became one of the most recognisable railway locations in the film series. The real train route runs between Fort William and Mallaig.",
   "source": "https://www.visitscotland.com/planning/trip-ideas/harry-potter",
   "image": {
@@ -323,7 +323,7 @@ export const QUESTIONS = [
   "place": "Alnwick Castle, Northumberland, England",
   "lat": 55.4156,
   "lng": -1.706,
-  "precision": "Exact castle",
+  "level": "specific",
   "story": "Alnwick Castle stood in for parts of Hogwarts in the first two films. The outer bailey appears during the flying lesson, while other courtyards were used for scenes involving the school grounds. The castle continues to run film tours and broomstick activities.",
   "source": "https://www.alnwickcastle.com/about-alnwick-castle/alnwick-castle-on-screen/harry-potter-at-alnwick-castle",
   "image": {
@@ -341,7 +341,7 @@ export const QUESTIONS = [
   "place": "Dubrovnik Old Town, Croatia",
   "lat": 42.6408,
   "lng": 18.1108,
-  "precision": "Historic old town",
+  "level": "city",
   "story": "The walled city became the principal real-world stand-in for King’s Landing from the second season onward. Its lanes, gates and fortress walls appear throughout the series. The city’s appearance is so distinctive that the production’s use of Dubrovnik is immediately recognisable to viewers.",
   "source": "https://www.visit-croatia.co.uk/about-croatia/filming-locations-in-croatia/",
   "image": {
@@ -359,7 +359,7 @@ export const QUESTIONS = [
   "place": "Castle Ward, County Down, Northern Ireland",
   "lat": 54.37,
   "lng": -5.583,
-  "precision": "Estate / historic site",
+  "level": "specific",
   "story": "Castle Ward’s farmyard stood in for parts of Winterfell in the first season. The estate also hosted scenes involving the Stark army and the Twins. The National Trust preserves the site and identifies the locations used in the series.",
   "source": "https://www.nationaltrust.org.uk/discover/film-tv/game-of-thrones-filming-locations",
   "image": null
@@ -372,7 +372,7 @@ export const QUESTIONS = [
   "place": "St Paul’s Cathedral, London, England",
   "lat": 51.5138,
   "lng": -0.0984,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "The cathedral’s great dome and roofline provide a striking backdrop in the film. The building was designed by Christopher Wren after the Great Fire of London and completed in the early 18th century. VisitBritain identifies it as one of the production’s London locations.",
   "source": "https://www.visitbritain.com/en/things-to-do/visit-mission-impossible-filming-locations",
   "image": {
@@ -390,7 +390,7 @@ export const QUESTIONS = [
   "place": "Buttermere Valley, Lake District, England",
   "lat": 54.5424,
   "lng": -3.2793,
-  "precision": "Valley / landscape",
+  "level": "region",
   "story": "The valley’s dramatic scenery supplied the backdrop for a sequence in the film. It includes Buttermere and nearby Crummock Water, lakes surrounded by steep hills. VisitBritain lists the valley among the production’s filming locations.",
   "source": "https://www.visitbritain.com/en/things-to-do/visit-mission-impossible-filming-locations",
   "image": {
@@ -408,7 +408,7 @@ export const QUESTIONS = [
   "place": "Park Hyatt Tokyo, Tokyo, Japan",
   "lat": 35.685,
   "lng": 139.6908,
-  "precision": "Exact hotel",
+  "level": "specific",
   "story": "The hotel’s high-floor rooms and bar provide several of the film’s most memorable views of the city. Sofia Coppola used the hotel and surrounding streets to convey the characters’ sense of dislocation in a vast, bustling metropolis.",
   "source": "https://www.imdb.com/title/tt0335266/locations/",
   "image": {
@@ -426,7 +426,7 @@ export const QUESTIONS = [
   "place": "Görlitz, Saxony, Germany",
   "lat": 51.1535,
   "lng": 14.9879,
-  "precision": "City",
+  "level": "city",
   "story": "Görlitz provided several real filming sites, including an ornate department store used for interior scenes and historic squares used for outdoor sequences. The hotel exterior itself was a miniature model, so the fictional hotel should not be mistaken for one real building.",
   "source": "https://www.mdm-online.de/film-commission/drehreport/grand-budapest-hotel; https://www.studiobabelsberg.com/about-us/press-and-news/drehstart-von-wes-andersons-neuem-film-the-grand-budapest-hotel/",
   "image": null
@@ -439,7 +439,7 @@ export const QUESTIONS = [
   "place": "Bar Vitelli, Savoca, Sicily, Italy",
   "lat": 37.9564,
   "lng": 15.34,
-  "precision": "Exact building",
+  "level": "specific",
   "story": "The bar occupies part of Palazzo Trimarchi and still displays photographs connected with the production. The village of Savoca also supplied other Sicilian scenes, including the church used for Michael and Apollonia’s wedding.",
   "source": "https://www.theworldofsicily.com/en/sights/sights-of-savoca/vitelli-bar/",
   "image": {
@@ -457,7 +457,7 @@ export const QUESTIONS = [
   "place": "Lingotto rooftop test track, Turin, Italy",
   "lat": 45.0303,
   "lng": 7.6665,
-  "precision": "Exact structure",
+  "level": "specific",
   "story": "The Lingotto complex was built for Fiat and became famous for its rooftop test track, where cars once drove around a loop above the factory. The sequence helped turn the building into a symbol of industrial modernity and Italian cinema.",
   "source": "https://www.imdb.com/title/tt0064505/locations/",
   "image": {
@@ -475,7 +475,7 @@ export const QUESTIONS = [
   "place": "Wadi Rum, Jordan",
   "lat": 29.5764,
   "lng": 35.4215,
-  "precision": "Desert landscape",
+  "level": "region",
   "story": "The sandstone mountains and wide desert valleys of Wadi Rum provided a convincing backdrop for the film’s Arabian setting. The landscape has since appeared in numerous productions and is protected as a UNESCO World Heritage Site for both natural and cultural reasons.",
   "source": "https://www.imdb.com/title/tt0056172/locations/",
   "image": {
@@ -493,7 +493,7 @@ export const QUESTIONS = [
   "place": "Hongcun, Anhui, China",
   "lat": 29.9047,
   "lng": 117.9898,
-  "precision": "Historic village",
+  "level": "city",
   "story": "The village’s reflective ponds, arched bridges and traditional architecture appear in the film’s village and rooftop scenes. Hongcun dates back centuries and is part of a UNESCO-listed group of historic villages in southern Anhui.",
   "source": "https://setjetchina.com/crouching-tiger-hidden-dragon-filming-locations/",
   "image": {
@@ -511,7 +511,7 @@ export const QUESTIONS = [
   "place": "Karekare Beach, Auckland Region, New Zealand",
   "lat": -36.9978,
   "lng": 174.4734,
-  "precision": "Exact beach",
+  "level": "specific",
   "story": "The beach was one of the real coastal locations used in the production. A lightweight replica piano was carried through the bush for the opening sequence, while the instrument itself was specially shipped to the production country. The film follows a Scottish pianist who is sent to live in a remote colonial settlement.",
   "source": "https://www.acmi.net.au/works/100509--the-piano/; https://www.imdb.com/title/tt0107822/locations/",
   "image": {
@@ -529,7 +529,7 @@ export const QUESTIONS = [
   "place": "Forbidden City, Beijing, China",
   "lat": 39.9163,
   "lng": 116.3972,
-  "precision": "Exact historic complex",
+  "level": "specific",
   "story": "The film follows the life of Puyi, the last emperor of China. Bernardo Bertolucci received permission to film inside the former imperial palace, making it one of the first major Western productions to shoot there. The complex served as the emperors’ residence for centuries.",
   "source": "https://www.imdb.com/title/tt0093389/locations/; https://www.imdb.com/title/tt0093389/locations/",
   "image": {
@@ -547,7 +547,7 @@ export const QUESTIONS = [
   "place": "Lower Wacker Drive, Chicago, USA",
   "lat": 41.8866,
   "lng": -87.6359,
-  "precision": "Road / urban corridor",
+  "level": "specific",
   "story": "Chicago stood in for Gotham City in several films about the masked hero. Its elevated roads, river bridges and distinctive downtown architecture gave the production a convincing urban setting. Lower Wacker Drive appears in the film’s dramatic vehicle sequences.",
   "source": "https://www.imdb.com/title/tt0468569/locations?item=lc0314534; https://www.moviemaps.org/movies/1s",
   "image": null
@@ -560,7 +560,7 @@ export const QUESTIONS = [
   "place": "Pont de Bir-Hakeim, Paris, France",
   "lat": 48.8557,
   "lng": 2.2873,
-  "precision": "Exact bridge",
+  "level": "specific",
   "story": "The bridge’s steel structure and views of the Eiffel Tower make it a recognisable Paris landmark. Christopher Nolan used it for an important scene between Cobb and Ariadne, where they discuss the rules of the dream world.",
   "source": "https://www.imdb.com/title/tt1375666/locations/",
   "image": {
@@ -578,7 +578,7 @@ export const QUESTIONS = [
   "place": "Saint-Étienne-du-Mont steps, Paris, France",
   "lat": 48.8465,
   "lng": 2.3481,
-  "precision": "Exact steps",
+  "level": "specific",
   "story": "The church stands behind the Panthéon in the Latin Quarter. Its side steps became the starting point for the film’s time-travelling journey. The building is known for its unusual combination of Gothic and Renaissance elements and its connection to Saint Geneviève.",
   "source": "https://www.imdb.com/title/tt1605783/locations/",
   "image": {
@@ -596,7 +596,7 @@ export const QUESTIONS = [
   "place": "Public Square, Cleveland, Ohio, USA",
   "lat": 41.4998,
   "lng": -81.6936,
-  "precision": "Exact square",
+  "level": "specific",
   "story": "Cleveland was used for several scenes that represent New York and other European settings in the film. Public Square hosted a crowd and fight sequence involving Loki, Captain America and Iron Man. The square remains a central public space in the city.",
   "source": "https://www.imdb.com/title/tt0848228/locations/",
   "image": {
@@ -614,7 +614,7 @@ export const QUESTIONS = [
   "place": "Ely Cathedral, Ely, England",
   "lat": 52.3983,
   "lng": 0.2639,
-  "precision": "Exact cathedral",
+  "level": "specific",
   "story": "Ely Cathedral has been used in a number of major productions, including The King’s Speech. Its vast Norman nave, medieval architecture and lantern tower make it a convincing stand-in for other historic religious buildings.",
   "source": "https://www.elycathedral.org/about/venue-hire/filming",
   "image": {
@@ -632,7 +632,7 @@ export const QUESTIONS = [
   "place": "Fort Ricasoli, Kalkara, Malta",
   "lat": 35.8876,
   "lng": 14.527,
-  "precision": "Exact fort",
+  "level": "specific",
   "story": "The 17th-century fort was used in the production’s recreation of ancient Rome. Malta’s fortified harbours and historic architecture have attracted many international productions, and the fort has since hosted other large-scale films.",
   "source": "https://maltafilmguide.com/",
   "image": {
@@ -650,7 +650,7 @@ export const QUESTIONS = [
   "place": "Plaza de España, Seville, Spain",
   "lat": 37.3772,
   "lng": -5.9869,
-  "precision": "Exact square",
+  "level": "specific",
   "story": "The semi-circular plaza was built for the 1929 Ibero-American Exposition. Its tiled alcoves, bridges and grand arcades provided the visual setting for the Naboo scenes. The film used the real architecture rather than constructing an entire fantasy city.",
   "source": "https://www.andalucia.org/en/seville-cultural-tourism-plaza-de-espana",
   "image": {
@@ -668,7 +668,7 @@ export const QUESTIONS = [
   "place": "Ponte dell’Accademia, Venice, Italy",
   "lat": 45.4319,
   "lng": 12.327,
-  "precision": "Exact bridge",
+  "level": "specific",
   "story": "The wooden bridge connects the San Marco and Dorsoduro districts and offers one of the best-known views of the Grand Canal. The film used it during Bond’s Venetian sequence, bringing a modern action scene into a historic urban setting.",
   "source": "https://www.imdb.com/title/tt0381061/locations/",
   "image": {
@@ -686,7 +686,7 @@ export const QUESTIONS = [
   "place": "Seaside, Florida, USA",
   "lat": 30.3216,
   "lng": -86.1371,
-  "precision": "Town",
+  "level": "city",
   "story": "The planned community supplied the pastel houses, central green and carefully ordered streets of fictional Seahaven. The production used real homes, shops and public spaces, although some water scenes were filmed on studio sets elsewhere. The town still attracts visitors interested in the film and its distinctive architecture.",
   "source": "https://www.visitflorida.com/places-to-go/northwest/seaside/; https://www.seasidefl.com/press/; https://www.tcm.com/articles/021191/the-truman-show-1998",
   "image": {
@@ -704,7 +704,7 @@ export const QUESTIONS = [
   "place": "London, England",
   "lat": 51.5074,
   "lng": -0.1278,
-  "precision": "City",
+  "level": "city",
   "story": "Sherlock Holmes and Dr Watson’s famous home is given as 221B Baker Street, an invented address on a real street. The stories use recognisable institutions, transport and neighbourhoods to create a vivid picture of Victorian urban life.",
   "source": "https://www.sherlock-holmes.co.uk/",
   "image": null
@@ -717,7 +717,7 @@ export const QUESTIONS = [
   "place": "Notre-Dame Cathedral, Paris, France",
   "lat": 48.853,
   "lng": 2.3499,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "Hugo made the cathedral central to his novel, treating the building almost as a character in its own right. Published in 1831, the book helped revive public interest in medieval architecture and the preservation of historic buildings.",
   "source": "https://www.notredamedeparis.fr/en/",
   "image": {
@@ -735,7 +735,7 @@ export const QUESTIONS = [
   "place": "Château d’If, Marseille, France",
   "lat": 43.2799,
   "lng": 5.3251,
-  "precision": "Exact fortress",
+  "level": "specific",
   "story": "The real fortress was built in the 16th century and later used as a state prison. Dumas made it famous as the prison of Edmond Dantès, who spends fourteen years there in the novel before escaping.",
   "source": "https://www.chateau-if.fr/en/",
   "image": {
@@ -753,7 +753,7 @@ export const QUESTIONS = [
   "place": "Anne Frank House, Amsterdam, Netherlands",
   "lat": 52.3752,
   "lng": 4.884,
-  "precision": "Exact building",
+  "level": "specific",
   "story": "Anne Frank and the others went into hiding in July 1942 and remained in the Secret Annex until their discovery in August 1944. Her diary survived the war and was later published by her father, Otto Frank. The building opened as a museum in 1960.",
   "source": "https://www.annefrank.org/en/anne-frank/secret-annex/",
   "image": {
@@ -771,7 +771,7 @@ export const QUESTIONS = [
   "place": "King’s Cross Station, London, England",
   "lat": 51.5308,
   "lng": -0.1238,
-  "precision": "Exact station",
+  "level": "specific",
   "story": "The fictional Platform 9¾ is where Hogwarts students catch their train to school. The real station has become a pilgrimage site for fans, with a luggage trolley embedded in a wall to recreate the magical departure.",
   "source": "https://www.kingscross.co.uk/harry-potters-platform-9-34",
   "image": {
@@ -789,7 +789,7 @@ export const QUESTIONS = [
   "place": "Whitby, North Yorkshire, England",
   "lat": 54.4855,
   "lng": -0.62,
-  "precision": "Town",
+  "level": "city",
   "story": "Stoker visited the harbour town in 1890 and used its abbey ruins, churchyard and dramatic cliffs as part of the novel’s atmosphere. Several chapters take place there, and the arrival of the ship Demeter became one of the story’s most memorable episodes.",
   "source": "https://www.english-heritage.org.uk/visit/places/whitby-abbey/history-and-stories/dracula/",
   "image": {
@@ -807,7 +807,7 @@ export const QUESTIONS = [
   "place": "Orchard House, Concord, Massachusetts, USA",
   "lat": 42.4591,
   "lng": -71.3311,
-  "precision": "Exact historic house",
+  "level": "specific",
   "story": "Alcott wrote much of Little Women at Orchard House in 1868, drawing on her own family experiences. The home is now a museum with rooms and objects connected to the author and the real-life inspirations for the March family.",
   "source": "https://louisamayalcott.org/",
   "image": {
@@ -825,7 +825,7 @@ export const QUESTIONS = [
   "place": "Chicago, Illinois, USA",
   "lat": 41.8095,
   "lng": -87.673,
-  "precision": "City / historic district pin",
+  "level": "city",
   "story": "Sinclair investigated the meatpacking industry before writing the novel. Its descriptions of unsanitary food production shocked readers and helped spur federal investigations and new food-safety laws. The story is closely associated with the city’s historic stockyards district.",
   "source": "https://www.chicagohistory.org/",
   "image": null
@@ -838,7 +838,7 @@ export const QUESTIONS = [
   "place": "Green Gables Heritage Place, Cavendish, Prince Edward Island, Canada",
   "lat": 46.4915,
   "lng": -63.381,
-  "precision": "Exact heritage site",
+  "level": "specific",
   "story": "L.M. Montgomery drew inspiration from a farmhouse belonging to her relatives and from the island’s countryside. The Green Gables house became closely associated with the fictional heroine, although the novel’s Avonlea is not a literal map of one real village.",
   "source": "https://parks.canada.ca/lhn-nhs/pe/greengables/activ/maison-house",
   "image": {
@@ -856,7 +856,7 @@ export const QUESTIONS = [
   "place": "Walden Pond, Concord, Massachusetts, USA",
   "lat": 42.438,
   "lng": -71.337,
-  "precision": "Exact pond",
+  "level": "specific",
   "story": "Henry David Thoreau lived in a small cabin beside the pond from 1845 to 1847. His reflections on self-reliance, nature and society became a foundational work of American literature. The site is now protected as a state reservation.",
   "source": "https://www.mass.gov/locations/walden-pond-state-reservation",
   "image": {
@@ -874,7 +874,7 @@ export const QUESTIONS = [
   "place": "Dublin, Ireland",
   "lat": 53.3498,
   "lng": -6.2603,
-  "precision": "City",
+  "level": "city",
   "story": "The novel maps the city in remarkable detail, from O’Connell Street to Sandymount Strand. Each year, readers celebrate Bloomsday on 16 June by retracing the characters’ routes, reading passages and visiting locations associated with Leopold Bloom.",
   "source": "https://www.visitdublin.com/guides/novels-set-in-dublin",
   "image": null
@@ -887,7 +887,7 @@ export const QUESTIONS = [
   "place": "London, England",
   "lat": 51.5074,
   "lng": -0.1278,
-  "precision": "City",
+  "level": "city",
   "story": "Dickens set the story in 1840s London, a city shaped by rapid industrial growth and stark inequality. Through Scrooge’s encounters with the Cratchit family and the spirits’ visions of Want and Ignorance, he drew attention to poverty and the harsh treatment of the poor.",
   "source": "https://dickensmuseum.com/blogs/explore/episode-two-scrooges-london; https://www.britishlibrary.cn/en/works/charles-dickenss-christmas-carol/; https://www.london.ac.uk/sites/default/files/shl/childhood-in-dickensian-london-exhibition-guide.pdf",
   "image": null
@@ -900,7 +900,7 @@ export const QUESTIONS = [
   "place": "London, England",
   "lat": 51.5155,
   "lng": -0.0922,
-  "precision": "City / historic district pin",
+  "level": "city",
   "story": "Dickens used real streets and institutions to give the novel’s depiction of poverty and crime a recognisable urban setting. The City of London’s Dickens walking trail links several places associated with Oliver Twist and other novels.",
   "source": "https://www.cityoflondon.gov.uk/things-to-do/walks-and-itineraries/self-guided-walks-and-trails/dickens-magic-lantern",
   "image": null
@@ -913,7 +913,7 @@ export const QUESTIONS = [
   "place": "St James’ Church and churchyard, Cooling, Kent, England",
   "lat": 51.45529,
   "lng": 0.52638,
-  "precision": "Exact churchyard",
+  "level": "specific",
   "story": "Dickens used this churchyard as the inspiration for the opening scene in which Pip imagines his parents from the inscriptions on their graves and meets the escaped convict Magwitch. The small gravestones that inspired the scene are still known locally as Pip’s Graves.",
   "source": "https://www.visitmedway.org/attractions/st-james-church-cooling-2533; https://www.medway.gov.uk/info/200911/dickensland_exhibition/1145/great_expectations_and_the_marsh_country",
   "image": {
@@ -931,7 +931,7 @@ export const QUESTIONS = [
   "place": "Canterbury Cathedral, Canterbury, England",
   "lat": 51.2798,
   "lng": 1.0784,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "The pilgrimage in Chaucer’s work leads to the shrine of Thomas Becket in the cathedral. Becket’s murder in 1170 made the site one of medieval Europe’s most important pilgrimage destinations, drawing visitors from across the continent.",
   "source": "https://www.canterbury-cathedral.org/",
   "image": {
@@ -949,7 +949,7 @@ export const QUESTIONS = [
   "place": "Paris, France",
   "lat": 48.8566,
   "lng": 2.3522,
-  "precision": "City",
+  "level": "city",
   "story": "Hugo used the city’s streets, sewers, churches and barricades as the setting for a sweeping story about justice and social change. The June Rebellion of 1832, which forms a key episode in the novel, took place in the city.",
   "source": "https://www.paris.fr/",
   "image": null
@@ -962,7 +962,7 @@ export const QUESTIONS = [
   "place": "Louvre Museum, Paris, France",
   "lat": 48.8606,
   "lng": 2.3376,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "The museum is the starting point of the novel’s mystery. Brown uses the building’s galleries, artworks and architecture as part of the puzzle, blending real art history with fictional codes and events. The museum itself is one of the world’s largest art collections.",
   "source": "https://www.louvre.fr/en",
   "image": {
@@ -980,7 +980,7 @@ export const QUESTIONS = [
   "place": "San Francisco, California, USA",
   "lat": 37.7749,
   "lng": -122.4194,
-  "precision": "City",
+  "level": "city",
   "story": "Hammett had worked as a private detective before becoming a writer, and he used his knowledge of the city’s streets and criminal world in the novel. The story helped establish the hard-boiled detective genre and remains closely tied to San Francisco.",
   "source": "https://www.sfmuseum.org/",
   "image": null
@@ -993,7 +993,7 @@ export const QUESTIONS = [
   "place": "Uji, Kyoto Prefecture, Japan",
   "lat": 34.884,
   "lng": 135.7998,
-  "precision": "Town",
+  "level": "city",
   "story": "The final ten chapters are known as the Uji chapters because they take place in and around this town. The river and its bridge remain important literary landmarks, and the area is closely associated with the world of the novel.",
   "source": "https://www.japan.travel/en/spot/2017/",
   "image": {
@@ -1011,7 +1011,7 @@ export const QUESTIONS = [
   "place": "Pamplona, Spain",
   "lat": 42.8125,
   "lng": -1.6458,
-  "precision": "City",
+  "level": "city",
   "story": "Hemingway first visited the city in 1923 and returned repeatedly. His novel helped bring the San Fermín festival to an international audience, and the city now has a route and places associated with the author’s visits.",
   "source": "https://www.pamplona.es/en/turismo/sanfermin/hemingway",
   "image": null
@@ -1024,7 +1024,7 @@ export const QUESTIONS = [
   "place": "Paris, France",
   "lat": 48.8534,
   "lng": 2.3488,
-  "precision": "City",
+  "level": "city",
   "story": "Hemingway’s memoir describes life among writers and artists during the 1920s, including Gertrude Stein, Ezra Pound and F. Scott Fitzgerald. Its scenes are concentrated around the Left Bank and Montparnasse, helping preserve a portrait of the city’s literary community.",
   "source": "https://www.paris.fr/",
   "image": null
@@ -1037,7 +1037,7 @@ export const QUESTIONS = [
   "place": "Edinburgh, Scotland",
   "lat": 55.9533,
   "lng": -3.1883,
-  "precision": "City",
+  "level": "city",
   "story": "The novel is set in 1930s Edinburgh and captures the atmosphere of its streets, schools and social divisions. The city’s literary tourism guide identifies the book as one of the best-known fictional portraits of the Scottish capital.",
   "source": "https://edinburgh.org/blog/books-set-in-edinburgh/",
   "image": null
@@ -1050,7 +1050,7 @@ export const QUESTIONS = [
   "place": "Edinburgh, Scotland",
   "lat": 55.9533,
   "lng": -3.1883,
-  "precision": "City",
+  "level": "city",
   "story": "Ian Rankin’s Rebus novels use the city as an essential part of their atmosphere. The stories move between the Old Town, New Town and less-visited neighbourhoods, showing a layered city that contrasts its tourist image with darker social realities.",
   "source": "https://edinburgh.org/blog/books-set-in-edinburgh/",
   "image": null
@@ -1063,7 +1063,7 @@ export const QUESTIONS = [
   "place": "Venice, Italy",
   "lat": 45.4408,
   "lng": 12.3155,
-  "precision": "City",
+  "level": "city",
   "story": "Shakespeare sets the play in a wealthy trading city whose commercial life and religious divisions shape the conflict. One of the central locations, Belmont, is fictional, but the city’s mercantile and civic setting is grounded in real Venetian history.",
   "source": "https://www.rsc.org.uk/shakespeare-learning-zone/the-merchant-of-venice/staging/setting",
   "image": null
@@ -1076,7 +1076,7 @@ export const QUESTIONS = [
   "place": "Reform Club, London, England",
   "lat": 51.5066,
   "lng": -0.1367,
-  "precision": "Exact building",
+  "level": "specific",
   "story": "Phileas Fogg begins his wager at the Reform Club, whose real building stands on Pall Mall. Verne’s novel turns a real London institution into the launch point for a fantastical journey by train, ship and other forms of transport.",
   "source": "https://www.reformclub.com/",
   "image": {
@@ -1094,7 +1094,7 @@ export const QUESTIONS = [
   "place": "Cairo, Egypt",
   "lat": 30.0444,
   "lng": 31.2357,
-  "precision": "City",
+  "level": "city",
   "story": "Mahfouz’s trilogy portrays family life, politics, religion and generational change across decades. The city’s streets, cafés and homes are integral to the novels, which are among the most important works of modern Arabic literature.",
   "source": "https://www.britannica.com/topic/Cairo-Trilogy",
   "image": null
@@ -1107,7 +1107,7 @@ export const QUESTIONS = [
   "place": "Yacoubian Building, 34 Talaat Harb Street, Cairo, Egypt",
   "lat": 30.0512,
   "lng": 31.2408,
-  "precision": "Exact building",
+  "level": "specific",
   "story": "The novel’s apartment block is a fictionalised version of a real Art Deco building at 34 Talaat Harb Street. The author had a personal connection to the building, and its layered social history helped inspire the novel’s portrait of modern urban life. The book was first published in Arabic in 2002.",
   "source": "https://readtheplaces.com/the-yacoubian-building/; https://www.armenianclub.com/2005/06/11/cairo-inside-the-yacoubian-building/",
   "image": {
@@ -1125,7 +1125,7 @@ export const QUESTIONS = [
   "place": "New Bedford, Massachusetts, USA",
   "lat": 41.6353,
   "lng": -70.927,
-  "precision": "City",
+  "level": "city",
   "story": "The opening chapters take place in New Bedford, then one of America’s major whaling ports. Melville had visited the town before writing the novel, and its maritime history provides a gateway to the book’s wider exploration of the whaling industry.",
   "source": "https://www.whalingmuseum.org/",
   "image": null
@@ -1138,7 +1138,7 @@ export const QUESTIONS = [
   "place": "Kabul, Afghanistan",
   "lat": 34.5553,
   "lng": 69.2075,
-  "precision": "City",
+  "level": "city",
   "story": "The opening part of the novel is set in the city during the 1970s. Hosseini uses its neighbourhoods and social hierarchies to establish the boys’ world before war and displacement transform their lives.",
   "source": "https://khaledhosseini.com/books/the-kite-runner/",
   "image": null
@@ -1151,7 +1151,7 @@ export const QUESTIONS = [
   "place": "Tulsa, Oklahoma, USA",
   "lat": 36.154,
   "lng": -95.9928,
-  "precision": "City",
+  "level": "city",
   "story": "S.E. Hinton wrote the novel while still a teenager and drew on the social divisions she observed among young people in her hometown. The city remains strongly associated with the book, and local cultural organisations preserve its connection to the story.",
   "source": "https://www.visittulsa.com/",
   "image": null
@@ -1164,7 +1164,7 @@ export const QUESTIONS = [
   "place": "Place du Forum, Arles, France",
   "lat": 43.6777,
   "lng": 4.6278,
-  "precision": "Exact square",
+  "level": "specific",
   "story": "Van Gogh painted the gas-lit terrace outdoors at night in September 1888. He contrasted the warm yellow and orange light beneath the awning with the deep blue sky. The café location remains recognisable, although its appearance has changed since the 19th century.",
   "source": "https://www.museum.nl/en/kroller-muller-museum/showpiece/terrace-of-a-cafe-van-gogh",
   "image": {
@@ -1182,7 +1182,7 @@ export const QUESTIONS = [
   "place": "Flatford, Suffolk, England",
   "lat": 51.9586,
   "lng": 1.0224,
-  "precision": "Hamlet",
+  "level": "city",
   "story": "Constable painted the scene around Flatford Mill and the River Stour. The cottage belonged to a tenant farmer named Willy Lott. Both the house and surrounding landscape still exist, making this one of the best-known locations in British landscape art.",
   "source": "https://www.nationaltrust.org.uk/visit/suffolk/flatford",
   "image": {
@@ -1200,7 +1200,7 @@ export const QUESTIONS = [
   "place": "American Gothic House, Eldon, Iowa, USA",
   "lat": 40.729,
   "lng": -92.0514,
-  "precision": "Exact building",
+  "level": "specific",
   "story": "Grant Wood spotted the house while travelling through the area and used it as the backdrop for his painting. His sister and his dentist posed as the two figures. The house still stands and is preserved as a state historic site.",
   "source": "https://history.iowa.gov/visit/historic-sites/american-gothic-house",
   "image": {
@@ -1218,7 +1218,7 @@ export const QUESTIONS = [
   "place": "Église Notre-Dame-de-l’Assomption, Auvers-sur-Oise, France",
   "lat": 49.0705,
   "lng": 2.1715,
-  "precision": "Exact church",
+  "level": "specific",
   "story": "Van Gogh painted the church in June 1890, shortly before his death. The 13th-century building remains recognisable, although he exaggerated its shape and used vivid blues and purples to create an almost dreamlike appearance. The Musée d’Orsay identifies the represented location as the village itself.",
   "source": "https://www.musee-orsay.fr/en/artworks/leglise-dauvers-sur-oise-vue-du-chevet-755",
   "image": {
@@ -1236,7 +1236,7 @@ export const QUESTIONS = [
   "place": "Île de la Grande Jatte, Seine, France",
   "lat": 48.8956,
   "lng": 2.2666,
-  "precision": "Exact island",
+  "level": "specific",
   "story": "Seurat spent several years studying and painting this popular leisure destination. His pointillist technique placed tiny dots of contrasting colours next to one another, allowing the viewer’s eye to blend them. The island was a fashionable Sunday destination in the 1880s.",
   "source": "https://www.artic.edu/artworks/27992/a-sunday-on-la-grande-jatte-1884",
   "image": {
@@ -1254,7 +1254,7 @@ export const QUESTIONS = [
   "place": "Olson House, Cushing, Maine, USA",
   "lat": 43.9708,
   "lng": -69.355,
-  "precision": "Exact historic house",
+  "level": "specific",
   "story": "The farmhouse belonged to Christina and Alvaro Olson, neighbours of artist Andrew Wyeth. The house and its surroundings inspired hundreds of his works, including this painting. The site is now a National Historic Landmark cared for by the Farnsworth Art Museum.",
   "source": "https://www.farnsworthmuseum.org/collection/olson-house-2/",
   "image": {
@@ -1272,7 +1272,7 @@ export const QUESTIONS = [
   "place": "Delft, Netherlands",
   "lat": 52.0116,
   "lng": 4.3571,
-  "precision": "City",
+  "level": "city",
   "story": "Vermeer painted the cityscape around 1660–1661, looking towards the town from across a harbour known as the Kolk. It is one of the most celebrated Dutch city views of the 17th century and an unusually detailed record of the town’s historic skyline.",
   "source": "https://www.mauritshuis.nl/en/our-collection/artworks/92-view-of-delft",
   "image": null
@@ -1285,7 +1285,7 @@ export const QUESTIONS = [
   "place": "Le Havre harbour, France",
   "lat": 49.485,
   "lng": 0.1079,
-  "precision": "City / harbour",
+  "level": "city",
   "story": "Monet painted the harbour from a hotel window in 1872. The scene’s fleeting light and modern industrial subject helped give the Impressionist movement its name after a critic used the painting’s title mockingly. The harbour features recognisable quays and basins.",
   "source": "https://www.muma-lehavre.fr/en/exhibitions/impressions-sun/monet-and-le-havre",
   "image": null
@@ -1298,7 +1298,7 @@ export const QUESTIONS = [
   "place": "Rouen Cathedral, Rouen, France",
   "lat": 49.4401,
   "lng": 1.0941,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "Monet produced more than twenty views of the cathedral’s western facade. He worked from nearby rooms and adjusted his canvases as the light changed throughout the day. The series became a landmark experiment in painting atmosphere and perception.",
   "source": "https://mbarouen.fr/en/oeuvres/rouen-cathedral-facade-and-tour-d-albane-grey-weather",
   "image": {
@@ -1316,7 +1316,7 @@ export const QUESTIONS = [
   "place": "Oslo, Norway",
   "lat": 59.913,
   "lng": 10.738,
-  "precision": "City-level",
+  "level": "city",
   "story": "Munch described an evening walk with friends when the sky seemed to turn blood red and a sense of anxiety overwhelmed him. The scene is commonly associated with the city’s fjord and the Ekeberg hills, but the exact viewpoint and whether the background is a literal view remain uncertain. A city-level answer is therefore fairest.",
   "source": "https://www.visitoslo.com/articles/map-of-munchs-oslo; https://ekebergparken.com/en/artworks/the-scream",
   "image": null
@@ -1329,7 +1329,7 @@ export const QUESTIONS = [
   "place": "Grand Canal near Rialto Bridge, Venice, Italy",
   "lat": 45.4379,
   "lng": 12.3358,
-  "precision": "Canal / landmark area",
+  "level": "specific",
   "story": "Canaletto created many detailed views of Venice for travellers on the Grand Tour. His paintings documented the city’s architecture, although he sometimes adjusted details to improve the composition or show a building to better advantage.",
   "source": "https://www.metmuseum.org/art/collection/search/438100",
   "image": null
@@ -1342,7 +1342,7 @@ export const QUESTIONS = [
   "place": "Palace of Westminster, London, England",
   "lat": 51.4995,
   "lng": -0.1248,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "Monet painted the building from across the River Thames during his visits to London in the early 1900s. The changing atmosphere interested him as much as the architecture, so the building often appears partly obscured by mist or glowing light.",
   "source": "https://www.tate.org.uk/art/artworks/monet-the-houses-of-parliament-sunlight-effect-t02071",
   "image": {
@@ -1360,7 +1360,7 @@ export const QUESTIONS = [
   "place": "Monet’s Garden, Giverny, France",
   "lat": 49.0757,
   "lng": 1.5339,
-  "precision": "Exact garden",
+  "level": "specific",
   "story": "Monet created his water garden in the 1890s, diverting a stream and planting water lilies, willows and other vegetation. He returned to the pond and its bridge repeatedly, exploring how the same view changed with season and light.",
   "source": "https://fondation-monet.com/en/",
   "image": {
@@ -1378,7 +1378,7 @@ export const QUESTIONS = [
   "place": "Arles, France",
   "lat": 43.6766,
   "lng": 4.6278,
-  "precision": "City-level; original bridge destroyed and surviving replica relocated",
+  "level": "city",
   "story": "Van Gogh painted several versions of the Langlois drawbridge during his time in Arles. The original structure has been destroyed. A similar bridge was later relocated to the area, so it should not be treated as the exact spot shown in the paintings. Arles is the defensible map target.",
   "source": "https://www.fondation-vincentvangogh-arles.org/en/vincent/; https://www.patrimoine.ville-arles.fr/index.php?idx=52&obj=edifice&quartier=29&site=0",
   "image": null
@@ -1391,7 +1391,7 @@ export const QUESTIONS = [
   "place": "Arles, France",
   "lat": 43.6766,
   "lng": 4.6278,
-  "precision": "City-level; original building no longer survives",
+  "level": "city",
   "story": "Van Gogh rented the Yellow House in 1888 and hoped to create a community for artists there. He painted the building and several views of the surrounding square. The house was badly damaged during the Second World War and later demolished, so the city is the defensible map target.",
   "source": "https://cz.media.france.fr/sites/default/files/document/press_kit/PK%20Arles%202016.pdf",
   "image": null
@@ -1404,7 +1404,7 @@ export const QUESTIONS = [
   "place": "Connecticut River Oxbow, near Northampton, Massachusetts, USA",
   "lat": 42.3025,
   "lng": -72.6313,
-  "precision": "River bend / landscape",
+  "level": "region",
   "story": "Thomas Cole painted the sweeping bend of the Connecticut River from Mount Holyoke. The composition contrasts settlement and wilderness and became one of the best-known images of the American landscape tradition.",
   "source": "https://www.metmuseum.org/art/collection/search/10497",
   "image": {
@@ -1422,7 +1422,7 @@ export const QUESTIONS = [
   "place": "Maison Fournaise, Chatou, France",
   "lat": 48.8894,
   "lng": 2.157,
-  "precision": "Exact historic restaurant",
+  "level": "specific",
   "story": "Renoir painted the scene at a popular riverside restaurant where visitors hired boats and gathered for meals. The building still stands and is associated with the artist’s work. The figures in the painting include friends and people from the restaurant’s social circle.",
   "source": "https://www.musee-fournaise.com/",
   "image": {
@@ -1440,7 +1440,7 @@ export const QUESTIONS = [
   "place": "Moulin de la Galette, Montmartre, Paris, France",
   "lat": 48.8841,
   "lng": 2.3335,
-  "precision": "Historic venue area",
+  "level": "specific",
   "story": "The venue was a popular dance hall in Montmartre, known for its windmills and outdoor atmosphere. Renoir captured a lively Sunday crowd of friends and local residents, creating an image of modern urban leisure in the late 19th century.",
   "source": "https://www.musee-orsay.fr/en",
   "image": null
@@ -1453,7 +1453,7 @@ export const QUESTIONS = [
   "place": "Boulevard Montmartre, Paris, France",
   "lat": 48.872,
   "lng": 2.342,
-  "precision": "Street / city area",
+  "level": "city",
   "story": "Pissarro painted the boulevard from a hotel room, returning to the same view in different weather and at different times of day. The series demonstrates how a familiar street could appear entirely different as light, traffic and atmosphere changed.",
   "source": "https://www.nationalgallery.org.uk/paintings/camille-pissarro-the-boulevard-montmartre-at-night",
   "image": null
@@ -1466,7 +1466,7 @@ export const QUESTIONS = [
   "place": "Gare Saint-Lazare, Paris, France",
   "lat": 48.8769,
   "lng": 2.325,
-  "precision": "Exact station",
+  "level": "specific",
   "story": "Monet made a series of paintings of the station, fascinated by the combination of modern engineering, steam and changing light. He arranged to work inside the busy terminal, turning an everyday transport hub into a subject for Impressionist art.",
   "source": "https://www.musee-orsay.fr/en",
   "image": {
@@ -1484,7 +1484,7 @@ export const QUESTIONS = [
   "place": "Maidenhead Railway Bridge, Maidenhead, England",
   "lat": 51.522,
   "lng": -0.713,
-  "precision": "Exact bridge",
+  "level": "specific",
   "story": "Turner painted the Great Western Railway bridge designed by Isambard Kingdom Brunel. The low, wide arches were an engineering achievement, and the work became an emblem of the arrival of industrial modernity in British landscape painting.",
   "source": "https://www.nationalgallery.org.uk/paintings/joseph-mallord-william-turner-rain-steam-and-speed-the-great-western-railway",
   "image": {
@@ -1502,7 +1502,7 @@ export const QUESTIONS = [
   "place": "Vlamingstraat 40–42, Delft, Netherlands",
   "lat": 52.0119,
   "lng": 4.3614,
-  "precision": "Historic street frontage; original buildings no longer survive",
+  "level": "specific",
   "story": "Research by art historian Frans Grijzenhout used 17th-century Delft archival records to identify the location as Vlamingstraat 40–42. The Rijksmuseum and University of Amsterdam publicised the finding in 2015. The original buildings shown in the painting no longer survive, but the historic site can still be located.",
   "source": "https://www.rijksmuseum.nl/en/collection/object/View-of-Houses-in-Delft-Known-as-The-Little-Street--a7dbf937cbd6f7c30f66f8aca4a0207c; https://www.uva.nl/content/nieuws/nieuwsberichten/2015/11/uva-hoogleraar-ontdekt-adres-van-%E2%80%98het-straatje-van-vermeer%E2%80%99.html",
   "image": null
@@ -1515,7 +1515,7 @@ export const QUESTIONS = [
   "place": "Cerro Pedernal, Abiquiú region, New Mexico, USA",
   "lat": 36.126,
   "lng": -106.552,
-  "precision": "Mountain",
+  "level": "region",
   "story": "O’Keeffe returned to the mountain in many paintings, often simplifying its form and isolating it against the sky. She once remarked that the mountain belonged to her because she could see it from her home and had painted it so often.",
   "source": "https://www.okeeffemuseum.org/",
   "image": {
@@ -1533,7 +1533,7 @@ export const QUESTIONS = [
   "place": "Mount Fuji, Japan",
   "lat": 35.3606,
   "lng": 138.7274,
-  "precision": "Mountain",
+  "level": "region",
   "story": "Hokusai returned to the mountain in many prints, exploring its appearance from different viewpoints and under changing weather. The series helped make the peak one of the most recognisable images in Japanese art and introduced its form to audiences around the world.",
   "source": "https://www.britishmuseum.org/collection",
   "image": {
@@ -1551,7 +1551,7 @@ export const QUESTIONS = [
   "place": "Detroit Institute of Arts, Detroit, Michigan, USA",
   "lat": 42.3594,
   "lng": -83.0645,
-  "precision": "Exact museum",
+  "level": "specific",
   "story": "Rivera created the murals after studying the city’s factories and industrial workforce. The cycle depicts the interconnected labour and technology of modern manufacturing and remains one of the most important examples of public mural art in the United States.",
   "source": "https://dia.org/art/collection/object/detroit-industry-murals-58581",
   "image": {
@@ -1569,7 +1569,7 @@ export const QUESTIONS = [
   "place": "Sistine Chapel, Vatican City",
   "lat": 41.9029,
   "lng": 12.4545,
-  "precision": "Exact chapel",
+  "level": "specific",
   "story": "Michelangelo worked on the ceiling over four years, painting scenes from Genesis alongside prophets and sibyls. The ceiling became one of the defining achievements of Renaissance art and remains part of the Vatican Museums.",
   "source": "https://www.museivaticani.va/content/museivaticani/en/collezioni/musei/cappella-sistina.html",
   "image": {
@@ -1587,7 +1587,7 @@ export const QUESTIONS = [
   "place": "Santa Maria delle Grazie, Milan, Italy",
   "lat": 45.4659,
   "lng": 9.17,
-  "precision": "Exact church / refectory",
+  "level": "specific",
   "story": "Leonardo painted the mural on the wall of the Dominican convent’s refectory. His experimental technique deteriorated rapidly, and the work has undergone several restorations. It remains one of the most influential images in Western art.",
   "source": "https://cenacolovinciano.org/en/",
   "image": {
@@ -1605,7 +1605,7 @@ export const QUESTIONS = [
   "place": "De Waag, Amsterdam, Netherlands",
   "lat": 52.3729,
   "lng": 4.9003,
-  "precision": "Historic building",
+  "level": "specific",
   "story": "The painting commemorates a public anatomy lesson organised by Amsterdam’s surgeons’ guild. In Rembrandt’s time, these demonstrations took place in an anatomy theatre in the city’s weighing house, De Waag. The portrait helped establish the young artist’s reputation.",
   "source": "https://www.mauritshuis.nl/en/our-collection/artworks/146-the-anatomy-lesson-of-dr-nicolaes-tulp",
   "image": null
@@ -1618,7 +1618,7 @@ export const QUESTIONS = [
   "place": "Notre-Dame Cathedral, Paris, France",
   "lat": 48.853,
   "lng": 2.3499,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "The ceremony took place in the cathedral in December 1804. David’s monumental painting is a carefully staged record of the event, with many historical figures arranged around the central couple. The work is now displayed in a major Paris museum.",
   "source": "https://www.louvre.fr/en/explore/the-palace/the-coronation-of-napoleon",
   "image": {
@@ -1636,7 +1636,7 @@ export const QUESTIONS = [
   "place": "Gernika (Guernica), Spain",
   "lat": 43.3113,
   "lng": -2.6795,
-  "precision": "Town",
+  "level": "city",
   "story": "On 26 April 1937, German and Italian aircraft supporting Franco’s forces bombed the town. Picasso responded with one of the most influential anti-war paintings of the 20th century. The mural does not depict the town literally; its figures are symbolic expressions of the attack’s horror.",
   "source": "https://www.museoreinasofia.es/en/collection/artwork/guernica",
   "image": {
@@ -1654,7 +1654,7 @@ export const QUESTIONS = [
   "place": "Memphis, Tennessee, USA",
   "lat": 35.1495,
   "lng": -90.049,
-  "precision": "City",
+  "level": "city",
   "story": "Marc Cohn travelled to the city looking for musical inspiration and was taken to hear Al Green preach at his church. He also met gospel pianist Muriel Wilkins, who performed at the Hollywood Café in nearby Robinsonville, Mississippi. Those encounters became central to the song’s narrative and atmosphere.",
   "source": "https://www.songwritingmagazine.co.uk/songs/walking-in-memphis-marc-cohn",
   "image": null
@@ -1667,7 +1667,7 @@ export const QUESTIONS = [
   "place": "Penny Lane, Liverpool, England",
   "lat": 53.38694,
   "lng": -2.91944,
-  "precision": "Exact street / representative point",
+  "level": "specific",
   "story": "McCartney’s song turns familiar people and everyday details from his youth into a vivid street portrait. The Beatles’ official history confirms that the street was close to McCartney’s childhood home. Its name became internationally famous, and the street signs have repeatedly attracted fans and souvenir hunters.",
   "source": "https://www.thebeatles.com/penny-lane-0",
   "image": {
@@ -1685,7 +1685,7 @@ export const QUESTIONS = [
   "place": "Strawberry Field, Woolton, Liverpool, England",
   "lat": 53.3767,
   "lng": -2.9159,
-  "precision": "Exact historic site",
+  "level": "specific",
   "story": "The original Strawberry Field was a Salvation Army children’s home where Lennon played as a boy. The building was demolished in the 1970s, but the site and its gardens remain associated with the song. The Salvation Army later developed the grounds as a visitor attraction and community project.",
   "source": "https://www.strawberryfield.salvationarmy.org.uk/about-us; https://www.thebeatles.com/strawberry-fields-forever-0",
   "image": {
@@ -1703,7 +1703,7 @@ export const QUESTIONS = [
   "place": "Waterloo district, London, England",
   "lat": 51.5033,
   "lng": -0.1147,
-  "precision": "Neighbourhood / district",
+  "level": "district",
   "story": "Ray Davies explained that the area had been important to him since childhood. He remembered looking towards the river from St Thomas’ Hospital, travelling past the station and meeting his future first wife nearby. The song transforms those personal memories into a quiet portrait of two imagined people watching the evening pass.",
   "source": "https://mmusicmag.com/m/2011/08/ray-davies-2/; https://www.northcountrypublicradio.org/news/npr/366813240/naive-yet-revolutionary-ray-davies-on-50-years-of-the-kinks",
   "image": null
@@ -1716,7 +1716,7 @@ export const QUESTIONS = [
   "place": "San Francisco, California, USA",
   "lat": 37.7749,
   "lng": -122.4194,
-  "precision": "City",
+  "level": "city",
   "story": "Bennett first performed the song at the Venetian Room in San Francisco shortly after leaving Hot Springs, Arkansas. The song had been written years earlier by George Cory and Douglass Cross, but Bennett’s performance helped turn it into an enduring musical emblem of the city.",
   "source": "https://www.loc.gov/static/programs/national-recording-preservation-board/documents/ILeftMyHeartInSanFran.pdf",
   "image": null
@@ -1729,7 +1729,7 @@ export const QUESTIONS = [
   "place": "New York City, New York, USA",
   "lat": 40.7128,
   "lng": -74.006,
-  "precision": "City",
+  "level": "city",
   "story": "The song was written for Scorsese’s film and first performed by Liza Minnelli. Frank Sinatra later recorded it, helping turn it into an unofficial anthem for the city. Its fame is often associated with Sinatra, although Minnelli’s version came first and was the one heard in the original film.",
   "source": "https://www.smithsonianmag.com/smithsonian-institution/how-the-theme-song-from-a-maligned-martin-scorsese-movie-became-new-york-citys-unofficial-anthem-180986020/",
   "image": null
@@ -1742,7 +1742,7 @@ export const QUESTIONS = [
   "place": "Vienna, Austria",
   "lat": 48.2082,
   "lng": 16.3738,
-  "precision": "City",
+  "level": "city",
   "story": "Joel visited his father in the city in the mid-1970s and was struck by the way older people remained active and involved in everyday life. He later explained that the city represented a different attitude to ageing and ambition. That personal association shaped the song’s message about slowing down and appreciating life.",
   "source": "https://www.billyjoel.com/news/new-billy-joel-qa-alex-joel-asks-for-one-more-song/; https://www.wien.info/en/art-culture/music-stage-shows/pop-rock-jazz/vienna-waits-for-you-billy-joel-363942",
   "image": null
@@ -1755,7 +1755,7 @@ export const QUESTIONS = [
   "place": "Ipanema, Rio de Janeiro, Brazil",
   "lat": -22.9838,
   "lng": -43.2096,
-  "precision": "Neighbourhood",
+  "level": "district",
   "story": "Jobim and de Moraes developed the song in 1962 while spending time at the Veloso bar, later renamed Garota de Ipanema. Their muse was Heloísa Pinheiro, a young woman they saw walking towards the beach. The song became one of the best-known international ambassadors for Brazilian bossa nova.",
   "source": "https://www.cambridge.org/core/journals/popular-music/article/abs/tom-jobim-and-the-bossa-nova-era/D61EFEFEF21863C86C31477EDCD12FF9; https://blogs.loc.gov/nls-music-notes/2019/11/the-blog-from-ipanema/",
   "image": null
@@ -1768,7 +1768,7 @@ export const QUESTIONS = [
   "place": "El Paso, Texas, USA",
   "lat": 31.7619,
   "lng": -106.485,
-  "precision": "City",
+  "level": "city",
   "story": "Robbins said the idea came to him while driving his family home for Christmas. He noticed the city-limit sign on successive trips and kept forgetting to write the song until the third journey, when the opening line came to him. The finished ballad became the centrepiece of his 1959 album Gunfighter Ballads and Trail Songs.",
   "source": "https://www.loc.gov/item/prn-17-029/national-recording-registry-picks-are-over-the-rainbow/",
   "image": null
@@ -1781,7 +1781,7 @@ export const QUESTIONS = [
   "place": "Marrakech, Morocco",
   "lat": 31.6295,
   "lng": -7.9811,
-  "precision": "City",
+  "level": "city",
   "story": "Nash recalled travelling by train from Casablanca to Marrakech with his wife and a friend while he was still a member of the Hollies. He described soaking up the people, sounds and atmosphere of the carriage. The experience inspired the song that later appeared on Crosby, Stills & Nash’s debut album.",
   "source": "https://www.musicconnection.com/it-happened-in-laurel-canyon-50-years-ago-the-crosby-stills-and-nash-lp/",
   "image": null
@@ -1794,7 +1794,7 @@ export const QUESTIONS = [
   "place": "Philadelphia, Pennsylvania, USA",
   "lat": 39.9526,
   "lng": -75.1636,
-  "precision": "City",
+  "level": "city",
   "story": "Springsteen’s song was written specifically for Jonathan Demme’s film and became one of the best-known musical responses to the AIDS crisis. It won the Academy Award for Best Original Song in 1994. The film is set in the city whose legal and civic institutions form the backdrop to the story.",
   "source": "https://www.springsteenlyrics.com/lyrics.php?song=streetsofphiladelphia",
   "image": null
@@ -1807,7 +1807,7 @@ export const QUESTIONS = [
   "place": "London, England",
   "lat": 51.5074,
   "lng": -0.1278,
-  "precision": "City",
+  "level": "city",
   "story": "The band’s official history says Strummer wrote the song while living beside the River Thames on the World’s End estate in Chelsea. The fear of a major flood helped shape its apocalyptic imagery, alongside wider concerns about world events. The title drew on the BBC World Service’s familiar broadcast identification.",
   "source": "https://www.theclash.com/music/london-calling-2",
   "image": null
@@ -1820,7 +1820,7 @@ export const QUESTIONS = [
   "place": "Warrington, England",
   "lat": 53.39,
   "lng": -2.597,
-  "precision": "Town",
+  "level": "city",
   "story": "The 1993 Warrington bombings killed three-year-old Johnathan Ball and twelve-year-old Tim Parry. The attack prompted Dolores O’Riordan to write the song, which became one of the band’s biggest international hits. The group later explained that the subject matter pushed them towards a heavier, more aggressive sound.",
   "source": "https://www.abc.net.au/listen/doublej/music-reads/features/the-cranberries-unlikely-success-noel-hogan/10790326; https://cranberriesworld.com/music/song-list-a-z/zombie/",
   "image": {
@@ -1838,7 +1838,7 @@ export const QUESTIONS = [
   "place": "Derry (Londonderry), Northern Ireland, UK",
   "lat": 54.9966,
   "lng": -7.3086,
-  "precision": "City",
+  "level": "city",
   "story": "The song was written in response to the events of 30 January 1972, when soldiers opened fire on a civil-rights march in Derry, killing 13 people that day; another victim later died. U2 framed the song as an anti-violence statement rather than a call to support either side of the conflict.",
   "source": "https://www.u2.com/pages/song/sunday-bloody-sunday; https://www.nporadio2.nl/muziek/nummers/b589344f-3c7b-45b0-9b02-8b032a2dfa09/sunday-bloody-sunday",
   "image": null
@@ -1851,7 +1851,7 @@ export const QUESTIONS = [
   "place": "Gqeberha (formerly Port Elizabeth), South Africa",
   "lat": -33.9608,
   "lng": 25.6022,
-  "precision": "City",
+  "level": "city",
   "story": "Biko was detained and beaten during interrogation in Port Elizabeth in August 1977. He was later transferred to Pretoria, where he died in police custody on 12 September. Gabriel said the news of Biko’s death shocked him and became the starting point for the song, released in 1980.",
   "source": "https://petergabriel.com/release/biko/; https://petergabriel.com/news/stephen-biko-40-years-ago/",
   "image": null
@@ -1864,7 +1864,7 @@ export const QUESTIONS = [
   "place": "Soweto, Johannesburg, South Africa",
   "lat": -26.2678,
   "lng": 27.8585,
-  "precision": "Township",
+  "level": "city",
   "story": "The song recalls the 16 June 1976 student uprising, when thousands of schoolchildren protested against the imposition of Afrikaans as a language of instruction. Police violence left many young people dead and injured. Masekela wrote the song in response, and Makeba’s performance carried the story to audiences around the world.",
   "source": "https://sahistory.org.za/article/biography-miriam-makeba-narcy-negrete",
   "image": null
@@ -1877,7 +1877,7 @@ export const QUESTIONS = [
   "place": "Kent State University, Kent, Ohio, USA",
   "lat": 41.149,
   "lng": -81.341,
-  "precision": "University campus",
+  "level": "specific",
   "story": "On 4 May 1970, Ohio National Guard troops fired on students at Kent State University, killing four and wounding nine. Neil Young wrote the song after seeing photographs of the shooting. The group recorded it quickly, and it became one of the defining musical responses to the Vietnam-era protests.",
   "source": "https://www.library.kent.edu/special-collections-and-archives/music-related-kent-state-shootings",
   "image": null
@@ -1890,7 +1890,7 @@ export const QUESTIONS = [
   "place": "Paterson, New Jersey, USA",
   "lat": 40.9168,
   "lng": -74.1718,
-  "precision": "City",
+  "level": "city",
   "story": "Rubin ‘Hurricane’ Carter and John Artis were arrested after a triple shooting at the Lafayette Bar and Grill in Paterson in June 1966. Dylan’s song helped bring international attention to Carter’s case, although the lyrics take artistic liberties. A federal judge overturned Carter’s conviction in 1985, and he was released.",
   "source": "https://home.nps.gov/pagr/learn/historyculture/hurricane-carter.htm; https://www.njarts.net/hurricane-bob-dylan/",
   "image": null
@@ -1903,7 +1903,7 @@ export const QUESTIONS = [
   "place": "Folsom State Prison, Folsom, California, USA",
   "lat": 38.6805,
   "lng": -121.1519,
-  "precision": "Exact facility",
+  "level": "specific",
   "story": "Cash performed at the prison on 13 January 1968, recording two shows in front of inmates. The atmosphere and audience response gave the album a raw energy that distinguished it from studio recordings. Its success helped re-establish Cash as a major performer and strengthened his association with prison reform and incarcerated audiences.",
   "source": "https://www.johnnycash.com/music/folsom-prison/; https://www.history.com/this-day-in-history/January-13/johnny-cash-performs-at-folsom-prison-california",
   "image": {
@@ -1921,7 +1921,7 @@ export const QUESTIONS = [
   "place": "Sugar Hill, Harlem, New York City, USA",
   "lat": 40.8243,
   "lng": -73.944,
-  "precision": "Neighbourhood",
+  "level": "district",
   "story": "Strayhorn said he was writing directions for the new subway route because people were confused about how to reach Ellington’s home. The destination was Sugar Hill, an affluent part of Harlem. The song became the Ellington Orchestra’s signature tune and one of the defining standards of the swing era.",
   "source": "https://amhistory.si.edu/documentsgallery/exhibitions/ellington_strayhorn_6.html",
   "image": null
@@ -1934,7 +1934,7 @@ export const QUESTIONS = [
   "place": "Bangkok, Thailand",
   "lat": 13.7563,
   "lng": 100.5018,
-  "precision": "City",
+  "level": "city",
   "story": "The song comes from Chess, the musical created by Tim Rice, Benny Andersson and Björn Ulvaeus. Murray Head’s recording became an international hit in 1985. The lyrics contrast the spectacle of the city with the chess tournament at the centre of the musical’s Cold War-era story.",
   "source": "https://murrayhead.com/en/",
   "image": null
@@ -1947,7 +1947,7 @@ export const QUESTIONS = [
   "place": "Amsterdam, Netherlands",
   "lat": 52.3728,
   "lng": 4.8936,
-  "precision": "City",
+  "level": "city",
   "story": "Brel’s song is known for its vivid account of sailors spending their time ashore. He recorded the celebrated version live at the Olympia in Paris in October 1964 and never made a studio recording of it. The performance became one of his most enduringly popular chansons.",
   "source": "https://musee.sacem.fr/index.php/ExhibitionCMS/Chroniques/SimpleExhibitions?id=56",
   "image": null
@@ -1960,7 +1960,7 @@ export const QUESTIONS = [
   "place": "Avenue des Champs-Élysées, Paris, France",
   "lat": 48.8698,
   "lng": 2.3077,
-  "precision": "Exact avenue / representative point",
+  "level": "specific",
   "story": "Dassin’s French-language hit was adapted from an earlier English song called ‘Waterloo Road’. Lyricist Pierre Delanoë reshaped the words around a famous Parisian avenue, turning the song into a light-hearted portrait of chance encounters and city life. It became one of Dassin’s signature recordings.",
   "source": "https://www.pierre-delanoe.fr/les-champs-elysees.html",
   "image": {
@@ -1978,7 +1978,7 @@ export const QUESTIONS = [
   "place": "Birmingham, Alabama, USA",
   "lat": 33.5186,
   "lng": -86.8104,
-  "precision": "City",
+  "level": "city",
   "story": "The 16th Street Baptist Church bombing took place on 15 September 1963 and killed Addie Mae Collins, Denise McNair, Carole Robertson and Cynthia Wesley. Simone later said the attack, along with the murder of Medgar Evers, made her realise she could no longer avoid writing directly about racial injustice.",
   "source": "https://www.pbs.org/wnet/americanmasters/the-story-behind-nina-simones-protest-song-mississippi-goddam/16651/; https://nmaahc.si.edu/nina-simone",
   "image": null
@@ -1991,7 +1991,7 @@ export const QUESTIONS = [
   "place": "Dublin, Ireland",
   "lat": 53.3498,
   "lng": -6.2603,
-  "precision": "City",
+  "level": "city",
   "story": "The Easter Rising began on 24 April 1916, when rebels seized the General Post Office and other strategic buildings. The proclamation of a republic was read outside the GPO, and fighting continued for six days. The ballad later became closely associated with the memory of the Rising and its participants.",
   "source": "https://www.rte.ie/culture/folk-song/2019/0423/1045191-the-foggy-dew/; https://www.1916societies.ie/news/culture-and-history/anthem-of-the-revolution/",
   "image": null
@@ -2004,7 +2004,7 @@ export const QUESTIONS = [
   "place": "Athenry, County Galway, Ireland",
   "lat": 53.298,
   "lng": -8.743,
-  "precision": "Town",
+  "level": "city",
   "story": "The song tells the story of a man caught stealing corn during the Great Famine and sentenced to transportation to Australia. St. John wrote it in the 1970s, and it later became especially popular at Irish sporting events. The Athenry Heritage Centre describes how the ballad helped immortalise the town.",
   "source": "https://www.athenryheritagecentre.com/index.php/athenry-history/4-the-fields-of-athenry; https://www.irishfamine.ie/the-arts-and-the-famine/music/",
   "image": {
@@ -2022,7 +2022,7 @@ export const QUESTIONS = [
   "place": "Skibbereen, County Cork, Ireland",
   "lat": 51.5504,
   "lng": -9.2656,
-  "precision": "Town",
+  "level": "city",
   "story": "The ballad describes the reasons an Irish father left his family’s home during the Great Famine. Skibbereen became internationally associated with the famine because of the severe suffering recorded there. The song has endured as a musical expression of loss, emigration and the memory of the disaster.",
   "source": "https://www.irishfamine.ie/the-arts-and-the-famine/music/",
   "image": {
@@ -2040,7 +2040,7 @@ export const QUESTIONS = [
   "place": "Maunawili, Oʻahu, Hawaiʻi, USA",
   "lat": 21.373,
   "lng": -157.759,
-  "precision": "Locality / inspiration area",
+  "level": "specific",
   "story": "Princess Liliʻuokalani was visiting the Boyd ranch when she witnessed a farewell embrace that inspired the song. The story is associated with Maunawili on the windward side of Oʻahu. The melody became one of Hawaiʻi’s best-known songs and later a symbol of farewell and cultural identity.",
   "source": "https://escholarship.org/content/qt4jx613tr/qt4jx613tr.pdf; https://washingtonplace.hawaii.gov/queen-liliuokalani/queens-music-and-washington-place/",
   "image": null
@@ -2053,7 +2053,7 @@ export const QUESTIONS = [
   "place": "Gundagai, New South Wales, Australia",
   "lat": -35.065,
   "lng": 148.103,
-  "precision": "Town",
+  "level": "city",
   "story": "O’Hagan wrote the song in 1921, and it was first performed in a Melbourne pantomime the following year. The National Film and Sound Archive records that he chose the town despite never having been there. Peter Dawson’s 1931 recording helped make the song a national favourite.",
   "source": "https://www.nfsa.gov.au/collection/item/along-road-gundagai-0; https://www.nfsa.gov.au/collection/item/jack-ohagan-interview-road-gundagai",
   "image": {
@@ -2071,7 +2071,7 @@ export const QUESTIONS = [
   "place": "Trench Town Culture Yard, Kingston, Jamaica",
   "lat": 17.9876,
   "lng": -76.8039,
-  "precision": "Exact heritage site",
+  "level": "specific",
   "story": "The song recalls Marley’s life in Trench Town, where he and Vincent ‘Tata’ Ford shared experiences that helped shape the lyrics. The Jamaica National Heritage Trust identifies the Culture Yard as the place where the pair lived and where the song was co-written. The restored yard is now a small heritage museum.",
   "source": "https://www.bobmarley.com/history/; https://www.jnht.gov.jm/site_trench_town_culture_yard.php",
   "image": {
@@ -2089,7 +2089,7 @@ export const QUESTIONS = [
   "place": "St George's Hall, Liverpool, England",
   "lat": 53.4078,
   "lng": -2.9805,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "Liverpool's St George's Hall supplied the monumental interior and exterior used for key Gotham scenes. The production also used other parts of the city, whose historic streets and waterfront helped create the film's dark urban atmosphere.",
   "source": "https://www.ljmu.ac.uk/about-us/news/articles/2022/3/1/ljmu-screen-school-students-big-break-with-the-batman",
   "image": {
@@ -2107,7 +2107,7 @@ export const QUESTIONS = [
   "place": "Venice Beach, Los Angeles, USA",
   "lat": 33.985,
   "lng": -118.4695,
-  "precision": "Beach / neighbourhood",
+  "level": "district",
   "story": "The film's bright roller-skating sequence helped turn this stretch of waterfront into one of Barbie's most recognisable real-world backdrops. The production used locations around Los Angeles, while the pink costumes and vivid styling made the beach scenes instantly memorable.",
   "source": "https://www.cntraveler.com/story/barbie-movie-venice-beach",
   "image": null
@@ -2120,7 +2120,7 @@ export const QUESTIONS = [
   "place": "Liwa Desert, Abu Dhabi, United Arab Emirates",
   "lat": 23.13,
   "lng": 53.77,
-  "precision": "Named desert region / representative pin",
+  "level": "region",
   "story": "The production filmed across multiple sites in the Liwa Desert, using its enormous dunes as the surface of Arrakis. The landscape's scale and shifting sand helped create the film's otherworldly setting without relying entirely on digital environments.",
   "source": "https://www.wam.ae/en/article/b1qrfmk-filmmaker-and-stars-dune-part-two-spotted-with",
   "image": {
@@ -2138,7 +2138,7 @@ export const QUESTIONS = [
   "place": "Los Alamos, New Mexico, USA",
   "lat": 35.88,
   "lng": -106.3031,
-  "precision": "Town-level",
+  "level": "city",
   "story": "The film used real Manhattan Project-era locations, including Fuller Lodge, the former Women's Dormitory and Oppenheimer's house. The town was created during the Second World War as a secret laboratory community for the development of the atomic bomb.",
   "source": "https://www.losalamosnm.gov/Community/Projects-initiatives/CMO-Projects/Project-Oppenheimer",
   "image": {
@@ -2156,7 +2156,7 @@ export const QUESTIONS = [
   "place": "Jahamun Tunnel, Seoul, South Korea",
   "lat": 37.5927,
   "lng": 126.9677,
-  "precision": "Exact tunnel",
+  "level": "specific",
   "story": "The tunnel's long staircase and sloping approach reinforce the film's visual contrast between households at different social levels. The real tunnel connects the Buam-dong and Cheongun-dong areas and became a destination for fans after the film's international success.",
   "source": "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=177334",
   "image": {
@@ -2174,7 +2174,7 @@ export const QUESTIONS = [
   "place": "Drayton House, Lowick, Northamptonshire, England",
   "lat": 52.374,
   "lng": -0.646,
-  "precision": "Historic estate",
+  "level": "specific",
   "story": "The Grade I-listed Drayton House provided the setting for the Catton family estate in the 2023 film. Its layered architecture and formal grounds became central to the film's atmosphere of privilege, excess and unease. The house is privately owned and not generally open for casual visits.",
   "source": "https://www.westnorthants.gov.uk/filming-northamptonshire/filming-locations",
   "image": null
@@ -2187,7 +2187,7 @@ export const QUESTIONS = [
   "place": "San Domenico Palace, Taormina, Sicily, Italy",
   "lat": 37.851,
   "lng": 15.288,
-  "precision": "Exact hotel",
+  "level": "specific",
   "story": "The former Dominican monastery became the fictional White Lotus resort in the Sicily season. Its terraces overlook the Ionian Sea and Mount Etna, and the hotel's real history gives the series' luxurious setting an unusually distinctive backdrop.",
   "source": "https://www.fourseasons.com/taormina/",
   "image": {
@@ -2205,7 +2205,7 @@ export const QUESTIONS = [
   "place": "Place de l’Estrapade, Paris, France",
   "lat": 48.8445,
   "lng": 2.347,
-  "precision": "Exact square",
+  "level": "specific",
   "story": "The square in the Latin Quarter is one of the series' best-known recurring locations. The surrounding streets, cafés and buildings help establish the version of Paris that Emily encounters after moving from Chicago for work.",
   "source": "https://parisjetaime.com/eng/article/see-the-paris-of-emily-in-paris-a1097",
   "image": {
@@ -2223,7 +2223,7 @@ export const QUESTIONS = [
   "place": "Royal Crescent, Bath, England",
   "lat": 51.385,
   "lng": -2.368,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "Bath's Royal Crescent was used as a backdrop for Regency London in the series. The curved terrace was built between 1767 and 1775 and is one of the city's best-known examples of Georgian architecture.",
   "source": "https://www.visitbath.co.uk/blog/read/2026/01/bridgerton-filming-locations-in-bath-b86",
   "image": {
@@ -2241,7 +2241,7 @@ export const QUESTIONS = [
   "place": "Highclere Castle, Hampshire, England",
   "lat": 51.326,
   "lng": -1.361,
-  "precision": "Exact estate",
+  "level": "specific",
   "story": "Highclere Castle has been the home of the Carnarvon family since the seventeenth century. Its interiors and grounds became the Crawley family's fictional home, while some servants' quarters and other scenes were filmed elsewhere.",
   "source": "https://www.visit-hampshire.co.uk/ideas-and-inspiration/film-and-tv/downton-abbey",
   "image": {
@@ -2259,7 +2259,7 @@ export const QUESTIONS = [
   "place": "Midhope Castle, South Queensferry, Scotland",
   "lat": 55.97,
   "lng": -3.462,
-  "precision": "Exact castle",
+  "level": "specific",
   "story": "Midhope Castle is a sixteenth-century tower house on the Hopetoun Estate. It stands in for Lallybroch in the television adaptation, although the interior scenes were filmed elsewhere. The building is a real historic site, not a purpose-built set.",
   "source": "https://www.visitscotland.com/places-to-go/film-tv/outlander",
   "image": {
@@ -2277,7 +2277,7 @@ export const QUESTIONS = [
   "place": "Charles Bridge, Prague, Czechia",
   "lat": 50.0865,
   "lng": 14.4114,
-  "precision": "Exact bridge",
+  "level": "specific",
   "story": "Prague provided several locations for Brian De Palma's first Mission: Impossible film, including Charles Bridge, Old Town Square and the National Museum. The city's historic architecture doubled for parts of the film's European espionage setting.",
   "source": "https://filmcommission.gov.cz/en/film/mission-impossible/",
   "image": {
@@ -2295,7 +2295,7 @@ export const QUESTIONS = [
   "place": "Preikestolen (Pulpit Rock), Rogaland, Norway",
   "lat": 58.986,
   "lng": 6.188,
-  "precision": "Exact natural landmark",
+  "level": "specific",
   "story": "Preikestolen rises about 604 metres above Lysefjord and became the setting for one of the film's most striking action sequences. The production used the real cliff, although the film's perilous stunt was carefully controlled and enhanced for cinema.",
   "source": "https://www.visitnorway.com/places-to-go/fjord-norway/the-lysefjord/attractions/preikestolen/",
   "image": {
@@ -2313,7 +2313,7 @@ export const QUESTIONS = [
   "place": "Tower Bridge, London, England",
   "lat": 51.5055,
   "lng": -0.0754,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "Tower Bridge appears during the film's London climax. Its two towers and opening road sections make it one of the city's most recognisable landmarks, and the film used the surrounding riverside streets as part of its action sequence.",
   "source": "https://www.visitlondon.com/things-to-do/sightseeing/film-locations/top-10-film-locations-in-london",
   "image": {
@@ -2331,7 +2331,7 @@ export const QUESTIONS = [
   "place": "Zócalo, Mexico City, Mexico",
   "lat": 19.4326,
   "lng": -99.1332,
-  "precision": "Exact square",
+  "level": "specific",
   "story": "The production transformed the historic square for the film's elaborate opening, complete with a Day of the Dead parade. The sequence brought international attention to the city's annual celebrations and its monumental historic centre.",
   "source": "https://mexicocity.cdmx.gob.mx/venues/zocalo/",
   "image": {
@@ -2349,7 +2349,7 @@ export const QUESTIONS = [
   "place": "Hotel Sidi Driss, Matmata, Tunisia",
   "lat": 33.544,
   "lng": 9.969,
-  "precision": "Exact building",
+  "level": "specific",
   "story": "The distinctive underground architecture of Matmata provided the interior of the Lars homestead. The cave-like rooms were originally built to stay cool in the desert climate, and the property later became a pilgrimage site for Star Wars fans.",
   "source": "https://www.tunisiatourism.info/en/",
   "image": {
@@ -2367,7 +2367,7 @@ export const QUESTIONS = [
   "place": "Finse, Norway",
   "lat": 60.601,
   "lng": 7.503,
-  "precision": "Village-level",
+  "level": "city",
   "story": "Finse's snow-covered terrain doubled for the ice planet Hoth. The crew worked in difficult winter conditions, and the real mountain railway village remains a remote stop on the Bergen Line between Oslo and Bergen.",
   "source": "https://www.visitnorway.com/places-to-go/eastern-norway/finse/",
   "image": {
@@ -2385,7 +2385,7 @@ export const QUESTIONS = [
   "place": "Wallilabou Bay, Saint Vincent, Saint Vincent and the Grenadines",
   "lat": 13.255,
   "lng": -61.275,
-  "precision": "Exact bay",
+  "level": "specific",
   "story": "Wallilabou Bay was transformed into the film's Port Royal set. Remnants of the production and the bay's steep green hillsides helped make the site a recognisable stop for fans of the pirate adventure.",
   "source": "https://discoversvg.com/destinations/wallilabou",
   "image": {
@@ -2403,7 +2403,7 @@ export const QUESTIONS = [
   "place": "Martin Place, Sydney, Australia",
   "lat": -33.8677,
   "lng": 151.2094,
-  "precision": "Exact public square",
+  "level": "specific",
   "story": "Sydney's central business district played a major role in the film's cityscape. Martin Place and its fountain appear in the finished movie, while much of the interior work was completed at Fox Studios. The location helped give the simulated city a recognisable real-world texture.",
   "source": "https://www.nfsa.gov.au/collection/item/filming-matrix",
   "image": {
@@ -2421,7 +2421,7 @@ export const QUESTIONS = [
   "place": "Kualoa Ranch, Oahu, Hawaii, USA",
   "lat": 21.52,
   "lng": -157.837,
-  "precision": "Exact ranch",
+  "level": "specific",
   "story": "Kualoa Ranch has appeared in Jurassic Park and several later productions. Its green valleys, ridgelines and open pastures helped create the fictional island park, while the real ranch remains a working cattle ranch and visitor destination.",
   "source": "https://www.kualoa.com/film-and-tv",
   "image": {
@@ -2439,7 +2439,7 @@ export const QUESTIONS = [
   "place": "Astoria, Oregon, USA",
   "lat": 46.1879,
   "lng": -123.8313,
-  "precision": "City-level",
+  "level": "city",
   "story": "Astoria's historic streets and coastal scenery were central to the film's look. The production used several local buildings and viewpoints, and the town has embraced its connection to the adventure film for generations of visitors.",
   "source": "https://www.visitoregon.com/astoria-guide/",
   "image": {
@@ -2457,7 +2457,7 @@ export const QUESTIONS = [
   "place": "Woodstock, Illinois, USA",
   "lat": 42.3147,
   "lng": -88.4487,
-  "precision": "Town-level",
+  "level": "city",
   "story": "The production used Woodstock's town square, streets and local businesses to create the film's repeating winter day. The town now celebrates its connection to the movie, even though the story itself is set in Punxsutawney, Pennsylvania.",
   "source": "https://www.enjoyillinois.com/plan-your-trip/travel-inspiration/film-and-tv-shooting-locations/",
   "image": {
@@ -2475,7 +2475,7 @@ export const QUESTIONS = [
   "place": "671 Lincoln Avenue, Winnetka, Illinois, USA",
   "lat": 42.1081,
   "lng": -87.735,
-  "precision": "Exact building",
+  "level": "specific",
   "story": "The Georgian-style house became one of the most recognisable homes in holiday cinema. The production filmed its exterior in Winnetka, while interiors and other scenes were created elsewhere in the Chicago area. It remains a private residence.",
   "source": "https://catalog.afi.com/Catalog/moviedetails/58544",
   "image": {
@@ -2493,7 +2493,7 @@ export const QUESTIONS = [
   "place": "Field of Dreams Movie Site, Dyersville, Iowa, USA",
   "lat": 42.489,
   "lng": -91.013,
-  "precision": "Exact site",
+  "level": "specific",
   "story": "The original baseball field was created on a farm outside Dyersville for the film. It has been preserved as a visitor attraction, where fans can walk the outfield, play catch and see the landscape that became central to the movie's emotional finale.",
   "source": "https://www.fieldofdreamsmoviesite.com/visit",
   "image": {
@@ -2511,7 +2511,7 @@ export const QUESTIONS = [
   "place": "Art Institute of Chicago, Chicago, Illinois, USA",
   "lat": 41.8796,
   "lng": -87.6237,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "The museum sequence is one of the film's most memorable pauses, with the characters moving through galleries and reflecting on the artworks. The Art Institute's collection and grand galleries made it a natural setting for the trio's day in the city.",
   "source": "https://www.artic.edu/",
   "image": {
@@ -2529,7 +2529,7 @@ export const QUESTIONS = [
   "place": "The Exorcist Steps, Georgetown, Washington, DC, USA",
   "lat": 38.905,
   "lng": -77.07,
-  "precision": "Exact staircase",
+  "level": "specific",
   "story": "The steep staircase at the corner of Prospect Street and 36th Street became one of horror cinema's most recognisable locations. A commemorative plaque marks the steps, which were used for the film's climactic sequence.",
   "source": "https://www.georgetowndc.com/guide/georgetown-movie-sites/",
   "image": {
@@ -2547,7 +2547,7 @@ export const QUESTIONS = [
   "place": "Ohio State Reformatory, Mansfield, Ohio, USA",
   "lat": 40.765,
   "lng": -82.516,
-  "precision": "Exact historic building",
+  "level": "specific",
   "story": "The former reformatory supplied the film's formidable prison interiors and exteriors. It closed as a prison in 1990 and is now preserved as a historic site, with tours that explore both its real history and its role in the movie.",
   "source": "https://www.mrps.org/explore-the-museums/shawshank-museum/",
   "image": {
@@ -2565,7 +2565,7 @@ export const QUESTIONS = [
   "place": "Bletchley Park, Milton Keynes, England",
   "lat": 51.9977,
   "lng": -0.7407,
-  "precision": "Exact historic site",
+  "level": "specific",
   "story": "Bletchley Park was the wartime home of Britain's Government Code and Cypher School. The film brought wider attention to the people who worked there, including Alan Turing, and to the codebreaking effort that helped the Allies during the Second World War.",
   "source": "https://bletchleypark.org.uk/",
   "image": {
@@ -2583,7 +2583,7 @@ export const QUESTIONS = [
   "place": "Malo-les-Bains Beach, Dunkirk, France",
   "lat": 51.053,
   "lng": 2.402,
-  "precision": "Exact beach",
+  "level": "specific",
   "story": "The evacuation known as Operation Dynamo took place in May and June 1940. The production filmed around Dunkirk and used its beaches and coastline to evoke the desperate effort to bring hundreds of thousands of Allied troops across the Channel.",
   "source": "https://www.dunkerque-tourisme.fr/en/",
   "image": {
@@ -2601,7 +2601,7 @@ export const QUESTIONS = [
   "place": "Omaha Beach, Normandy, France",
   "lat": 49.369,
   "lng": -0.878,
-  "precision": "Named beach",
+  "level": "specific",
   "story": "Omaha Beach was one of the main American landing sectors on 6 June 1944. The film's opening battle was shot largely in Ireland, not on this beach, but the real coastline remains closely associated with the events portrayed.",
   "source": "https://www.normandy-tourism.org/",
   "image": {
@@ -2619,7 +2619,7 @@ export const QUESTIONS = [
   "place": "Kraków, Poland",
   "lat": 50.0647,
   "lng": 19.945,
-  "precision": "City-level",
+  "level": "city",
   "story": "The film was shot in and around Kraków, including locations in the former Jewish district of Kazimierz and near the site of the Płaszów camp. The city's streets and surviving wartime sites help connect the story to the real history of the Holocaust.",
   "source": "https://www.krakow.pl/english/",
   "image": null
@@ -2632,7 +2632,7 @@ export const QUESTIONS = [
   "place": "Warsaw, Poland",
   "lat": 52.2297,
   "lng": 21.0122,
-  "precision": "City-level",
+  "level": "city",
   "story": "The film recounts the experiences of pianist Władysław Szpilman during the Nazi occupation. Warsaw's wartime destruction and subsequent rebuilding are essential to the story, and parts of the movie were filmed in the city and elsewhere in Poland.",
   "source": "https://www.poland.travel/en/",
   "image": null
@@ -2645,7 +2645,7 @@ export const QUESTIONS = [
   "place": "Princeton University, Princeton, New Jersey, USA",
   "lat": 40.3431,
   "lng": -74.6551,
-  "precision": "Exact campus",
+  "level": "specific",
   "story": "John Nash joined Princeton as a graduate student in 1948 and later returned as a professor. The film uses the university as a central setting, although some campus scenes were recreated at other locations for production.",
   "source": "https://www.princeton.edu/",
   "image": {
@@ -2663,7 +2663,7 @@ export const QUESTIONS = [
   "place": "Harvard Law School, Cambridge, Massachusetts, USA",
   "lat": 42.377,
   "lng": -71.119,
-  "precision": "Exact campus",
+  "level": "specific",
   "story": "Harvard Law School is the destination that drives Elle's story, even though much of the film was shot in California. The campus and its reputation provide the comedy's contrast between Elle's sunny California background and the world she is determined to enter.",
   "source": "https://hls.harvard.edu/",
   "image": {
@@ -2681,7 +2681,7 @@ export const QUESTIONS = [
   "place": "Massachusetts Institute of Technology, Cambridge, Massachusetts, USA",
   "lat": 42.3601,
   "lng": -71.0942,
-  "precision": "Exact campus",
+  "level": "specific",
   "story": "The film uses the university's mathematics culture as a central part of Will's story. Although several scenes were filmed at other Boston-area institutions, MIT is the real-world academic setting that gives the character's talent its context.",
   "source": "https://mit.edu/",
   "image": {
@@ -2699,7 +2699,7 @@ export const QUESTIONS = [
   "place": "Henry River Mill Village, Hildebran, North Carolina, USA",
   "lat": 35.715,
   "lng": -81.477,
-  "precision": "Exact historic village",
+  "level": "city",
   "story": "The abandoned mill village supplied the weathered buildings and streets of District 12. Its early twentieth-century mill houses gave the film a convincing industrial-era setting, and the site later became a draw for fans of the book and movie series.",
   "source": "https://www.visitnc.com/",
   "image": {
@@ -2717,7 +2717,7 @@ export const QUESTIONS = [
   "place": "Shakespeare Avenue stairs, Bronx, New York, USA",
   "lat": 40.8366,
   "lng": -73.923,
-  "precision": "Exact staircase",
+  "level": "specific",
   "story": "The steep staircase between Shakespeare and Anderson Avenues became a pilgrimage site after the film's release. The scene's choreography and music transformed an ordinary neighbourhood stairway into one of the movie's defining images.",
   "source": "https://www.nyc.gov/",
   "image": {
@@ -2735,7 +2735,7 @@ export const QUESTIONS = [
   "place": "Ames Mansion, Borderland State Park, North Easton, Massachusetts, USA",
   "lat": 42.0655,
   "lng": -71.125,
-  "precision": "Exact mansion",
+  "level": "specific",
   "story": "The Ames Mansion's dark woodwork, elaborate rooms and landscaped grounds gave the murder mystery its distinctive atmosphere. The estate was built for the Ames family and is now part of a public state park.",
   "source": "https://www.mass.gov/locations/borderland-state-park",
   "image": {
@@ -2753,7 +2753,7 @@ export const QUESTIONS = [
   "place": "Rosslyn Chapel, Roslin, Scotland",
   "lat": 55.8559,
   "lng": -3.1606,
-  "precision": "Exact chapel",
+  "level": "specific",
   "story": "Rosslyn Chapel's elaborate medieval carvings and symbolism made it a natural choice for the film's finale. The chapel was founded in the fifteenth century and has inspired speculation and stories about hidden meanings for generations.",
   "source": "https://www.rosslynchapel.com/",
   "image": {
@@ -2771,7 +2771,7 @@ export const QUESTIONS = [
   "place": "Chatsworth House, Derbyshire, England",
   "lat": 53.227,
   "lng": -1.611,
-  "precision": "Exact estate",
+  "level": "specific",
   "story": "Chatsworth was used as Pemberley in the film, with its grand interiors and sweeping parkland helping establish Darcy's wealth and status. Jane Austen's novel does not name Chatsworth as the real estate, so this is a production location rather than a claim about the fictional house.",
   "source": "https://www.chatsworth.org/visit-chatsworth/film-tv/",
   "image": {
@@ -2789,7 +2789,7 @@ export const QUESTIONS = [
   "place": "Christ Church, Oxford, England",
   "lat": 51.75,
   "lng": -1.255,
-  "precision": "Exact college",
+  "level": "specific",
   "story": "Carroll was a mathematics lecturer at Christ Church, where Alice Liddell was the daughter of the dean. A boat trip on the nearby Thames helped inspire the story, and the college's rooms and gardens are still associated with its origins.",
   "source": "https://www.experienceoxfordshire.org/alice-in-wonderland-oxford/",
   "image": {
@@ -2807,7 +2807,7 @@ export const QUESTIONS = [
   "place": "Ashdown Forest, East Sussex, England",
   "lat": 51.06,
   "lng": 0.06,
-  "precision": "Named forest",
+  "level": "region",
   "story": "A. A. Milne lived on the edge of Ashdown Forest and explored it with his son Christopher Robin. Its heathland, bridges and wooded paths inspired the Hundred Acre Wood and several of the stories' best-loved places.",
   "source": "https://ashdownforest.org/explore/winnie-the-pooh/",
   "image": {
@@ -2825,7 +2825,7 @@ export const QUESTIONS = [
   "place": "Kensington Gardens, London, England",
   "lat": 51.507,
   "lng": -0.181,
-  "precision": "Exact park",
+  "level": "specific",
   "story": "Barrie drew on Kensington Gardens and his friendship with the Llewelyn Davies boys when creating Peter Pan. In 1912 he paid for the bronze statue beside the Long Water, marking a place associated with Peter's arrival in the story.",
   "source": "https://www.royalparks.org.uk/read-watch-listen/shrine-youth-peter-pan-statue-kensington-gardens",
   "image": {
@@ -2843,7 +2843,7 @@ export const QUESTIONS = [
   "place": "Hannibal, Missouri, USA",
   "lat": 39.7084,
   "lng": -91.3585,
-  "precision": "Town-level",
+  "level": "city",
   "story": "Twain spent much of his boyhood in Hannibal, and its riverfront, caves and streets provided inspiration for Tom Sawyer and Huckleberry Finn. The town preserves sites associated with the author and the fictional adventures.",
   "source": "https://marktwainmuseum.org/about/our-history/",
   "image": {
@@ -2861,7 +2861,7 @@ export const QUESTIONS = [
   "place": "Primrose Hill, London, England",
   "lat": 51.539,
   "lng": -0.161,
-  "precision": "Exact hill",
+  "level": "specific",
   "story": "Wells used Primrose Hill as the location for one of the novel's most haunting scenes, where the narrator encounters the aftermath of the invasion. The hill remains a public viewpoint with wide views across the city.",
   "source": "https://www.royalparks.org.uk/read-watch-listen/royal-parks-literature",
   "image": {
@@ -2879,7 +2879,7 @@ export const QUESTIONS = [
   "place": "The Plaza Hotel, New York, USA",
   "lat": 40.7645,
   "lng": -73.9743,
-  "precision": "Exact hotel",
+  "level": "specific",
   "story": "The Plaza appears in the novel's climactic confrontation, when Gatsby's carefully constructed world begins to collapse. Fitzgerald used the hotel's public image of wealth and exclusivity to sharpen the contrast between old money and new ambition.",
   "source": "https://www.theplazany.com/history/timeline-history-of-the-plaza-hotel/",
   "image": {
@@ -2897,7 +2897,7 @@ export const QUESTIONS = [
   "place": "New York City, New York, USA",
   "lat": 40.758,
   "lng": -73.9855,
-  "precision": "City-level",
+  "level": "city",
   "story": "Salinger's novel follows Holden through Manhattan over a few days, capturing his alienation and his complicated feelings about growing up. The city is more than a backdrop: its crowds, hotels, museums and public spaces shape his experience.",
   "source": "https://www.britannica.com/topic/The-Catcher-in-the-Rye",
   "image": null
@@ -2910,7 +2910,7 @@ export const QUESTIONS = [
   "place": "San Francisco, California, USA",
   "lat": 37.7749,
   "lng": -122.4194,
-  "precision": "City-level",
+  "level": "city",
   "story": "The novel moves between the lives of immigrant mothers and their American-born daughters, with San Francisco as a central home for the families. Tan's stories explore memory, migration and the tensions that can arise between generations.",
   "source": "https://www.penguinrandomhouse.com/books/12539/the-joy-luck-club-by-amy-tan/",
   "image": null
@@ -2923,7 +2923,7 @@ export const QUESTIONS = [
   "place": "Chicago, Illinois, USA",
   "lat": 41.8819,
   "lng": -87.6278,
-  "precision": "City-level",
+  "level": "city",
   "story": "Cisneros drew on her experiences growing up in Chicago to create Esperanza's neighbourhood. The short linked vignettes explore identity, poverty, family and the desire for a home of one's own, making the city an important part of the book's emotional landscape.",
   "source": "https://www.penguinrandomhouse.com/books/24584/the-house-on-mango-street-by-sandra-cisneros/",
   "image": null
@@ -2936,7 +2936,7 @@ export const QUESTIONS = [
   "place": "Monroeville, Alabama, USA",
   "lat": 31.515,
   "lng": -87.324,
-  "precision": "Town-level",
+  "level": "city",
   "story": "Maycomb is fictional, but Lee drew on her childhood in Monroeville and on people and events she knew. The town's courthouse and literary heritage helped it become closely associated with the novel and its film adaptation.",
   "source": "https://www.monroevilleal.gov/",
   "image": {
@@ -2954,7 +2954,7 @@ export const QUESTIONS = [
   "place": "Stockholm, Sweden",
   "lat": 59.3293,
   "lng": 18.0686,
-  "precision": "City-level",
+  "level": "city",
   "story": "Larsson's Millennium novels use Stockholm's islands, waterfronts and contrasting neighbourhoods as a central part of the story. The city is also the home base of the Millennium magazine and many of the characters whose lives intersect with the mystery.",
   "source": "https://www.visitstockholm.com/",
   "image": null
@@ -2967,7 +2967,7 @@ export const QUESTIONS = [
   "place": "Barcelona, Spain",
   "lat": 41.3874,
   "lng": 2.1686,
-  "precision": "City-level",
+  "level": "city",
   "story": "Set largely in post-war Barcelona, the novel follows Daniel Sempere as he searches for the truth behind a mysterious author. The city's Gothic Quarter, old streets and layered history give the book much of its atmosphere.",
   "source": "https://www.penguinrandomhouse.com/books/292766/the-shadow-of-the-wind-by-carlos-ruiz-zafon/",
   "image": null
@@ -2980,7 +2980,7 @@ export const QUESTIONS = [
   "place": "Anne Frank House, Amsterdam, Netherlands",
   "lat": 52.3752,
   "lng": 4.884,
-  "precision": "Exact building",
+  "level": "specific",
   "story": "The visit to the Anne Frank House is one of the novel's emotional turning points. Green's characters reflect on courage, suffering and the way stories preserve lives. The real museum remains a place of remembrance and education about Anne Frank and the Holocaust.",
   "source": "https://www.annefrank.org/en/",
   "image": {
@@ -2998,7 +2998,7 @@ export const QUESTIONS = [
   "place": "New York City, New York, USA",
   "lat": 40.7794,
   "lng": -73.9632,
-  "precision": "City-level",
+  "level": "city",
   "story": "The novel opens at the Metropolitan Museum of Art, where a terrorist attack kills the mother of the young protagonist. The story follows Theo Decker across several cities, but New York is foundational to the book's beginning and emotional core.",
   "source": "https://www.metmuseum.org/",
   "image": null
@@ -3011,7 +3011,7 @@ export const QUESTIONS = [
   "place": "Saint-Malo, Brittany, France",
   "lat": 48.6493,
   "lng": -2.0257,
-  "precision": "City-level",
+  "level": "city",
   "story": "Saint-Malo is the setting for the novel's climactic episodes during the Allied bombardment of 1944. Doerr uses the city's walled streets and sea-facing buildings to bring the final days of the Second World War into sharp focus.",
   "source": "https://www.penguinrandomhouse.com/books/225209/all-the-light-we-cannot-see-by-anthony-doerr/",
   "image": null
@@ -3024,7 +3024,7 @@ export const QUESTIONS = [
   "place": "Los Angeles, California, USA",
   "lat": 34.0522,
   "lng": -118.2437,
-  "precision": "City-level",
+  "level": "city",
   "story": "The novel follows Evelyn Hugo through decades of Hollywood glamour, ambition and reinvention. Los Angeles provides the backdrop for the film studios, premieres and private lives behind her public image.",
   "source": "https://www.simonandschuster.com/books/The-Seven-Husbands-of-Evelyn-Hugo/Taylor-Jenkins-Reid/9781501161933",
   "image": null
@@ -3037,7 +3037,7 @@ export const QUESTIONS = [
   "place": "Los Angeles, California, USA",
   "lat": 34.0522,
   "lng": -118.2437,
-  "precision": "City-level",
+  "level": "city",
   "story": "The fictional band emerges from Los Angeles's rock scene, where music, celebrity and personal rivalries collide. The oral-history format gives the novel the feel of a documentary about a group whose rise and breakup became legendary.",
   "source": "https://www.penguinrandomhouse.com/books/550050/daisy-jones-and-the-six-by-taylor-jenkins-reid/",
   "image": null
@@ -3050,7 +3050,7 @@ export const QUESTIONS = [
   "place": "Mumbai, Maharashtra, India",
   "lat": 19.076,
   "lng": 72.8777,
-  "precision": "City-level",
+  "level": "city",
   "story": "The novel draws on the author's experiences in India and uses Mumbai as its vast, shifting setting. Its crowded neighbourhoods, waterfronts and informal settlements shape the protagonist's encounters with friendship, crime and reinvention.",
   "source": "https://www.penguinrandomhouse.com/books/292611/shantaram-by-gregory-david-roberts/",
   "image": null
@@ -3063,7 +3063,7 @@ export const QUESTIONS = [
   "place": "New Delhi, India",
   "lat": 28.6139,
   "lng": 77.209,
-  "precision": "City-level",
+  "level": "city",
   "story": "The novel follows Balram Halwai as he moves from a poor village to employment in Delhi, where he becomes entangled in the city's unequal economy. The book won the 2008 Booker Prize and offers a sharply satirical portrait of modern India.",
   "source": "https://thebookerprizes.com/the-booker-library/books/the-white-tiger",
   "image": null
@@ -3076,7 +3076,7 @@ export const QUESTIONS = [
   "place": "Jaipur, Rajasthan, India",
   "lat": 26.9124,
   "lng": 75.7873,
-  "precision": "City-level",
+  "level": "city",
   "story": "The novel is set in 1950s Jaipur, where Lakshmi navigates class, family and ambition while establishing her own business. The city's palaces, markets and social hierarchies shape the world she moves through.",
   "source": "https://www.harpercollins.com/products/the-henna-artist-alka-joshi",
   "image": null
@@ -3089,7 +3089,7 @@ export const QUESTIONS = [
   "place": "Kabul, Afghanistan",
   "lat": 34.5553,
   "lng": 69.2075,
-  "precision": "City-level",
+  "level": "city",
   "story": "The novel follows Mariam and Laila through several decades of Afghanistan's turbulent history. Kabul's changing streets, homes and political atmosphere provide the setting for a story about endurance, friendship and the costs of war.",
   "source": "https://khaledhosseini.com/books/a-thousand-splendid-suns/",
   "image": null
@@ -3102,7 +3102,7 @@ export const QUESTIONS = [
   "place": "Kolkata, West Bengal, India",
   "lat": 22.5726,
   "lng": 88.3639,
-  "precision": "City-level",
+  "level": "city",
   "story": "The novel moves between Kolkata and the northeastern United States as the Ganguli family negotiates migration, identity and belonging. Kolkata anchors the parents' memories and cultural traditions, even as their children grow up elsewhere.",
   "source": "https://www.penguinrandomhouse.com/books/292766/the-namesake-by-jhumpa-lahiri/",
   "image": null
@@ -3115,7 +3115,7 @@ export const QUESTIONS = [
   "place": "Tokyo, Japan",
   "lat": 35.6762,
   "lng": 139.6503,
-  "precision": "City-level",
+  "level": "city",
   "story": "Set in late-1960s Tokyo, the novel evokes the student protests and changing culture of the period. Its everyday locations—campus paths, bars, trains and small apartments—give the characters' emotional lives a recognisable urban setting.",
   "source": "https://www.penguinrandomhouse.com/books/292766/norwegian-wood-by-haruki-murakami/",
   "image": null
@@ -3128,7 +3128,7 @@ export const QUESTIONS = [
   "place": "Gion, Kyoto, Japan",
   "lat": 35.0037,
   "lng": 135.7788,
-  "precision": "Exact district",
+  "level": "district",
   "story": "Gion's traditional streets and teahouses provide the novel's setting. The book follows Sayuri's life through the upheavals of twentieth-century Japan, though its portrayal of geisha life has also been debated by scholars and practitioners.",
   "source": "https://www.japan.travel/en/destinations/kansai/kyoto/gion-and-higashiyama/",
   "image": {
@@ -3146,7 +3146,7 @@ export const QUESTIONS = [
   "place": "Singapore",
   "lat": 1.3521,
   "lng": 103.8198,
-  "precision": "City-level",
+  "level": "city",
   "story": "The novel uses Singapore's food culture, luxury shopping, family estates and social networks as the backdrop for its story of romance and class. Its portrayal of the city helped make the book a global bestseller and later inspired the hit film adaptation.",
   "source": "https://www.penguinrandomhouse.com/books/312369/crazy-rich-asians-by-kevin-kwan/",
   "image": null
@@ -3159,7 +3159,7 @@ export const QUESTIONS = [
   "place": "Puducherry (Pondicherry), India",
   "lat": 11.9416,
   "lng": 79.8083,
-  "precision": "City-level",
+  "level": "city",
   "story": "The novel begins in Pondicherry, where Pi's family runs a zoo. The city's French colonial architecture and coastal setting provide the opening world before the story moves into its extraordinary Pacific Ocean survival narrative.",
   "source": "https://www.penguinrandomhouse.com/books/292766/life-of-pi-by-yann-martel/",
   "image": null
@@ -3172,7 +3172,7 @@ export const QUESTIONS = [
   "place": "Cartagena, Colombia",
   "lat": 10.391,
   "lng": -75.5144,
-  "precision": "City-level",
+  "level": "city",
   "story": "The novel's unnamed Caribbean city draws on the atmosphere and architecture of Cartagena, where García Márquez spent time and found inspiration. Its balconies, plazas and waterfront help explain why readers often associate the story with the historic port.",
   "source": "https://www.colombia.travel/en/cartagena",
   "image": null
@@ -3185,7 +3185,7 @@ export const QUESTIONS = [
   "place": "Amsterdam, Netherlands",
   "lat": 52.3676,
   "lng": 4.9041,
-  "precision": "City-level",
+  "level": "city",
   "story": "The novel is set in seventeenth-century Amsterdam, a city enriched by overseas trade and marked by sharp contrasts between wealth and poverty. Its canals, merchant houses and religious tensions form the world around the mysterious miniature cabinet.",
   "source": "https://www.iamsterdam.com/en",
   "image": null
@@ -3198,7 +3198,7 @@ export const QUESTIONS = [
   "place": "London, England",
   "lat": 51.5074,
   "lng": -0.1278,
-  "precision": "City-level",
+  "level": "city",
   "story": "The narrator's daily rail journey and the suburban neighbourhoods along the route are central to the mystery. The novel turns an ordinary commuter view into a source of obsession, unreliable memory and suspicion.",
   "source": "https://www.panmacmillan.com/authors/paula-hawkins/the-girl-on-the-train/9781447275429",
   "image": null
@@ -3211,7 +3211,7 @@ export const QUESTIONS = [
   "place": "London, England",
   "lat": 51.5074,
   "lng": -0.1278,
-  "precision": "City-level",
+  "level": "city",
   "story": "Bridget's life is rooted in contemporary London, from office culture and local pubs to dinner parties and public transport. The city's social rhythms provide the backdrop for the novel's humour about relationships, work and self-improvement.",
   "source": "https://www.penguin.co.uk/books/103/1034996/bridget-jones-s-diary/9780140298479.html",
   "image": null
@@ -3224,7 +3224,7 @@ export const QUESTIONS = [
   "place": "Cloud Gate, Millennium Park, Chicago, Illinois, USA",
   "lat": 41.8827,
   "lng": -87.6233,
-  "precision": "Exact public artwork",
+  "level": "specific",
   "story": "Nicknamed 'The Bean', Cloud Gate is made from stainless-steel plates polished into a seamless reflective surface. It sits in Millennium Park and has become one of the city's most recognisable public artworks since its unveiling in 2004.",
   "source": "https://chicago.gov/city/en/depts/dca/supp_info/chicago_s_publicartcloudgateinmillenniumpark.html",
   "image": {
@@ -3242,7 +3242,7 @@ export const QUESTIONS = [
   "place": "Langelinie, Copenhagen, Denmark",
   "lat": 55.6929,
   "lng": 12.5992,
-  "precision": "Exact sculpture",
+  "level": "specific",
   "story": "Edvard Eriksen's sculpture was inspired by Hans Christian Andersen's fairy tale and donated to the city in 1913. Though modest in size, it has become one of the world's most recognised waterfront statues and a symbol of the Danish capital.",
   "source": "https://www.visitcopenhagen.com/copenhagen/planning/the-little-mermaid-gdk586951",
   "image": {
@@ -3260,7 +3260,7 @@ export const QUESTIONS = [
   "place": "Guggenheim Museum Bilbao, Bilbao, Spain",
   "lat": 43.2687,
   "lng": -2.934,
-  "precision": "Exact public artwork",
+  "level": "specific",
   "story": "Jeff Koons's Puppy is a living sculpture made from a steel frame, soil and thousands of flowering plants. It has stood outside the Guggenheim Bilbao since 1997 and has become one of the museum's most beloved features.",
   "source": "https://www.guggenheim-bilbao.eus/en/exhibition/puppy",
   "image": {
@@ -3278,7 +3278,7 @@ export const QUESTIONS = [
   "place": "Spiral Jetty, Great Salt Lake, Utah, USA",
   "lat": 41.4375,
   "lng": -112.668,
-  "precision": "Exact land-art site",
+  "level": "specific",
   "story": "Robert Smithson built the 1,500-foot spiral from basalt rock, earth and salt crystals in 1970. Its appearance changes with water levels and mineral deposits, making the artwork inseparable from the landscape in which it was created.",
   "source": "https://diaart.org/visit/visit-our-locations-sites/robert-smithson-spiral-jetty",
   "image": {
@@ -3296,7 +3296,7 @@ export const QUESTIONS = [
   "place": "Angel of the North, Gateshead, England",
   "lat": 54.9145,
   "lng": -1.5895,
-  "precision": "Exact sculpture",
+  "level": "specific",
   "story": "Antony Gormley's 20-metre-high sculpture was installed in 1998 and quickly became a symbol of the region. Its wingspan is 54 metres, and its form recalls both an angel and the industrial history of the surrounding landscape.",
   "source": "https://www.gateshead.gov.uk/article/4834/Angel-of-the-North",
   "image": {
@@ -3314,7 +3314,7 @@ export const QUESTIONS = [
   "place": "Crosby Beach, Merseyside, England",
   "lat": 53.49,
   "lng": -3.05,
-  "precision": "Exact beach installation",
+  "level": "specific",
   "story": "Another Place consists of 100 life-size casts of the artist's body, spread across a stretch of tidal sand. The figures appear and disappear with the tide, turning the changing seascape into an essential part of the work.",
   "source": "https://www.tate.org.uk/art/artworks/gormley-another-place-t12766",
   "image": {
@@ -3332,7 +3332,7 @@ export const QUESTIONS = [
   "place": "The Kelpies, Falkirk, Scotland",
   "lat": 56.0,
   "lng": -3.767,
-  "precision": "Exact sculpture",
+  "level": "specific",
   "story": "The 30-metre-high stainless-steel horse heads were designed by sculptor Andy Scott and opened in 2013. They reference the mythical water spirits of Scottish folklore and the historic role of working horses in the region's canals and industries.",
   "source": "https://www.thehelix.co.uk/things-to-do/the-kelpies/",
   "image": {
@@ -3350,7 +3350,7 @@ export const QUESTIONS = [
   "place": "Manneken Pis, Brussels, Belgium",
   "lat": 50.8449,
   "lng": 4.3499,
-  "precision": "Exact sculpture",
+  "level": "specific",
   "story": "The statue has become one of Brussels's best-known symbols, despite its tiny scale. The original bronze figure is kept in the Brussels City Museum, while a replica stands at the famous street corner and is regularly dressed in costumes.",
   "source": "https://www.stib-mivb.be/news-event/stop-for-a-story/stop-for-a-story-manneken-pis",
   "image": {
@@ -3368,7 +3368,7 @@ export const QUESTIONS = [
   "place": "National Gallery of Canada, Ottawa, Canada",
   "lat": 45.4295,
   "lng": -75.698,
-  "precision": "Exact public artwork",
+  "level": "specific",
   "story": "Louise Bourgeois created Maman as an homage to her mother, who worked as a weaver. The sculpture has been installed in several cities, but the Ottawa version stands outside the National Gallery of Canada and is one of the museum's most recognisable outdoor works.",
   "source": "https://ottawatourism.ca/en/see-and-do/ottawa-art-activities",
   "image": {
@@ -3386,7 +3386,7 @@ export const QUESTIONS = [
   "place": "Bowling Green, Manhattan, New York, USA",
   "lat": 40.7056,
   "lng": -74.0134,
-  "precision": "Exact sculpture",
+  "level": "specific",
   "story": "Arturo Di Modica installed the bull as an unauthorised gift to the public after the 1987 stock-market crash. It became a symbol of resilience and financial optimism, and the sculpture remains a popular stop in Lower Manhattan.",
   "source": "https://www.nycgovparks.org/parks/bowling-green",
   "image": {
@@ -3404,7 +3404,7 @@ export const QUESTIONS = [
   "place": "New York Stock Exchange, Wall Street, New York, USA",
   "lat": 40.7069,
   "lng": -74.0113,
-  "precision": "Exact sculpture",
+  "level": "specific",
   "story": "Fearless Girl was first installed opposite the Charging Bull before being moved to the New York Stock Exchange. The sculpture was commissioned to draw attention to gender diversity in corporate leadership and quickly became an international symbol.",
   "source": "https://www.nyse.com/",
   "image": {
@@ -3422,7 +3422,7 @@ export const QUESTIONS = [
   "place": "Denver International Airport, Denver, Colorado, USA",
   "lat": 39.8561,
   "lng": -104.6737,
-  "precision": "Exact public artwork",
+  "level": "specific",
   "story": "Luis Jiménez's 32-foot sculpture is officially titled Mustang and is widely known by its nickname, Blue Mustang. Its vivid colour and dramatic appearance have made it one of the most talked-about airport artworks in the United States.",
   "source": "https://www.flydenver.com/",
   "image": {
@@ -3440,7 +3440,7 @@ export const QUESTIONS = [
   "place": "Minneapolis Sculpture Garden, Minneapolis, Minnesota, USA",
   "lat": 44.969,
   "lng": -93.288,
-  "precision": "Exact artwork",
+  "level": "specific",
   "story": "The playful sculpture was created by Claes Oldenburg and Coosje van Bruggen and installed in 1988. It has become an emblem of the Walker Art Center and one of the most photographed public artworks in the American Midwest.",
   "source": "https://walkerart.org/collections/artworks/spoonbridge-and-cherry",
   "image": {
@@ -3458,7 +3458,7 @@ export const QUESTIONS = [
   "place": "JFK Plaza, Philadelphia, Pennsylvania, USA",
   "lat": 39.9524,
   "lng": -75.1636,
-  "precision": "Exact sculpture",
+  "level": "specific",
   "story": "Robert Indiana's LOVE design first appeared as a painting and later became a public sculpture. The Philadelphia version was installed in 1976 and became one of the city's most recognisable meeting points and photo stops.",
   "source": "https://www.phila.gov/parks-rec-finder/#/locations/LOVE-Park",
   "image": {
@@ -3476,7 +3476,7 @@ export const QUESTIONS = [
   "place": "Naoshima, Kagawa Prefecture, Japan",
   "lat": 34.46,
   "lng": 133.995,
-  "precision": "Exact public artwork site",
+  "level": "specific",
   "story": "Yayoi Kusama's yellow pumpkin became an emblem of Naoshima's outdoor art programme. After the original sculpture was damaged by a typhoon in 2021, a replacement was installed, restoring one of the island's best-known art landmarks.",
   "source": "https://benesse-artsite.jp/en/art/yayoi-kusama.html",
   "image": {
@@ -3494,7 +3494,7 @@ export const QUESTIONS = [
   "place": "Verity, Ilfracombe, Devon, England",
   "lat": 51.209,
   "lng": -4.113,
-  "precision": "Exact sculpture",
+  "level": "specific",
   "story": "Damien Hirst's 20-metre-high sculpture depicts a pregnant woman with an exposed view of her internal anatomy. Installed in 2012, it became a striking and sometimes controversial landmark at the harbour entrance.",
   "source": "https://www.visitdevon.co.uk/",
   "image": {
@@ -3512,7 +3512,7 @@ export const QUESTIONS = [
   "place": "Corcovado Mountain, Rio de Janeiro, Brazil",
   "lat": -22.9519,
   "lng": -43.2105,
-  "precision": "Exact monument",
+  "level": "specific",
   "story": "Christ the Redeemer was completed in 1931 and rises 30 metres above its pedestal. The statue has become an international symbol of Rio, overlooking the city, its beaches and Guanabara Bay from the summit of Corcovado.",
   "source": "https://www.visitbrasil.com/",
   "image": {
@@ -3530,7 +3530,7 @@ export const QUESTIONS = [
   "place": "Liberty Island, New York Harbor, USA",
   "lat": 40.6892,
   "lng": -74.0445,
-  "precision": "Exact monument",
+  "level": "specific",
   "story": "The Statue of Liberty was a gift from France and was dedicated in 1886. Designed by Frédéric Auguste Bartholdi, it became an enduring symbol of freedom and immigration, greeting generations of newcomers arriving by sea.",
   "source": "https://www.nps.gov/stli/index.htm",
   "image": {
@@ -3548,7 +3548,7 @@ export const QUESTIONS = [
   "place": "Ahu Tongariki, Rapa Nui (Easter Island), Chile",
   "lat": -27.1258,
   "lng": -109.276,
-  "precision": "Exact archaeological site",
+  "level": "specific",
   "story": "Ahu Tongariki is the largest ceremonial platform on Rapa Nui and supports fifteen restored moai. The figures were carved by the island's Polynesian inhabitants and are among the most recognisable works of monumental sculpture in the world.",
   "source": "https://whc.unesco.org/en/list/715/",
   "image": {
@@ -3566,7 +3566,7 @@ export const QUESTIONS = [
   "place": "Terracotta Army, Xi’an, Shaanxi, China",
   "lat": 34.384,
   "lng": 109.278,
-  "precision": "Exact archaeological site",
+  "level": "specific",
   "story": "The terracotta figures were created more than 2,000 years ago to accompany Emperor Qin Shi Huang in the afterlife. Discovered by local farmers in 1974, the army includes soldiers, horses and chariots, each with individual features.",
   "source": "https://whc.unesco.org/en/list/441/",
   "image": {
@@ -3584,7 +3584,7 @@ export const QUESTIONS = [
   "place": "Leshan Giant Buddha, Sichuan, China",
   "lat": 29.5443,
   "lng": 103.773,
-  "precision": "Exact monument",
+  "level": "specific",
   "story": "Carved between the eighth and ninth centuries, the 71-metre Buddha was built to calm dangerous river currents below. It is the largest stone Buddha in the world and forms part of a UNESCO-listed cultural landscape.",
   "source": "https://whc.unesco.org/en/list/779/",
   "image": {
@@ -3602,7 +3602,7 @@ export const QUESTIONS = [
   "place": "Giza Plateau, Giza, Egypt",
   "lat": 29.9753,
   "lng": 31.1376,
-  "precision": "Exact monument",
+  "level": "specific",
   "story": "The Great Sphinx was carved from the limestone bedrock of the Giza Plateau during Egypt's Old Kingdom. Its exact purpose remains debated, but it has stood for more than four millennia beside the pyramids and become one of the world's best-known ancient sculptures.",
   "source": "https://egymonuments.gov.eg/monuments/great-sphinx/",
   "image": {
@@ -3620,7 +3620,7 @@ export const QUESTIONS = [
   "place": "Galleria dell’Accademia, Florence, Italy",
   "lat": 43.7769,
   "lng": 11.2588,
-  "precision": "Exact museum",
+  "level": "specific",
   "story": "Michelangelo completed David in 1504, and the sculpture originally stood outside the Palazzo Vecchio before being moved indoors for protection. The original is now the centrepiece of the Accademia, while a replica marks its former public location.",
   "source": "https://www.galleriaaccademiafirenze.it/en/",
   "image": {
@@ -3638,7 +3638,7 @@ export const QUESTIONS = [
   "place": "St Peter’s Basilica, Vatican City",
   "lat": 41.9022,
   "lng": 12.4539,
-  "precision": "Exact artwork location",
+  "level": "specific",
   "story": "Michelangelo carved the Pietà when he was in his early twenties. The sculpture is the only work he signed and is one of the treasures of St Peter's Basilica, where it is displayed in a side chapel near the entrance.",
   "source": "https://www.basilicasanpietro.va/en.html",
   "image": {
@@ -3656,7 +3656,7 @@ export const QUESTIONS = [
   "place": "Santa Maria della Vittoria, Rome, Italy",
   "lat": 41.9043,
   "lng": 12.495,
-  "precision": "Exact chapel",
+  "level": "specific",
   "story": "Bernini's sculpture is the centrepiece of the Cornaro Chapel. Its theatrical lighting, carved marble and surrounding architectural setting create an illusion of a spiritual vision unfolding before the viewer.",
   "source": "https://www.turismoroma.it/en/places/santa-maria-della-vittoria",
   "image": {
@@ -3674,7 +3674,7 @@ export const QUESTIONS = [
   "place": "Piazza Navona, Rome, Italy",
   "lat": 41.8992,
   "lng": 12.4731,
-  "precision": "Exact public artwork",
+  "level": "specific",
   "story": "Bernini's fountain represents four great rivers associated with the continents known to Europeans at the time: the Nile, Ganges, Danube and Río de la Plata. It remains the centrepiece of Piazza Navona, a square built over an ancient Roman stadium.",
   "source": "https://www.turismoroma.it/en/places/fountain-four-rivers",
   "image": {
@@ -3692,7 +3692,7 @@ export const QUESTIONS = [
   "place": "Derry (Londonderry), Northern Ireland, UK",
   "lat": 54.997,
   "lng": -7.32,
-  "precision": "City-level",
+  "level": "city",
   "story": "On 30 January 1972, British soldiers shot civil-rights demonstrators in the Bogside area of Derry. U2’s song was released in 1983 and responds to the violence and its lasting legacy. The song is not a literal retelling, but its title refers to the event.",
   "source": "https://www.britannica.com/event/Bloody-Sunday-Northern-Ireland-1972",
   "image": null
@@ -3705,7 +3705,7 @@ export const QUESTIONS = [
   "place": "Warrington, Cheshire, England",
   "lat": 53.39,
   "lng": -2.597,
-  "precision": "Town-level",
+  "level": "city",
   "story": "The 1993 Warrington bombings were carried out by the Provisional IRA. Dolores O’Riordan wrote the song in response to the deaths of Jonathan Ball and Tim Parry. Its powerful anti-violence message became one of the band's best-known international hits.",
   "source": "https://www.bbc.com/news/uk-england-merseyside-64903246",
   "image": {
@@ -3723,7 +3723,7 @@ export const QUESTIONS = [
   "place": "Gqeberha (formerly Port Elizabeth), South Africa",
   "lat": -33.9608,
   "lng": 25.6022,
-  "precision": "City-level",
+  "level": "city",
   "story": "Steve Biko died in police custody in September 1977 after being detained under apartheid-era security laws. Gabriel's song helped bring international attention to Biko's death and the anti-apartheid movement. The city was known as Port Elizabeth until its official renaming in 2021.",
   "source": "https://www.sahistory.org.za/people/stephen-bantu-biko",
   "image": null
@@ -3736,7 +3736,7 @@ export const QUESTIONS = [
   "place": "New York City, New York, USA",
   "lat": 40.7128,
   "lng": -74.006,
-  "precision": "City-level",
+  "level": "city",
   "story": "Released in 2009, the song pairs Jay-Z's autobiographical verses with Alicia Keys's soaring chorus. Its references to New York neighbourhoods and landmarks helped it become one of the city's best-known modern musical tributes.",
   "source": "https://www.grammy.com/artists/jay-z/10289",
   "image": null
@@ -3749,7 +3749,7 @@ export const QUESTIONS = [
   "place": "London, England",
   "lat": 51.5074,
   "lng": -0.1278,
-  "precision": "City-level",
+  "level": "city",
   "story": "Released in 1967, “Waterloo Sunset” follows two fictional characters meeting near the Thames. Ray Davies drew on memories of growing up in London and watching the city's river, bridges and railway traffic. It became one of the Kinks' most celebrated songs.",
   "source": "https://www.kinks.com/",
   "image": null
@@ -3762,7 +3762,7 @@ export const QUESTIONS = [
   "place": "Hansa Studios, Berlin, Germany",
   "lat": 52.5058,
   "lng": 13.391,
-  "precision": "Exact recording studio",
+  "level": "specific",
   "story": "Bowie recorded much of the song at Hansa's Meistersaal studio, close to the Berlin Wall. The image of two lovers meeting beside the wall was inspired in part by a scene Bowie witnessed involving producer Tony Visconti and singer Antonia Maass.",
   "source": "https://www.hansastudios.de/",
   "image": {
@@ -3780,7 +3780,7 @@ export const QUESTIONS = [
   "place": "Harlem, New York City, USA",
   "lat": 40.8116,
   "lng": -73.9465,
-  "precision": "Neighbourhood-level",
+  "level": "district",
   "story": "Billy Strayhorn wrote the tune after Duke Ellington gave him directions to reach the bandleader's home by taking the A train. The route connected central Manhattan with Harlem, which became a major centre of African American music, literature and culture.",
   "source": "https://www.nytransitmuseum.org/",
   "image": null
@@ -3793,7 +3793,7 @@ export const QUESTIONS = [
   "place": "Trench Town, Kingston, Jamaica",
   "lat": 17.982,
   "lng": -76.791,
-  "precision": "Neighbourhood-level",
+  "level": "district",
   "story": "Marley grew up in Trench Town, and the song evokes shared memories of everyday life there. The area became central to the development of reggae, producing musicians whose work carried Jamaican music to audiences around the world.",
   "source": "https://www.visitjamaica.com/",
   "image": {
@@ -3811,7 +3811,7 @@ export const QUESTIONS = [
   "place": "West Norwood, London, England",
   "lat": 51.431,
   "lng": -0.103,
-  "precision": "Neighbourhood-level",
+  "level": "district",
   "story": "Adele wrote the song as a teenager after her mother encouraged her to move away for university. Its affection for familiar streets and everyday city life helped introduce the singer's personal songwriting style on her debut album.",
   "source": "https://www.adele.com/",
   "image": null
@@ -3824,7 +3824,7 @@ export const QUESTIONS = [
   "place": "Cornelia Street, Greenwich Village, New York City, USA",
   "lat": 40.7315,
   "lng": -74.0015,
-  "precision": "Exact street",
+  "level": "specific",
   "story": "Swift rented a townhouse on Cornelia Street while recording music in New York. The street became the setting and metaphor for a relationship she feared might end. The song appeared on her 2019 album Lover.",
   "source": "https://www.nytimes.com/2019/08/23/arts/music/taylor-swift-lover.html",
   "image": {
@@ -3842,7 +3842,7 @@ export const QUESTIONS = [
   "place": "Watch Hill, Westerly, Rhode Island, USA",
   "lat": 41.303,
   "lng": -71.858,
-  "precision": "Village / coastal area",
+  "level": "city",
   "story": "The song recounts the life of socialite Rebekah Harkness, who owned the seaside estate later purchased by Swift. The house, known as Holiday House, overlooks the Atlantic and inspired the song's story of wealth, scandal and local legend.",
   "source": "https://www.rhodeisland.com/",
   "image": {
@@ -3860,7 +3860,7 @@ export const QUESTIONS = [
   "place": "Framlingham Castle, Suffolk, England",
   "lat": 52.221,
   "lng": 1.341,
-  "precision": "Exact landmark",
+  "level": "specific",
   "story": "Sheeran grew up in Framlingham and wrote the song as a nostalgic tribute to the people and places of his youth. The castle dominates the town and appears in the song's imagery as a symbol of home and growing up.",
   "source": "https://www.english-heritage.org.uk/visit/places/framlingham-castle/",
   "image": {
@@ -3878,7 +3878,7 @@ export const QUESTIONS = [
   "place": "Strawberry Field, Liverpool, England",
   "lat": 53.386,
   "lng": -2.895,
-  "precision": "Exact site",
+  "level": "specific",
   "story": "Lennon grew up near the Strawberry Field children's home and remembered playing in its grounds. The song transformed those childhood memories into a surreal meditation on identity and memory. The site is now a visitor attraction with a Beatles history exhibition.",
   "source": "https://www.strawberryfieldliverpool.com/",
   "image": {
@@ -3896,7 +3896,7 @@ export const QUESTIONS = [
   "place": "Penny Lane, Liverpool, England",
   "lat": 53.4035,
   "lng": 53.4035,
-  "precision": "-2.9167",
+  "level": "specific",
   "story": "Song about a real street",
   "source": "",
   "image": {
@@ -3914,7 +3914,7 @@ export const QUESTIONS = [
   "place": "London, England",
   "lat": 51.5074,
   "lng": -0.1278,
-  "precision": "City-level",
+  "level": "city",
   "story": "The title track of the band's 1979 album reflected anxieties about political unrest, unemployment and environmental threats. Joe Strummer and Mick Jones used the city's name as a dramatic broadcast-style refrain, giving the song a sense of urgent place.",
   "source": "https://www.theclash.com/",
   "image": null
@@ -3927,7 +3927,7 @@ export const QUESTIONS = [
   "place": "New York City, New York, USA",
   "lat": 40.7128,
   "lng": -74.006,
-  "precision": "City-level",
+  "level": "city",
   "story": "Shane MacGowan and Jem Finer wrote the song as a bittersweet story of an Irish couple in New York. Its blend of festive warmth and disappointment made it a perennial Christmas favourite, despite its unsentimental view of immigrant life.",
   "source": "https://www.bbc.com/culture",
   "image": null
@@ -3940,7 +3940,7 @@ export const QUESTIONS = [
   "place": "Paris, France",
   "lat": 48.8566,
   "lng": 2.3522,
-  "precision": "City-level",
+  "level": "city",
   "story": "The melody began as “Comme d'habitude”, written by Claude François, Jacques Revaux and Gilles Thibaut. Paul Anka later wrote new English lyrics for Sinatra. The French original emerged from the popular music scene of 1960s Paris.",
   "source": "https://www.britannica.com/biography/Frank-Sinatra",
   "image": null
@@ -3953,7 +3953,7 @@ export const QUESTIONS = [
   "place": "Paterson, New Jersey, USA",
   "lat": 40.9168,
   "lng": -74.1718,
-  "precision": "City-level",
+  "level": "city",
   "story": "Dylan wrote the song about boxer Rubin “Hurricane” Carter, who was convicted of a triple murder in 1966. The case was marked by allegations of racism and police misconduct. Carter's convictions were eventually overturned, and the song helped draw international attention to his campaign for justice.",
   "source": "https://www.britannica.com/biography/Rubin-Carter",
   "image": null
@@ -3966,7 +3966,7 @@ export const QUESTIONS = [
   "place": "Sophiatown, Johannesburg, South Africa",
   "lat": -26.176,
   "lng": 28.01,
-  "precision": "Neighbourhood-level",
+  "level": "district",
   "story": "“Pata Pata” grew from South African township music and dance traditions. Makeba recorded an international hit version in the 1960s, introducing the rhythm to listeners far beyond South Africa. Sophiatown was an important centre of Black urban culture before its forced removals under apartheid.",
   "source": "https://www.sahistory.org.za/article/sophiatown",
   "image": {
@@ -3984,7 +3984,7 @@ export const QUESTIONS = [
   "place": "Coventry, England",
   "lat": 52.4068,
   "lng": -1.5197,
-  "precision": "City-level",
+  "level": "city",
   "story": "Jerry Dammers wrote the song amid recession, unemployment and social tension in early-1980s Britain. Though its lyrics describe a wider national mood, Coventry and the Midlands music scene formed part of the band's immediate context.",
   "source": "https://www.bbc.co.uk/music",
   "image": null
@@ -3997,7 +3997,7 @@ export const QUESTIONS = [
   "place": "New Orleans, Louisiana, USA",
   "lat": 29.9511,
   "lng": -90.0715,
-  "precision": "City-level",
+  "level": "city",
   "story": "The song's origins are uncertain, and versions circulated in American folk tradition long before The Animals recorded it. Its narrator describes a life gone wrong in New Orleans, a city whose music and folklore helped the song's dark atmosphere resonate.",
   "source": "https://www.loc.gov/item/ihas.200197495/",
   "image": null
@@ -4010,7 +4010,7 @@ export const QUESTIONS = [
   "place": "Abbey Road Studios, London, England",
   "lat": 51.532,
   "lng": -0.1779,
-  "precision": "Exact recording studio",
+  "level": "specific",
   "story": "The Beatles performed the song during the Our World broadcast on 25 June 1967, reaching an estimated audience of hundreds of millions. The performance was staged at EMI's Abbey Road Studios, where the group had recorded many of their best-known songs.",
   "source": "https://www.abbeyroad.com/",
   "image": {
@@ -4028,7 +4028,7 @@ export const QUESTIONS = [
   "place": "Rockfield Studios, Monmouth, Wales",
   "lat": 51.813,
   "lng": -2.72,
-  "precision": "Exact recording studio",
+  "level": "specific",
   "story": "Queen worked on the song at Rockfield Studios in 1975. The studio's farmhouse setting and relaxed working environment allowed the band to experiment with layered vocals and elaborate arrangements that helped make the track a landmark of rock music.",
   "source": "https://www.rockfieldstudios.com/",
   "image": {
@@ -4046,7 +4046,7 @@ export const QUESTIONS = [
   "place": "Los Angeles, California, USA",
   "lat": 34.0522,
   "lng": -118.2437,
-  "precision": "City-level",
+  "level": "city",
   "story": "John Landis directed the fourteen-minute video, which premiered in 1983. Its cinematic style, choreography and horror-film references helped redefine the music video as a major form of popular entertainment.",
   "source": "https://www.loc.gov/item/ihas.200197495/",
   "image": null
@@ -4059,7 +4059,7 @@ export const QUESTIONS = [
   "place": "Gangnam District, Seoul, South Korea",
   "lat": 37.5172,
   "lng": 127.0473,
-  "precision": "District-level",
+  "level": "district",
   "story": "Released in 2012, the video became the first YouTube clip to reach one billion views. Its exaggerated horse-riding dance and satire of the Gangnam lifestyle made Psy a global star and brought the district's name into everyday conversation worldwide.",
   "source": "https://english.visitseoul.net/",
   "image": null
@@ -4072,7 +4072,7 @@ export const QUESTIONS = [
   "place": "La Perla, San Juan, Puerto Rico",
   "lat": 18.467,
   "lng": -66.116,
-  "precision": "Neighbourhood-level",
+  "level": "district",
   "story": "The video was filmed in the historic La Perla neighbourhood and other parts of San Juan. Its global success brought renewed attention to Puerto Rico's music, architecture and Caribbean identity.",
   "source": "https://www.discoverpuertorico.com/",
   "image": {
@@ -4090,7 +4090,7 @@ export const QUESTIONS = [
   "place": "Honolulu, Oʻahu, Hawaii, USA",
   "lat": 21.3069,
   "lng": -157.8583,
-  "precision": "City-level",
+  "level": "city",
   "story": "Israel Kamakawiwoʻole recorded the medley in a single late-night session in 1988. His gentle performance became internationally famous years later and remains strongly associated with Hawaiian music and identity.",
   "source": "https://www.hawaiipublicradio.org/",
   "image": null
@@ -4103,7 +4103,7 @@ export const QUESTIONS = [
   "place": "Las Vegas, Nevada, USA",
   "lat": 36.1699,
   "lng": -115.1398,
-  "precision": "City-level",
+  "level": "city",
   "story": "The Killers formed in Las Vegas, and the video for “Read My Mind” was filmed around the city and in Japan. The band's early work often used the desert metropolis as a backdrop for stories of ambition, escape and reinvention.",
   "source": "https://www.visitlasvegas.com/",
   "image": null
@@ -4116,7 +4116,7 @@ export const QUESTIONS = [
   "place": "Los Angeles, California, USA",
   "lat": 34.0522,
   "lng": -118.2437,
-  "precision": "City-level",
+  "level": "city",
   "story": "The video draws on the visual language of 1980s crime films, with night driving, bright signs and empty streets. It was filmed in Los Angeles and became one of the defining visual accompaniments to the song's global success.",
   "source": "https://www.discoverlosangeles.com/",
   "image": null
@@ -4129,7 +4129,7 @@ export const QUESTIONS = [
   "place": "New Orleans, Louisiana, USA",
   "lat": 29.9511,
   "lng": -90.0715,
-  "precision": "City-level",
+  "level": "city",
   "story": "The video references Hurricane Katrina, police violence and the city's Black cultural traditions. Its imagery includes the city's distinctive architecture and flooded streets, making New Orleans central to the work's political and cultural message.",
   "source": "https://www.nolamuseum.org/",
   "image": null

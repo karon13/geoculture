@@ -15,11 +15,21 @@ export function haversineKm(lat1, lng1, lat2, lng2) {
   return 2 * EARTH_RADIUS_KM * Math.asin(Math.min(1, Math.sqrt(a)));
 }
 
-// 100 points for a guess within 25 km, then exponential falloff.
-// ~1,000 km away is about 57 points, ~5,000 km about 7 points.
-export function scoreForDistance(km) {
-  const effective = Math.max(0, km - 25);
-  return Math.round(POINTS_PER_ROUND * Math.exp(-effective / 1800));
+// How exact the answer is, and what that means for scoring. A guess inside `fullKm` earns all 100 points;
+// beyond it the score falls off exponentially, faster when `scaleKm` is smaller. The more exact the target, the
+// smaller the free zone and the faster the falloff. These are the only numbers to tune; the README and the About
+// page describe them.
+export const PRECISION = {
+  specific: { label: "Specific place", icon: "🎯", fullKm: 2, scaleKm: 1000 },
+  district: { label: "District", icon: "🏘️", fullKm: 8, scaleKm: 1400 },
+  city: { label: "City / town", icon: "🏙️", fullKm: 25, scaleKm: 1800 },
+  region: { label: "Region", icon: "🗺️", fullKm: 100, scaleKm: 2500 },
+};
+
+export function scoreForDistance(km, level = "city") {
+  const { fullKm, scaleKm } = PRECISION[level] || PRECISION.city;
+  const effective = Math.max(0, km - fullKm);
+  return Math.round(POINTS_PER_ROUND * Math.exp(-effective / scaleKm));
 }
 
 // Local calendar date as YYYY-MM-DD, so "daily" follows the player's own midnight.

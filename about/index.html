@@ -73,10 +73,40 @@
 
       <h2>Scoring</h2>
       <p>
-        Each round is worth up to 100 points, so a day is worth 500. A guess within 25&nbsp;km (15&nbsp;miles) of
-        the real place earns the full 100. After that the points fall off quickly: about 57 points at
-        1,000&nbsp;km (620&nbsp;miles) and about 7 at 5,000&nbsp;km (3,100&nbsp;miles).
+        Each round is worth up to 100 points, so a day is worth 500. How strict the scoring is depends on how exact
+        the answer is. Every clue carries a small badge that says what you are looking for:
       </p>
+      <ul class="cats">
+        <li><strong>🎯 Specific place</strong><span>One exact spot: a building, a bridge, a square, a statue.</span></li>
+        <li><strong>🏘️ District</strong><span>A neighbourhood or quarter inside a city.</span></li>
+        <li><strong>🏙️ City / town</strong><span>A whole city, town or village.</span></li>
+        <li><strong>🗺️ Region</strong><span>A broader area: a valley, a stretch of coast, a desert.</span></li>
+      </ul>
+      <p>
+        Inside the full-points zone you get all 100. Beyond it the points drop off smoothly with distance, and they drop
+        faster the more exact the target is. So a guess 50&nbsp;km off is a perfect answer for a region, but costs you
+        points on a specific place.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Target</th>
+              <th scope="col">Full points within</th>
+              <th scope="col">at 100&nbsp;km</th>
+              <th scope="col">at 1,000&nbsp;km</th>
+              <th scope="col">at 5,000&nbsp;km</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">🎯 Specific place</th><td>2&nbsp;km</td><td>91</td><td>37</td><td>1</td></tr>
+            <tr><th scope="row">🏘️ District</th><td>8&nbsp;km</td><td>94</td><td>49</td><td>3</td></tr>
+            <tr><th scope="row">🏙️ City / town</th><td>25&nbsp;km</td><td>96</td><td>58</td><td>6</td></tr>
+            <tr><th scope="row">🗺️ Region</th><td>100&nbsp;km</td><td>100</td><td>70</td><td>14</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="meta">The columns on the right show your points for a guess that far from the target. 2&nbsp;km is 1.2&nbsp;miles, 8&nbsp;km is 5, 25&nbsp;km is 15 and 100&nbsp;km is 62. Points are rounded to whole numbers. Hover over a badge in the game to see its rule.</p>
 
       <h2>A new set every day</h2>
       <p>

@@ -37,6 +37,17 @@ def image_for(r):
     }
 
 
+# precision_label in the CSV says how exact the answer is. It sets the scoring tolerance (see PRECISION in
+# src/game.js) and the small badge shown with the question. An unknown label fails the build on purpose, so a typo
+# in the CSV can't silently turn into the wrong scoring.
+PRECISION_LEVELS = {
+    "specific place": "specific",
+    "district / neighbourhood": "district",
+    "city / town": "city",
+    "region": "region",
+}
+
+
 rows = list(csv.DictReader(open(SRC, encoding="utf-8-sig", newline="")))
 questions, seen = [], set()
 for r in rows:
@@ -46,6 +57,8 @@ for r in rows:
     lat, lng = float(r["latitude"]), float(r["longitude"])
     assert -90 <= lat <= 90 and -180 <= lng <= 180, f"bad coordinates for {qid}"
     source = r["source_url"].strip()
+    label = r["precision_label"].strip().lower()
+    assert label in PRECISION_LEVELS, f"{qid}: unknown precision_label {r['precision_label']!r}"
     questions.append({
         "id": qid,
         "category": r["category"].strip().lower(),
@@ -54,7 +67,7 @@ for r in rows:
         "place": r["answer_location"].strip(),
         "lat": lat,
         "lng": lng,
-        "precision": r["location_precision"].strip(),
+        "level": PRECISION_LEVELS[label],
         "story": r["story"].strip(),
         "source": source if source.startswith(("http://", "https://")) else "",
         "image": image_for(r),

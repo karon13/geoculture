@@ -168,6 +168,26 @@ body {
   background: #fca5a5;
 }
 
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.chips .chip {
+  margin-bottom: 0;
+}
+
+/* The precision badge is an outline, so it reads as a second kind of label next to the coloured category. */
+.chip.precision {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  letter-spacing: 0.04em;
+  cursor: help;
+}
+
 .prompt {
   margin: 0 0 14px;
   font-size: 1.02rem;

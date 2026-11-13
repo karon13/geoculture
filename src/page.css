@@ -184,3 +184,56 @@ a:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+.table-wrap {
+  overflow-x: auto;
+  margin: 0 0 14px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+th,
+td {
+  padding: 8px 8px;
+  text-align: right;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+th:first-child,
+td:first-child {
+  text-align: left;
+}
+
+thead th {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+
+tbody th {
+  font-weight: 600;
+  color: var(--text);
+}
+
+td {
+  color: #d5dbec;
+}
+
+@media (max-width: 480px) {
+  table {
+    font-size: 0.82rem;
+  }
+
+  th,
+  td {
+    padding: 8px 5px;
+  }
+
+  thead th {
+    font-size: 0.72rem;
+  }
+}

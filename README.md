@@ -3,6 +3,26 @@
 A daily game: five prompts from art, music, books and movies, and you pin each one on a globe.
 100 points per round, 500 per day. The streak is stored in the browser.
 
+## Scoring
+
+Every question has a `precision_label` in the CSV (Specific Place, District / Neighbourhood, City / Town,
+Region). The build turns it into a `level` and the game shows it as a badge next to the category, so the player
+knows how exact the answer has to be. The level sets the scoring (`PRECISION` in `src/game.js`):
+
+    points = round(100 * exp(-max(0, km - fullKm) / scaleKm))
+
+| Level                     | Full 100 within | Falloff scale | 100 km off | 1,000 km off | 5,000 km off |
+| ------------------------- | --------------- | ------------- | ---------- | ------------ | ------------ |
+| Specific Place            | 2 km            | 1,000 km      | 91         | 37           | 1            |
+| District / Neighbourhood  | 8 km            | 1,400 km      | 94         | 49           | 3            |
+| City / Town               | 25 km           | 1,800 km      | 96         | 58           | 6            |
+| Region                    | 100 km          | 2,500 km      | 100        | 70           | 14           |
+
+Inside the full zone you get 100; beyond it points fall off exponentially, faster for more exact targets. A
+stricter level never scores higher than a looser one at the same distance (covered by `npm test`). To tune the
+game, change the two numbers per level in `PRECISION`, then update this table and the About page. An unknown
+`precision_label` fails the build. Results already saved in a player's browser keep the points they were given.
+
 ## Run it
 
     npm install
