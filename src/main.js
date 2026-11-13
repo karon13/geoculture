@@ -722,7 +722,23 @@ function renderFinal() {
   // On phones an open round hides the score summary and the other rounds (see .detail-mode in the CSS)
   // so the card stays small and the map stays visible.
   const finalEl = panel.querySelector(".final");
+  const finalBody = finalEl.querySelector(".final-body");
   let openIndex = null;
+
+  // Scrolls the list just far enough that the open round shows as much as possible, but never so far that its
+  // header (the row, or the back/previous/next bar above it on phones) leaves the top of the card. Rounds
+  // above it may scroll out of view. If it already fits, or the card is scrolled too far down, nothing jumps.
+  function keepOpenInView(i, smooth = true) {
+    const li = finalBody.querySelectorAll("li")[i];
+    if (!li) return;
+    const body = finalBody.getBoundingClientRect();
+    const item = li.getBoundingClientRect();
+    let delta = 0;
+    if (item.top < body.top) delta = item.top - body.top; // header above the card: scroll up to it
+    else if (item.bottom > body.bottom) delta = Math.min(item.bottom - body.bottom, item.top - body.top);
+    if (delta) finalBody.scrollBy({ top: delta, behavior: smooth && !REDUCED_MOTION ? "smooth" : "auto" });
+  }
+
   function setOpen(i) {
     openIndex = i;
     panel.querySelectorAll(".row").forEach((b) => {
@@ -734,8 +750,8 @@ function renderFinal() {
     });
     finalEl.classList.toggle("has-open", i !== null);
     panel.classList.toggle("detail-mode", i !== null);
-    finalEl.querySelector(".final-body").scrollTop = 0;
     if (i === null) {
+      finalBody.scrollTop = 0;
       // Back to the overview with every pin and no line.
       setLink(null);
       overview({ fly: true });
@@ -744,7 +760,11 @@ function renderFinal() {
     const q = questions[i];
     const r = dayResults[i];
     // Pictures are loaded when a round is opened, not for all five up front.
-    mountImage(panel.querySelectorAll(".detail")[i], q);
+    // The picture changes the height of the opened round, so the scroll position is checked again once it is in.
+    requestAnimationFrame(() => keepOpenInView(i));
+    mountImage(panel.querySelectorAll(".detail")[i], q).then((shown) => {
+      if (shown && openIndex === i) keepOpenInView(i);
+    });
     setLink({ a: r.guess, b: q, km: r.km });
     // The panel has changed size, so the camera is placed after that (it reads the panel's height).
     moveCamera({ center: [q.lng, q.lat], zoom: r.km < 300 ? zoomForKm(r.km, q.lat, 500) : 6, fly: true });
