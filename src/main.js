@@ -437,19 +437,22 @@ function closeHistory() {
 menuBtn.addEventListener("click", () => (menuOpen() ? closeMenu() : openMenu()));
 document.getElementById("menu-history").addEventListener("click", openHistory);
 
-const unitToggle = document.getElementById("menu-unit");
+// Distance unit: a two-way switch (km | mi) in the menu.
+const unitButtons = [...document.querySelectorAll("#menu-unit button")];
 function updateUnitToggle() {
-  unitToggle.textContent = `📏 Distances in ${unit === "km" ? "kilometres" : "miles"} → switch to ${unit === "km" ? "miles" : "kilometres"}`;
+  for (const b of unitButtons) b.setAttribute("aria-pressed", String(b.dataset.unit === unit));
 }
 updateUnitToggle();
-unitToggle.addEventListener("click", () => {
-  unit = unit === "km" ? "mi" : "km";
-  store.unit = unit;
-  saveStore(store);
-  updateUnitToggle();
-  updateDistances();
-  closeMenu();
-});
+for (const b of unitButtons) {
+  b.addEventListener("click", () => {
+    if (b.dataset.unit === unit) return;
+    unit = b.dataset.unit;
+    store.unit = unit;
+    saveStore(store);
+    updateUnitToggle();
+    updateDistances();
+  });
+}
 
 // The map is OpenFreeMap's Liberty style, which has to be downloaded first. The globe starts on a plain dark
 // placeholder and the style is swapped in when it arrives (one retry after a short wait). If it still fails
