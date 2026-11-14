@@ -1,4 +1,4 @@
-# GeoCulture
+# StoryGlobe
 
 A daily game: five prompts from art, music, books and movies, and you pin each one on a globe.
 100 points per round, 500 per day. The streak is stored in the browser.
@@ -50,9 +50,9 @@ by `vite.config.js`. All three pages share the top bar and hamburger menu (`src/
 in the same place everywhere; the static pages' menu script is `src/pageMenu.js`.
 
 Canonical links, share cards and the sitemap need the public address. It defaults to
-`https://karon13.github.io/geoculture`; once there is a real domain, build with it:
+`https://karon13.github.io/geoculture`; the domain is `storyglobe.app`; build with it once DNS points at the host:
 
-    VITE_SITE_URL=https://yourdomain.com npm run build
+    VITE_SITE_URL=https://storyglobe.app npm run build
 
 (in GitHub Actions, add `env: VITE_SITE_URL: ...` to the build step). Also still to do before launch: a
 1200x630 share image (`og:image`), and update `/privacy/` when ads or analytics are added.

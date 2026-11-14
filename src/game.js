@@ -103,6 +103,8 @@ export function dayNumber(key) {
 // whole bank has been used (256 questions = 51 days). Categories stay a natural random mix.
 // Questions are ordered by id before shuffling, so the order doesn't depend on how the bank file is sorted.
 export function pickDaily(questions, key, n = ROUNDS_PER_DAY) {
+  // The seed keeps its original text (from before the StoryGlobe rename) on purpose: changing it would
+  // reshuffle which questions fall on which day.
   const rand = mulberry32(hashString("geoculture:order"));
   const order = [...questions].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   for (let i = order.length - 1; i > 0; i--) {
@@ -136,7 +138,7 @@ export function shareText(key, results) {
   const squares = results
     .map((r) => (r.points >= 80 ? "🟩" : r.points >= 50 ? "🟨" : r.points >= 20 ? "🟧" : "🟥"))
     .join("");
-  return `GeoCulture ${key}\n${squares} ${total}/${ROUNDS_PER_DAY * POINTS_PER_ROUND}`;
+  return `StoryGlobe ${key}\n${squares} ${total}/${ROUNDS_PER_DAY * POINTS_PER_ROUND}`;
 }
 
 // ---------- map helpers (pure, no DOM) ----------

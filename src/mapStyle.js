@@ -6,7 +6,7 @@ import { LIBERTY_STYLE_URL, stripText, deepSea, emphasizeStateBorders } from "./
 
 // Shown while the Liberty style is still being downloaded.
 export function buildStyle() {
-  return { version: 8, name: "GeoCulture loading", sources: {}, layers: [{ id: "space", type: "background", paint: { "background-color": "#050914" } }] };
+  return { version: 8, name: "StoryGlobe loading", sources: {}, layers: [{ id: "space", type: "background", paint: { "background-color": "#050914" } }] };
 }
 
 // The finished style. It has to be downloaded, so this is async and can fail (offline, OpenFreeMap down).
@@ -14,5 +14,5 @@ export async function loadStyle() {
   const response = await fetch(LIBERTY_STYLE_URL);
   if (!response.ok) throw new Error(`Liberty style: HTTP ${response.status}`);
   const style = emphasizeStateBorders(deepSea(stripText(await response.json())));
-  return { ...style, name: "GeoCulture Liberty" };
+  return { ...style, name: "StoryGlobe Liberty" };
 }

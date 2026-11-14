@@ -181,7 +181,7 @@ export function isStateBorderLayer(layer) {
 export function emphasizeStateBorders(style) {
   const stateLayers = style.layers.filter(isStateBorderLayer);
   if (!stateLayers.length) {
-    console.warn("GeoCulture: no state border layer found in the map style; state lines keep their default look");
+    console.warn("StoryGlobe: no state border layer found in the map style; state lines keep their default look");
     return style;
   }
   // The country border colour, so state lines read as the same family of line.
