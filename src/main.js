@@ -1,6 +1,6 @@
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { buildStyle, loadStyle, addUsStateBorders } from "./mapStyle.js";
+import { buildStyle, loadStyle } from "./mapStyle.js";
 import { QUESTIONS } from "./questions.js";
 import {
   ROUNDS_PER_DAY,
@@ -145,7 +145,6 @@ const EMPTY = { type: "FeatureCollection", features: [] };
 
 map.on("style.load", () => {
   map.setProjection({ type: "globe" });
-  addUsStateBorders(map); // under the guess line and pins
   map.addSource("link", { type: "geojson", data: linkLine || EMPTY, lineMetrics: true });
   map.addLayer({
     id: "link-casing",

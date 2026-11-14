@@ -135,3 +135,68 @@ export function deepSea(style) {
     }),
   };
 }
+
+// ---------- state borders ----------
+// Liberty draws state / province lines (admin level 3 or 4) faintly and only when zoomed in. We keep Liberty's own
+// lines, so they follow the same geometry as the country borders, but restyle them: solid, a bit thinner than
+// the country border, and switched on at a much lower zoom. The tiles decide how far out the lines exist at all.
+export const STATE_BORDER = {
+  minzoom: 2.4, // earliest zoom the layer is drawn
+  opacity: ["interpolate", ["linear"], ["zoom"], 2.4, 0, 3.4, 0.85],
+  width: ["interpolate", ["linear"], ["zoom"], 3, 0.6, 6, 1.1, 10, 1.8, 14, 2.4],
+  fallbackColor: "hsl(248, 10%, 74%)",
+};
+
+// The admin levels a layer filter lets through, for example ["in", "admin_level", 3, 4] gives {3, 4}. Looks for
+// filters that mention admin_level, in the old and the new expression syntax, and ignores "not equal" tests.
+export function adminLevels(filter) {
+  const levels = new Set();
+  const numbers = (node) => {
+    if (typeof node === "number") levels.add(node);
+    else if (Array.isArray(node)) node.forEach(numbers);
+  };
+  const walk = (node) => {
+    if (!Array.isArray(node)) return;
+    const [op, ...rest] = node;
+    const mentions = rest.some((x) => x === "admin_level" || (Array.isArray(x) && x[0] === "get" && x[1] === "admin_level"));
+    if (mentions && op !== "!=" && op !== "!in" && op !== "!has") {
+      rest.forEach((x) => (x === "admin_level" ? null : numbers(x)));
+      return;
+    }
+    node.forEach(walk);
+  };
+  walk(filter);
+  return levels;
+}
+
+// Layers drawing state-level borders: boundary lines that let admin level 3 or 4 through but not the country level 2.
+export function isStateBorderLayer(layer) {
+  if (layer.type !== "line" || layer["source-layer"] !== "boundary") return false;
+  const levels = adminLevels(layer.filter);
+  return !levels.has(2) && (levels.has(3) || levels.has(4));
+}
+
+export function emphasizeStateBorders(style) {
+  const stateLayers = style.layers.filter(isStateBorderLayer);
+  if (!stateLayers.length) {
+    console.warn("GeoCulture: no state border layer found in the map style; state lines keep their default look");
+    return style;
+  }
+  // The country border colour, so state lines read as the same family of line.
+  const country = style.layers.filter((l) => l.type === "line" && l["source-layer"] === "boundary" && !isStateBorderLayer(l) && adminLevels(l.filter).has(2));
+  const countryColor = country.map((l) => l.paint?.["line-color"]).find((c) => typeof c === "string");
+  const color = countryColor || STATE_BORDER.fallbackColor;
+  const earliest = Math.min(...stateLayers.map((l) => l.minzoom ?? 0));
+  return {
+    ...style,
+    layers: style.layers.map((layer) => {
+      if (!stateLayers.includes(layer)) return layer;
+      const paint = { ...layer.paint, "line-color": color, "line-opacity": STATE_BORDER.opacity, "line-width": STATE_BORDER.width };
+      delete paint["line-dasharray"]; // solid lines read as stronger than dashes
+      const out = { ...layer, paint, layout: { ...layer.layout, "line-cap": "round", "line-join": "round" } };
+      // the earliest layer starts as early as we want; layers that start later (higher zoom) keep their own start
+      if ((layer.minzoom ?? 0) <= earliest && earliest > STATE_BORDER.minzoom) out.minzoom = STATE_BORDER.minzoom;
+      return out;
+    }),
+  };
+}
