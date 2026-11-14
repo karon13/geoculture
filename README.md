@@ -50,7 +50,7 @@ by `vite.config.js`. All three pages share the top bar and hamburger menu (`src/
 in the same place everywhere; the static pages' menu script is `src/pageMenu.js`.
 
 Canonical links, share cards and the sitemap need the public address. It defaults to
-`https://karon13.github.io/geoculture`; the domain is `storyglobe.app`; build with it once DNS points at the host:
+`https://karon13.github.io/storyglobe`; the live domain is `storyglobe.app`; set it in the host's build settings:
 
     VITE_SITE_URL=https://storyglobe.app npm run build
 
@@ -153,6 +153,8 @@ Open the page with `?debug` to expose the map as `window.__map` for automated te
 
 `npm run build` produces a plain static site in `dist/` that works from any folder or sub-path.
 Upload the folder to Netlify (drag and drop at app.netlify.com/drop), Vercel, Cloudflare Pages or GitHub Pages.
+
+The live site runs on Cloudflare Pages (free plan), connected to this repo. Build command `npm test && npm run build`, output folder `dist`, variables `NODE_VERSION=20` and `VITE_SITE_URL=https://storyglobe.app`.
 
 ## Test reset
 
