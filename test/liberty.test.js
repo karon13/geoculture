@@ -90,3 +90,32 @@ test("deepSea: land fills and the base colour are re-toned, roads are not", () =
   assert.notEqual(wood["fill-color"][3], "hsl(98, 61%, 72%)");
   assert.equal(by("road_motorway").paint["line-color"], "hsl(28, 80%, 70%)");
 });
+
+import { readFileSync } from "node:fs";
+import { STATE_BORDER_LAYER, STATE_BORDERS_URL, addUsStateBorders } from "../src/mapStyle.js";
+
+test("US state borders: the line file is shipped and is plain border lines", () => {
+  const data = JSON.parse(readFileSync(new URL(`../public/${STATE_BORDERS_URL}`, import.meta.url)));
+  assert.equal(data.type, "FeatureCollection");
+  assert.ok(data.features.length >= 1);
+  assert.ok(data.features.every((f) => /LineString/.test(f.geometry.type)));
+  // no names or other properties that could give an answer away
+  assert.ok(data.features.every((f) => Object.keys(f.properties || {}).length === 0));
+});
+
+test("US state borders: fade in before zoom 4 and are added once, below the layer given", () => {
+  const stops = STATE_BORDER_LAYER.paint["line-opacity"];
+  const fullAt = stops[stops.indexOf(stops.find((v, i) => i > 3 && v > 0.5)) - 1];
+  assert.ok(fullAt <= 4);
+  const calls = [];
+  const fake = {
+    getSource: () => calls.some((c) => c[0] === "source"),
+    getLayer: () => calls.some((c) => c[0] === "layer"),
+    addSource: (...a) => calls.push(["source", ...a]),
+    addLayer: (...a) => calls.push(["layer", ...a]),
+  };
+  addUsStateBorders(fake, "link-casing");
+  addUsStateBorders(fake, "link-casing");
+  assert.equal(calls.length, 2);
+  assert.equal(calls[1][2], "link-casing");
+});
