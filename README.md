@@ -156,6 +156,12 @@ Upload the folder to Netlify (drag and drop at app.netlify.com/drop), Vercel, Cl
 
 The live site runs on Cloudflare Pages (free plan). `.github/workflows/cloudflare.yml` tests, builds and uploads it on every push to `main`; it needs the repository secrets `CLOUDFLARE_API_TOKEN` (permission Cloudflare Pages: Edit) and `CLOUDFLARE_ACCOUNT_ID`.
 
+## Testing before release
+
+Work on the `develop` branch. Every push to `develop` is tested, built and uploaded as a Cloudflare Pages preview at
+`https://develop.storyglobe.pages.dev`, while `storyglobe.app` stays untouched. When the preview looks right, merge
+`develop` into `main` and the live site updates. (The workflow is `.github/workflows/cloudflare.yml`.)
+
 ## Test reset
 
 The hamburger menu has a "Reset everything (testing)" item. It wipes everything saved in the browser (results,
