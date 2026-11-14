@@ -118,6 +118,14 @@ Notes:
   instead of `LIBERTY_STYLE_URL` and keep the `stripText` call so no text comes back.
 - `npm test` covers the colour maths (`test/liberty.test.js`).
 
+### State borders
+
+OpenFreeMap draws state and province lines faintly and late. `emphasizeStateBorders` in `src/libertyStyle.js` finds
+those layers (by their `admin_level` filter) and restyles them in every country: dotted, thinner than the country
+border, shown from zoom 2.4. Tune start, strength, width and dot spacing in `STATE_BORDER`. If the style has no
+state layer a warning is logged in the browser console. (A US-only version, using an outline of the US as a mask,
+was tried and reverted.)
+
 ### Satellite imagery (Esri): good option, licensing issue
 
 An earlier version used Esri World Imagery photos with our own country and US state borders on top. It looks

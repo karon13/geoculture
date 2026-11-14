@@ -115,7 +115,7 @@ test("emphasizeStateBorders restyles state lines only, from the country colour, 
   const out = emphasizeStateBorders(style);
   const state = out.layers[0];
   assert.equal(state.paint["line-color"], "hsl(248, 7%, 66%)");
-  assert.equal(state.paint["line-dasharray"], undefined);
+  assert.deepEqual(state.paint["line-dasharray"], STATE_BORDER.dasharray);
   assert.deepEqual(state.paint["line-opacity"], STATE_BORDER.opacity);
   assert.equal(state.minzoom, STATE_BORDER.minzoom);
   assert.deepEqual(out.layers[1], style.layers[1]); // country border untouched

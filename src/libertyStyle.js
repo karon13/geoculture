@@ -138,12 +138,14 @@ export function deepSea(style) {
 
 // ---------- state borders ----------
 // Liberty draws state / province lines (admin level 3 or 4) faintly and only when zoomed in. We keep Liberty's own
-// lines, so they follow the same geometry as the country borders, but restyle them: solid, a bit thinner than
+// lines, so they follow the same geometry as the country borders, but restyle them: dotted, thinner than
 // the country border, and switched on at a much lower zoom. The tiles decide how far out the lines exist at all.
 export const STATE_BORDER = {
   minzoom: 2.4, // earliest zoom the layer is drawn
   opacity: ["interpolate", ["linear"], ["zoom"], 2.4, 0, 3.4, 0.85],
-  width: ["interpolate", ["linear"], ["zoom"], 3, 0.6, 6, 1.1, 10, 1.8, 14, 2.4],
+  width: ["interpolate", ["linear"], ["zoom"], 3, 0.5, 6, 0.9, 10, 1.4, 14, 2],
+  // Dots: a near-zero dash with round caps draws a round dot, the gap is in line widths.
+  dasharray: [0.1, 2.2],
   fallbackColor: "hsl(248, 10%, 74%)",
 };
 
@@ -192,7 +194,7 @@ export function emphasizeStateBorders(style) {
     layers: style.layers.map((layer) => {
       if (!stateLayers.includes(layer)) return layer;
       const paint = { ...layer.paint, "line-color": color, "line-opacity": STATE_BORDER.opacity, "line-width": STATE_BORDER.width };
-      delete paint["line-dasharray"]; // solid lines read as stronger than dashes
+      paint["line-dasharray"] = STATE_BORDER.dasharray;
       const out = { ...layer, paint, layout: { ...layer.layout, "line-cap": "round", "line-join": "round" } };
       // the earliest layer starts as early as we want; layers that start later (higher zoom) keep their own start
       if ((layer.minzoom ?? 0) <= earliest && earliest > STATE_BORDER.minzoom) out.minzoom = STATE_BORDER.minzoom;
