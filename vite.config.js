@@ -9,7 +9,7 @@ import { resolve } from "node:path";
 // sitemap need a full address, so set it when the final domain is known:
 //   VITE_SITE_URL=https://storyglobe.app npm run build
 // (in GitHub Actions: add it as an env var on the build step).
-const SITE_URL = (process.env.VITE_SITE_URL || "https://karon13.github.io/geoculture").replace(/\/+$/, "");
+const SITE_URL = (process.env.VITE_SITE_URL || "https://karon13.github.io/storyglobe").replace(/\/+$/, "");
 const PAGES = ["/", "/about/", "/privacy/"];
 
 function siteFiles() {
