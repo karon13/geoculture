@@ -154,7 +154,7 @@ Open the page with `?debug` to expose the map as `window.__map` for automated te
 `npm run build` produces a plain static site in `dist/` that works from any folder or sub-path.
 Upload the folder to Netlify (drag and drop at app.netlify.com/drop), Vercel, Cloudflare Pages or GitHub Pages.
 
-The live site runs on Cloudflare Pages (free plan), connected to this repo. Build command `npm test && npm run build`, output folder `dist`, variables `NODE_VERSION=20` and `VITE_SITE_URL=https://storyglobe.app`.
+The live site runs on Cloudflare Pages (free plan). `.github/workflows/cloudflare.yml` tests, builds and uploads it on every push to `main`; it needs the repository secrets `CLOUDFLARE_API_TOKEN` (permission Cloudflare Pages: Edit) and `CLOUDFLARE_ACCOUNT_ID`.
 
 ## Test reset
 
