@@ -7,14 +7,14 @@ import { resolve } from "node:path";
 //
 // SITE_URL is the public address of the site, without a trailing slash. Canonical links, share cards and the
 // sitemap need a full address, so set it when the final domain is known:
-//   VITE_SITE_URL=https://geoculture.example npm run build
+//   VITE_SITE_URL=https://storyglobe.app npm run build
 // (in GitHub Actions: add it as an env var on the build step).
 const SITE_URL = (process.env.VITE_SITE_URL || "https://karon13.github.io/geoculture").replace(/\/+$/, "");
 const PAGES = ["/", "/about/", "/privacy/"];
 
 function siteFiles() {
   return {
-    name: "geoculture-site-files",
+    name: "storyglobe-site-files",
     transformIndexHtml: (html) => html.replaceAll("%SITE_URL%", SITE_URL),
     generateBundle() {
       const lastmod = new Date().toISOString().slice(0, 10);

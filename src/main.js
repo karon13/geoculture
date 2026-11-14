@@ -28,13 +28,15 @@ import {
 import { figureHTML, mountImage, preloadImages } from "./revealImage.js";
 
 // Satellite globe with borders only (see mapStyle.js).
-const STORAGE_KEY = "geoculture:v1";
+const STORAGE_KEY = "storyglobe:v1";
+// The game was called GeoCulture before; progress saved under the old key is picked up once and moved.
+const LEGACY_STORAGE_KEY = "geoculture:v1";
 const REDUCED_MOTION = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // ---------- persistence (browser only, no backend) ----------
 function loadStore() {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? localStorage.getItem(LEGACY_STORAGE_KEY)) || {};
   } catch {
     return {};
   }
@@ -797,6 +799,7 @@ function renderFinal() {
 document.getElementById("reset").addEventListener("click", () => {
   try {
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(LEGACY_STORAGE_KEY);
   } catch {
     /* storage unavailable: nothing was saved anyway */
   }
