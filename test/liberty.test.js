@@ -1,6 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { stripText, deepSea, SEA, earthTone, parseColor, adminLevels, isStateBorderLayer, emphasizeStateBorders, STATE_BORDER } from "../src/libertyStyle.js";
+import { featureFilter } from "@maplibre/maplibre-gl-style-spec";
+import { readFileSync } from "node:fs";
+import { US_MASK } from "../src/usMask.js";
+import { stripText, deepSea, SEA, earthTone, parseColor, adminLevels, isStateBorderLayer, emphasizeStateBorders, toExpressionFilter, STATE_BORDER } from "../src/libertyStyle.js";
 
 // A tiny stand-in shaped like OpenFreeMap's Liberty style.
 const liberty = {
@@ -100,11 +103,11 @@ test("adminLevels reads old and new filter syntax and ignores not-equal", () => 
   assert.deepEqual([...adminLevels(undefined)], []);
 });
 
-test("emphasizeStateBorders restyles state lines only, from the country colour, solid and early", () => {
+test("emphasizeStateBorders adds a stronger US-only copy of each state layer and leaves the rest alone", () => {
   const style = {
     layers: [
       { id: "boundary_3", type: "line", source: "openmaptiles", "source-layer": "boundary", minzoom: 4,
-        filter: ["all", ["in", "admin_level", 3, 4]], paint: { "line-color": "#aaa", "line-width": 0.5, "line-dasharray": [2, 2], "line-opacity": 0.3 } },
+        filter: ["all", ["in", "admin_level", 3, 4], ["!=", "maritime", 1]], paint: { "line-color": "#aaa", "line-width": 0.5, "line-dasharray": [2, 2], "line-opacity": 0.3 } },
       { id: "boundary_2", type: "line", source: "openmaptiles", "source-layer": "boundary",
         filter: ["==", "admin_level", 2], paint: { "line-color": "hsl(248, 7%, 66%)", "line-width": 1.5 } },
       { id: "road", type: "line", source: "openmaptiles", "source-layer": "transportation", paint: {} },
@@ -113,13 +116,84 @@ test("emphasizeStateBorders restyles state lines only, from the country colour, 
   assert.equal(isStateBorderLayer(style.layers[0]), true);
   assert.equal(isStateBorderLayer(style.layers[1]), false);
   const out = emphasizeStateBorders(style);
-  const state = out.layers[0];
-  assert.equal(state.paint["line-color"], "hsl(248, 7%, 66%)");
-  assert.equal(state.paint["line-dasharray"], undefined);
-  assert.deepEqual(state.paint["line-opacity"], STATE_BORDER.opacity);
-  assert.equal(state.minzoom, STATE_BORDER.minzoom);
-  assert.deepEqual(out.layers[1], style.layers[1]); // country border untouched
-  assert.deepEqual(out.layers[2], style.layers[2]);
+  assert.deepEqual(out.layers.map((l) => l.id), ["boundary_3", "boundary_3-us", "boundary_2", "road"]);
+  assert.deepEqual(out.layers[0], style.layers[0]); // Liberty's own layer is untouched, so other countries look as before
+  assert.deepEqual(out.layers[2], style.layers[1]);
+  assert.deepEqual(out.layers[3], style.layers[2]);
+  const us = out.layers[1];
+  assert.equal(us.paint["line-color"], "hsl(248, 7%, 66%)");
+  assert.equal(us.paint["line-dasharray"], undefined);
+  assert.deepEqual(us.paint["line-opacity"], STATE_BORDER.opacity);
+  assert.equal(us.minzoom, STATE_BORDER.minzoom);
+  // old-style filter rewritten as an expression, then limited to the US outline
+  assert.equal(us.filter[0], "all");
+  assert.deepEqual(us.filter[1], ["all", ["in", ["get", "admin_level"], ["literal", [3, 4]]], ["!=", ["get", "maritime"], 1]]);
+  assert.equal(us.filter[2][0], "within");
+  assert.equal(us.filter[2][1].type, "Polygon");
+});
+
+test("toExpressionFilter agrees with MapLibre's own converter on sample features", () => {
+  const filters = [
+    ["all", ["in", "admin_level", 3, 4], ["!=", "maritime", 1]],
+    ["==", "admin_level", 2],
+    ["any", ["==", "class", "state"], ["!in", "admin_level", 2, 3]],
+    ["none", ["==", "disputed", 1]],
+    ["has", "name"],
+    ["!has", "name"],
+    ["==", "$type", "LineString"],
+    ["all", ["==", ["get", "admin_level"], 4], ["!=", ["get", "maritime"], 1]], // already an expression
+  ];
+  const features = [
+    { properties: { admin_level: 2, maritime: 0 } },
+    { properties: { admin_level: 3, maritime: 0 } },
+    { properties: { admin_level: 4, maritime: 1, name: "x" } },
+    { properties: { admin_level: 4, class: "state", disputed: 1 } },
+    { properties: { admin_level: 6 } },
+  ].map((f) => ({ type: 2, geometry: [], id: 1, ...f }));
+  for (const f of filters) {
+    const mine = featureFilter(toExpressionFilter(f)).filter({ zoom: 5 }, features[0]);
+    assert.equal(typeof mine, "boolean");
+    for (const feat of features) {
+      const ours = featureFilter(toExpressionFilter(f)).filter({ zoom: 5 }, feat);
+      const theirs = featureFilter(f).filter({ zoom: 5 }, feat);
+      assert.equal(ours, theirs, `${JSON.stringify(f)} on ${JSON.stringify(feat.properties)}`);
+    }
+  }
+});
+
+test("the US outline: contains every US state line, none of the neighbours' provinces or states", () => {
+  const data = JSON.parse(readFileSync(new URL("../public/borders-us-states.json", import.meta.url)));
+  const ring = US_MASK.coordinates[0];
+  const inside = ([x, y]) => {
+    let ins = false;
+    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+      const [xi, yi] = ring[i], [xj, yj] = ring[j];
+      if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) ins = !ins;
+    }
+    return ins;
+  };
+  const points = data.features.flatMap((f) => f.geometry.coordinates.flat());
+  assert.ok(points.length > 1000);
+  assert.deepEqual(points.filter((p) => !inside(p)), []);
+  for (const [name, p] of Object.entries({ "Alberta/BC": [-114.5, 50.5], Manitoba: [-98, 50.5], Ontario: [-89, 48.6], Quebec: [-73.5, 45.5], Sonora: [-110.5, 30], Chihuahua: [-106, 29], Baja: [-115.5, 30] })) {
+    assert.equal(inside(p), false, name);
+  }
+});
+
+test("MapLibre's own 'within' filter keeps a US line and drops a Canadian one", () => {
+  const filter = featureFilter(["within", US_MASK]);
+  // tile z4 x3 y6 covers roughly lng -112.5..-90, lat 36.6..21.9 mirrored; use a z3 tile over North America instead
+  const canonical = { z: 3, x: 1, y: 2 }; // lng -135..-90, lat 40.98..0 ... see below
+  const toTile = (lng, lat) => {
+    const n = 2 ** canonical.z;
+    const fx = ((lng + 180) / 360) * n;
+    const fy = ((1 - Math.log(Math.tan((lat * Math.PI) / 180) + 1 / Math.cos((lat * Math.PI) / 180)) / Math.PI) / 2) * n;
+    return { x: Math.round((fx - canonical.x) * 8192), y: Math.round((fy - canonical.y) * 8192) };
+  };
+  const line = (...pts) => ({ type: 2, properties: {}, geometry: [pts.map(([lng, lat]) => toTile(lng, lat))] });
+  // canonical tile z3/x1/y2 spans lng -135..-90 and lat 40.98..0; both test lines must lie inside it
+  assert.equal(filter.filter({ zoom: 5 }, line([-110, 37], [-109, 36]), canonical), true); // Four Corners area, US
+  assert.equal(filter.filter({ zoom: 5 }, line([-110, 30], [-109, 29]), canonical), false); // Sonora, Mexico
 });
 
 test("emphasizeStateBorders leaves a style without state lines alone", () => {

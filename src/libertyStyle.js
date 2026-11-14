@@ -5,6 +5,8 @@
 // street and country names, shields, points of interest, house numbers; all of them are layers of type
 // "symbol"). Everything else, including Liberty's own country and state border lines, colours, shapes and
 // zoom behaviour, stays exactly as OpenFreeMap designed it.
+import { US_MASK } from "./usMask.js";
+
 export const LIBERTY_STYLE_URL = "https://tiles.openfreemap.org/styles/liberty";
 
 export function stripText(style) {
@@ -136,12 +138,14 @@ export function deepSea(style) {
   };
 }
 
-// ---------- state borders ----------
-// Liberty draws state / province lines (admin level 3 or 4) faintly and only when zoomed in. We keep Liberty's own
-// lines, so they follow the same geometry as the country borders, but restyle them: solid, a bit thinner than
-// the country border, and switched on at a much lower zoom. The tiles decide how far out the lines exist at all.
+// ---------- US state borders ----------
+// Liberty draws state / province lines (admin level 3 or 4) faintly and only when zoomed in, in every country. We
+// want the US states to stand out, and nothing else. So for each of Liberty's state-level boundary layers we add a
+// copy that only draws what lies inside the outline of the contiguous US (US_MASK) and gives it a stronger look: solid,
+// a bit thinner than the country border, shown from a much lower zoom. Liberty's own layer stays as it is for everyone
+// else, and the copy uses the same lines, so nothing is drawn from another source or in a different place.
 export const STATE_BORDER = {
-  minzoom: 2.4, // earliest zoom the layer is drawn
+  minzoom: 2.4, // earliest zoom the US copy is drawn
   opacity: ["interpolate", ["linear"], ["zoom"], 2.4, 0, 3.4, 0.85],
   width: ["interpolate", ["linear"], ["zoom"], 3, 0.6, 6, 1.1, 10, 1.8, 14, 2.4],
   fallbackColor: "hsl(248, 10%, 74%)",
@@ -176,7 +180,59 @@ export function isStateBorderLayer(layer) {
   return !levels.has(2) && (levels.has(3) || levels.has(4));
 }
 
-export function emphasizeStateBorders(style) {
+// MapLibre cannot mix the old filter syntax (["==", "admin_level", 4]) with expressions (["within", ...]) in one
+// filter, so an old-style filter is first rewritten as an expression. Same rule MapLibre itself uses to tell them apart.
+export function isExpressionFilter(f) {
+  if (typeof f === "boolean") return true;
+  if (!Array.isArray(f) || f.length === 0) return false;
+  switch (f[0]) {
+    case "has":
+      return f.length >= 2 && f[1] !== "$id" && f[1] !== "$type";
+    case "in":
+      return f.length >= 3 && (typeof f[1] !== "string" || Array.isArray(f[2]));
+    case "!in":
+    case "!has":
+    case "none":
+      return false;
+    case "==":
+    case "!=":
+    case ">":
+    case ">=":
+    case "<":
+    case "<=":
+      return f.length !== 3 || Array.isArray(f[1]) || Array.isArray(f[2]);
+    case "any":
+    case "all":
+      return f.slice(1).every((x) => typeof x === "boolean" || isExpressionFilter(x));
+    default:
+      return true;
+  }
+}
+
+export function toExpressionFilter(f) {
+  if (isExpressionFilter(f)) return f;
+  const [op, ...rest] = f;
+  const key = (k) => (k === "$type" ? ["geometry-type"] : k === "$id" ? ["id"] : ["get", k]);
+  switch (op) {
+    case "all":
+    case "any":
+      return [op, ...rest.map(toExpressionFilter)];
+    case "none":
+      return ["!", ["any", ...rest.map(toExpressionFilter)]];
+    case "has":
+      return ["has", rest[0]];
+    case "!has":
+      return ["!", ["has", rest[0]]];
+    case "in":
+      return ["in", key(rest[0]), ["literal", rest.slice(1)]];
+    case "!in":
+      return ["!", ["in", key(rest[0]), ["literal", rest.slice(1)]]];
+    default: // == != > >= < <=
+      return [op, key(rest[0]), rest[1]];
+  }
+}
+
+export function emphasizeStateBorders(style, mask = US_MASK) {
   const stateLayers = style.layers.filter(isStateBorderLayer);
   if (!stateLayers.length) {
     console.warn("GeoCulture: no state border layer found in the map style; state lines keep their default look");
@@ -187,16 +243,22 @@ export function emphasizeStateBorders(style) {
   const countryColor = country.map((l) => l.paint?.["line-color"]).find((c) => typeof c === "string");
   const color = countryColor || STATE_BORDER.fallbackColor;
   const earliest = Math.min(...stateLayers.map((l) => l.minzoom ?? 0));
-  return {
-    ...style,
-    layers: style.layers.map((layer) => {
-      if (!stateLayers.includes(layer)) return layer;
-      const paint = { ...layer.paint, "line-color": color, "line-opacity": STATE_BORDER.opacity, "line-width": STATE_BORDER.width };
-      delete paint["line-dasharray"]; // solid lines read as stronger than dashes
-      const out = { ...layer, paint, layout: { ...layer.layout, "line-cap": "round", "line-join": "round" } };
-      // the earliest layer starts as early as we want; layers that start later (higher zoom) keep their own start
-      if ((layer.minzoom ?? 0) <= earliest && earliest > STATE_BORDER.minzoom) out.minzoom = STATE_BORDER.minzoom;
-      return out;
-    }),
-  };
+  const layers = [];
+  for (const layer of style.layers) {
+    layers.push(layer);
+    if (!stateLayers.includes(layer)) continue;
+    const paint = { ...layer.paint, "line-color": color, "line-opacity": STATE_BORDER.opacity, "line-width": STATE_BORDER.width };
+    delete paint["line-dasharray"]; // solid lines read as stronger than dashes
+    const copy = {
+      ...layer,
+      id: `${layer.id}-us`,
+      filter: layer.filter === undefined ? ["within", mask] : ["all", toExpressionFilter(layer.filter), ["within", mask]],
+      paint,
+      layout: { ...layer.layout, "line-cap": "round", "line-join": "round" },
+    };
+    // the earliest layer starts as early as we want; layers that start later (higher zoom) keep their own start
+    if ((layer.minzoom ?? 0) <= earliest && earliest > STATE_BORDER.minzoom) copy.minzoom = STATE_BORDER.minzoom;
+    layers.push(copy);
+  }
+  return { ...style, layers };
 }
